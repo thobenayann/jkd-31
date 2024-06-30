@@ -9,7 +9,7 @@ import {
     Merriweather as FontSerif,
 } from 'next/font/google';
 import { Suspense } from 'react';
-import './globals.css';
+import '../globals.css';
 
 const fontSans = FontSans({
     subsets: ['latin'],
