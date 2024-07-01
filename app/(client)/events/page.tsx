@@ -10,16 +10,6 @@ import { fr } from 'date-fns/locale';
 import { ArrowRight, Clock } from 'lucide-react';
 import Image from 'next/image';
 
-const formatEventDates = (dates: string[] | undefined): string => {
-    if (!dates || dates.length === 0) return '';
-    const formattedDates = dates.map((date) =>
-        format(new Date(date), 'd MMMM', { locale: fr })
-    );
-    return formattedDates.length > 1
-        ? `${formattedDates[0]} et ${formattedDates[1]}`
-        : formattedDates[0];
-};
-
 export default async function Events() {
     const events: EVENTS_QUERYResult = await sanityFetch({
         query: EVENTS_QUERY,
@@ -50,6 +40,8 @@ export default async function Events() {
     };
 
     const formattedEventDates = formatEventDates(firstEvent.eventDates);
+
+    console.log('events', events);
 
     return (
         <main className='w-full'>
@@ -125,6 +117,7 @@ export default async function Events() {
                                     alt="Poster de l\'événement"
                                     width={350}
                                     height={200}
+                                    priority
                                 />
                             ) : null}
                         </div>
