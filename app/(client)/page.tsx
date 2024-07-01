@@ -1,3 +1,5 @@
+import GradualSpacing from '@/components/ui/gradual-spacing';
+
 export default function Home() {
     return (
         <div
@@ -7,11 +9,12 @@ export default function Home() {
                 backgroundSize: 'cover',
             }}
         >
-            <h1
-                className={`text-6xl font-cinzel max-md:text-center md:pl-52 pt-60 md:pt-80`}
-            >
-                Ji Dao
-            </h1>
+            <div className='md:pl-52 pt-60 md:pt-80'>
+                <GradualSpacing
+                    className='max-md:text-center font-cinzel text-black dark:text-white text-6xl md:text-7xl'
+                    text='Ji Dao'
+                />
+            </div>
         </div>
     );
 }
