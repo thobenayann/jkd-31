@@ -24,6 +24,7 @@ export default defineConfig({
     schema,
     perspectives: 'published',
     studioUrl: '/studio',
+    useCdn: true,
     plugins: [
         structureTool(),
         // Vision is a tool that lets you query your content with GROQ in the studio

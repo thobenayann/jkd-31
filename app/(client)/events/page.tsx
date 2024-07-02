@@ -41,47 +41,45 @@ export default async function Events() {
 
     const formattedEventDates = formatEventDates(firstEvent.eventDates);
 
-    console.log('events', events);
-
     return (
-        <main className='w-full'>
-            <header className='flex flex-col align-center space-y-2 pb-10'>
-                <h1 className='text-center text-3xl pt-32 uppercase font-bold'>
+        <main className="w-full">
+            <header className="flex flex-col align-center space-y-2 pb-10">
+                <h1 className="text-center text-3xl pt-32 uppercase font-bold">
                     Événements
                 </h1>
-                <p className='text-center text-xl text-gray-400'>
+                <p className="text-center text-xl text-gray-400">
                     saison 2023-2024
                 </p>
             </header>
-            <section className='bg-gray-900'>
-                <article className='container flex flex-col items-center p-6'>
-                    <strong className='text-2xl mb-10'>
+            <section className="bg-gray-900">
+                <article className="container flex flex-col items-center p-6">
+                    <strong className="text-2xl mb-10">
                         {formattedEventDates}
                     </strong>
-                    <div className='flex space-x-4'>
-                        <div className='flex flex-col space-y-4 p-20 w-1/2'>
-                            <h2 className='text-2xl font-bold'>
+                    <div className="flex space-x-4">
+                        <div className="flex flex-col space-y-4 p-20 w-1/2">
+                            <h2 className="text-2xl font-bold text-white">
                                 {firstEvent.title}
                             </h2>
-                            <p className='text-gray-300'>
+                            <p className="text-gray-300">
                                 {firstEvent.description}
                             </p>
-                            <div className='flex flex-col space-y-1'>
+                            <div className="flex flex-col space-y-1">
                                 {firstEvent.timeSlots?.map(
                                     (timeSlot, index) => (
                                         <Badge
                                             key={index}
-                                            className='flex items-center space-x-2 w-fit bg-blue-900 hover:bg-blue-800'
+                                            className="flex items-center space-x-2 w-fit bg-blue-900 hover:bg-blue-800"
                                         >
-                                            <Clock className='w-4 h-4 text-blue-300' />
-                                            <span className='text-blue-300'>
+                                            <Clock className="w-4 h-4 text-blue-300" />
+                                            <span className="text-blue-300">
                                                 {timeSlot}
                                             </span>
                                         </Badge>
                                     )
                                 )}
                             </div>
-                            <div className='flex items-center mt-4'>
+                            <div className="flex items-center mt-4">
                                 <Avatar>
                                     <AvatarImage
                                         src={urlFor(
@@ -96,19 +94,19 @@ export default async function Events() {
                                         )}
                                     </AvatarFallback>
                                 </Avatar>
-                                <div className='ml-4'>
-                                    <p className='font-bold'>{`${firstEvent.personality?.firstName} ${firstEvent.personality?.lastName}`}</p>
-                                    <p className='text-gray-400'>
+                                <div className="ml-4">
+                                    <p className="font-bold text-white">{`${firstEvent.personality?.firstName} ${firstEvent.personality?.lastName}`}</p>
+                                    <p className="text-gray-400">
                                         {firstEvent.personality?.title}
                                     </p>
                                 </div>
                             </div>
-                            <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600'>
+                            <Button className="mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600">
                                 <span>Nous contacter</span>
-                                <ArrowRight className='w-4 h-4 ml-2' />
+                                <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                         </div>
-                        <div className='flex items-center justify-center w-1/2'>
+                        <div className="flex items-center justify-center w-1/2">
                             {firstEvent.mainImage?.asset ? (
                                 <Image
                                     src={urlFor(

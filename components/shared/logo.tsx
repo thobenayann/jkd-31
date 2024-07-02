@@ -6,10 +6,9 @@ export const MyLogo = () => {
     return (
         <Image
             src={logo}
-            alt='My Logo'
-            className='object-contain'
-            height={25}
-            layout='intrinsic'
+            alt="My Logo"
+            height={18}
+            style={{ objectFit: 'contain' }}
         />
     );
 };
