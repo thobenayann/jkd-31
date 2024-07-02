@@ -31,15 +31,29 @@ export default async function Events() {
     // Format the event dates for display
     const formatEventDates = (dates: string[] | undefined): string => {
         if (!dates || dates.length === 0) return '';
-        const formattedDates = dates.map((date) =>
-            format(new Date(date), 'd MMMM', { locale: fr })
-        ); // Utilisation de la locale française
+        const formattedDates = dates
+            .map((date) => {
+                const parsedDate = new Date(date);
+                return isNaN(parsedDate.getTime())
+                    ? ''
+                    : format(parsedDate, 'd MMMM', { locale: fr });
+            })
+            .filter(Boolean); // Filtrer les dates invalides
         return formattedDates.length > 1
             ? `${formattedDates[0]} et ${formattedDates[1]}`
             : formattedDates[0];
     };
 
     const formattedEventDates = formatEventDates(firstEvent.eventDates);
+
+    const firstEventImageUrl = firstEvent.mainImage?.asset?._ref
+        ? urlFor(firstEvent.mainImage.asset._ref).url()
+        : '';
+
+    const firstEventPersonalityPhotoUrl = firstEvent.personality?.photo?.asset
+        ?._ref
+        ? urlFor(firstEvent.personality.photo.asset._ref).url()
+        : '';
 
     return (
         <main className="w-full">
@@ -82,10 +96,7 @@ export default async function Events() {
                             <div className="flex items-center mt-4">
                                 <Avatar>
                                     <AvatarImage
-                                        src={urlFor(
-                                            firstEvent.personality?.photo?.asset
-                                                ?._ref ?? ''
-                                        )?.url()}
+                                        src={firstEventPersonalityPhotoUrl}
                                         alt={`${firstEvent.personality?.firstName} ${firstEvent.personality?.lastName}`}
                                     />
                                     <AvatarFallback>
@@ -109,9 +120,7 @@ export default async function Events() {
                         <div className="flex items-center justify-center w-1/2">
                             {firstEvent.mainImage?.asset ? (
                                 <Image
-                                    src={urlFor(
-                                        firstEvent.mainImage?.asset._ref
-                                    ).url()}
+                                    src={firstEventImageUrl}
                                     alt="Poster de l\'événement"
                                     width={350}
                                     height={200}
