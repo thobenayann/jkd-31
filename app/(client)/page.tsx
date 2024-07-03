@@ -10,7 +10,7 @@ export default function Home() {
                 backgroundSize: 'cover',
             }}
         >
-            <div className='absolute top-1/3 left-2/3'>
+            <div className='absolute top-[15%] left-[64%]'>
                 <Confetti />
             </div>
             <div className='md:pl-52 pt-60 md:pt-80'>
