@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { capitalizeFirstLetter } from './capitalizeFirstLetter';
 
 /**
  * Format an array of event date strings into a readable string.
@@ -44,10 +45,6 @@ export const formatEventDates = (dates: string[] | undefined): string => {
             return isNaN(parsedDate.getTime()) ? '' : parsedDate;
         })
         .filter(Boolean) as Date[]; // Filtrer les dates invalides
-
-    const capitalizeFirstLetter = (string: string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
 
     switch (formattedDates.length) {
         case 0:

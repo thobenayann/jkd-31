@@ -1,7 +1,6 @@
 import AvatarPersonality from '@/components/shared/avatar-personality';
-import { Badge } from '@/components/ui/badge';
+import ClockBadge from '@/components/shared/clock-badge';
 import { formatEventDates } from '@/lib/formatEventDate';
-import { Clock } from 'lucide-react';
 import Image from 'next/image';
 
 interface CardEventProps {
@@ -44,13 +43,12 @@ function CardEvent({
                 </strong>
                 <h2>{title}</h2>
                 {timeSlots.map((timeSlot, index) => (
-                    <Badge
+                    <ClockBadge
                         key={index}
-                        className='flex items-center space-x-2 w-fit bg-blue-900 hover:bg-blue-800'
-                    >
-                        <Clock className='w-4 h-4 text-blue-300' />
-                        <span className='text-blue-300'>{timeSlot}</span>
-                    </Badge>
+                        date={eventDates[index]}
+                        time={timeSlot}
+                        withDay={false}
+                    />
                 ))}
                 <AvatarPersonality
                     personalityPhotoUrl={personalityPhotoUrl}

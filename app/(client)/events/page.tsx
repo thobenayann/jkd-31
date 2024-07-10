@@ -78,6 +78,7 @@ export default async function Events() {
                                                 firstEvent.eventDates?.[index]
                                             }
                                             time={timeSlot}
+                                            withDay={true}
                                         />
                                     ) : null
                                 )}
