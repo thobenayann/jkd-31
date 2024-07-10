@@ -4,6 +4,7 @@ import { CalendarSearch, House, Phone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AuroraBackground } from '../ui/aurora-background-french-flag';
 
 // nav data
 export const navData = [
@@ -53,17 +54,17 @@ const Nav = ({ hash }: NavProps) => {
     return (
         <>
             {/* Desktop NAV */}
-            <nav className='fixed z-50 right-0 bg-[#1D1F23]/75 w-full'>
-                <div className='hidden xl:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
-                    <Image
-                        src='/images/logo/logo-jkd31.png'
-                        alt='Ji Dao'
-                        width={40}
-                        height={40}
-                    />
-                    <div className='flex items-center justify-end gap-x-10'>
-                        {navData.map((link) => {
-                            return (
+            <nav className='fixed z-50 right-0 w-full'>
+                <AuroraBackground className='w-full h-full'>
+                    <div className='hidden xl:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
+                        <Image
+                            src='/images/logo/logo-jkd31.png'
+                            alt='Ji Dao'
+                            width={40}
+                            height={40}
+                        />
+                        <div className='flex items-center justify-end gap-x-10'>
+                            {navData.map((link) => (
                                 <Link
                                     className={getLinkClassName(link.path)}
                                     href={link.path}
@@ -73,13 +74,12 @@ const Nav = ({ hash }: NavProps) => {
                                         hash === link.path ? 'page' : undefined
                                     }
                                 >
-                                    {/* Links */}
                                     <span>{link.name}</span>
                                 </Link>
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </AuroraBackground>
             </nav>
 
             {/* Table and mobile NAV */}
