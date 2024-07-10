@@ -54,7 +54,7 @@ const Nav = ({ hash }: NavProps) => {
     return (
         <>
             {/* Desktop NAV */}
-            <nav className='fixed z-50 right-0 w-full'>
+            <nav className='fixed z-50 right-0 w-full shadow-md shadow-zinc-500'>
                 <AuroraBackground className='w-full h-full'>
                     <div className='hidden xl:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
                         <Image
