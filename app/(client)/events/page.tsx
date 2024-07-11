@@ -2,13 +2,14 @@ import AvatarPersonality from '@/components/shared/avatar-personality';
 import ClockBadge from '@/components/shared/clock-badge';
 import { Button } from '@/components/ui/button';
 import { formatEventDates } from '@/lib/formatEventDate';
+import { getCurrentSeason } from '@/lib/getCurrentSeason';
 import { Evenement, EVENTS_QUERYResult } from '@/sanity.types';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import NextEventCard from './_components/next-event-card';
+import ClientEventFilter from './_components/event-filter';
 
 export default async function Events() {
     const events: EVENTS_QUERYResult = await sanityFetch({
@@ -20,6 +21,9 @@ export default async function Events() {
     }
 
     const today = new Date();
+
+    const currentSeason = getCurrentSeason();
+
     let firstEvent: Evenement | undefined = events.find(
         (event) => new Date(event.eventDates?.[0] || '') >= today
     );
@@ -41,9 +45,7 @@ export default async function Events() {
         ? urlFor(firstEvent.personality.photo.asset._ref).url()
         : '';
 
-    // TODO: Gérer l'affichage de la saison
-    // Proposer d'afficher les événements passés ou futurs
-    // Gérer le cas ou il n'y a pas d'événement a montrer
+    // TODO:
     // Gérer la grid des événéments pour le responsive
 
     return (
@@ -53,7 +55,7 @@ export default async function Events() {
                     Événements
                 </h1>
                 <p className='text-center text-xl text-gray-400'>
-                    saison 2023-2024
+                    {currentSeason}
                 </p>
             </header>
             <section className='bg-gray-900'>
@@ -110,7 +112,7 @@ export default async function Events() {
                     </div>
                 </article>
             </section>
-            <NextEventCard events={remainingEvents} />
+            <ClientEventFilter events={remainingEvents} />
         </main>
     );
 }

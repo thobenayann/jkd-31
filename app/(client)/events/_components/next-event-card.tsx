@@ -32,6 +32,16 @@ function NextEventCard({ events }: NextEventCardProps) {
                     />
                 );
             })}
+            {events.length === 0 ? (
+                <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-4'>
+                    <div className='flex flex-col items-center gap-1 text-center'>
+                        <h3 className='text-2xl font-bold tracking-tight'>
+                            Nous n&apos;avons pas encore publié
+                            d&apos;événements à venir.
+                        </h3>
+                    </div>
+                </div>
+            ) : null}
         </section>
     );
 }
