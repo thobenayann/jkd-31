@@ -1,14 +1,16 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import AvatarPersonality from '@/components/shared/avatar-personality';
+import ClockBadge from '@/components/shared/clock-badge';
 import { Button } from '@/components/ui/button';
+import { formatEventDates } from '@/lib/formatEventDate';
+import { getCurrentSeason } from '@/lib/getCurrentSeason';
+import { sortEventsByDate } from '@/lib/sortEventsByDate';
 import { Evenement, EVENTS_QUERYResult } from '@/sanity.types';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { ArrowRight, Clock } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import ClientEventFilter from './_components/event-filter';
 
 export default async function Events() {
     const events: EVENTS_QUERYResult = await sanityFetch({
@@ -19,108 +21,106 @@ export default async function Events() {
         return null;
     }
 
+    // Date et saison actuelle
     const today = new Date();
-    let firstEvent: Evenement | undefined = events.find(
+    const currentSeason = getCurrentSeason();
+
+    // Trouver le premier événement futur ou le dernier événement passé
+    const sortedEvents = sortEventsByDate(events);
+    let firstEventOrLatest: Evenement | undefined = sortedEvents.find(
         (event) => new Date(event.eventDates?.[0] || '') >= today
     );
 
-    if (!firstEvent) {
-        firstEvent = events[events.length - 1];
+    // Si aucun événement futur n'est trouvé, prendre le dernier événement passé
+    if (!firstEventOrLatest) {
+        firstEventOrLatest = sortedEvents
+            .slice()
+            .reverse()
+            .find((event) => new Date(event.eventDates?.[0] || '') < today);
     }
 
-    // Format the event dates for display
-    const formatEventDates = (dates: string[] | undefined): string => {
-        if (!dates || dates.length === 0) return '';
-        const formattedDates = dates
-            .map((date) => {
-                const parsedDate = new Date(date);
-                return isNaN(parsedDate.getTime())
-                    ? ''
-                    : format(parsedDate, 'd MMMM', { locale: fr });
-            })
-            .filter(Boolean); // Filtrer les dates invalides
-        return formattedDates.length > 1
-            ? `${formattedDates[0]} et ${formattedDates[1]}`
-            : formattedDates[0];
-    };
+    // Vérifier si firstEvent est toujours undefined
+    if (!firstEventOrLatest) {
+        return null;
+    }
 
-    const formattedEventDates = formatEventDates(firstEvent.eventDates);
-
-    const firstEventImageUrl = firstEvent.mainImage?.asset?._ref
-        ? urlFor(firstEvent.mainImage.asset._ref).url()
+    // URL de l'image principale et de la photo de la personnalité
+    const firstEventOrLatestImageUrl = firstEventOrLatest.mainImage?.asset?._ref
+        ? urlFor(firstEventOrLatest.mainImage.asset._ref).url()
+        : '';
+    const firstEventOrLatestPersonalityPhotoUrl = firstEventOrLatest.personality
+        ?.photo?.asset?._ref
+        ? urlFor(firstEventOrLatest.personality.photo.asset._ref).url()
         : '';
 
-    const firstEventPersonalityPhotoUrl = firstEvent.personality?.photo?.asset
-        ?._ref
-        ? urlFor(firstEvent.personality.photo.asset._ref).url()
-        : '';
+    // Filtrer les événements restants
+    const remainingEvents = sortedEvents.filter(
+        (event) => event !== firstEventOrLatest
+    );
+
+    const formattedEventDates = formatEventDates(firstEventOrLatest.eventDates);
 
     return (
-        <main className="w-full">
-            <header className="flex flex-col align-center space-y-2 pb-10">
-                <h1 className="text-center text-3xl pt-32 uppercase font-bold">
+        <main className='w-full max-md:pb-28'>
+            <header className='flex flex-col align-center space-y-2 pb-10'>
+                <h1 className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'>
                     Événements
                 </h1>
-                <p className="text-center text-xl text-gray-400">
-                    saison 2023-2024
+                <p className='text-center text-xl text-gray-400'>
+                    {currentSeason}
                 </p>
             </header>
-            <section className="bg-gray-900">
-                <article className="container flex flex-col items-center p-6">
-                    <strong className="text-2xl mb-10">
+            {/* Section de l'événement principal */}
+            <section className='bg-gray-900 max-md:pb-10 max-md:border-b-2 max-md:border-dashed relative'>
+                <article className='container flex flex-col items-center p-6'>
+                    <strong className='text-2xl mb-10'>
                         {formattedEventDates}
                     </strong>
-                    <div className="flex space-x-4">
-                        <div className="flex flex-col space-y-4 p-20 w-1/2">
-                            <h2 className="text-2xl font-bold text-white">
-                                {firstEvent.title}
+                    <div className='flex max-md:flex-col max-md:space-y-6 md:space-x-4'>
+                        <div className='flex flex-col space-y-4 p-2 max-md:items-center md:p-20 md:w-1/2'>
+                            <h2 className='text-2xl font-bold text-white'>
+                                {firstEventOrLatest.title}
                             </h2>
-                            <p className="text-gray-300">
-                                {firstEvent.description}
+                            <p className='text-gray-300 text-center'>
+                                {firstEventOrLatest.description}
                             </p>
-                            <div className="flex flex-col space-y-1">
-                                {firstEvent.timeSlots?.map(
-                                    (timeSlot, index) => (
-                                        <Badge
-                                            key={index}
-                                            className="flex items-center space-x-2 w-fit bg-blue-900 hover:bg-blue-800"
-                                        >
-                                            <Clock className="w-4 h-4 text-blue-300" />
-                                            <span className="text-blue-300">
-                                                {timeSlot}
-                                            </span>
-                                        </Badge>
-                                    )
+                            <div className='flex flex-col space-y-1'>
+                                {firstEventOrLatest.timeSlots?.map(
+                                    (timeSlot, index) =>
+                                        firstEventOrLatest.eventDates ? (
+                                            <ClockBadge
+                                                key={index}
+                                                date={
+                                                    firstEventOrLatest
+                                                        .eventDates?.[index]
+                                                }
+                                                time={timeSlot}
+                                                withDay={true}
+                                            />
+                                        ) : null
                                 )}
                             </div>
-                            <div className="flex items-center mt-4">
-                                <Avatar>
-                                    <AvatarImage
-                                        src={firstEventPersonalityPhotoUrl}
-                                        alt={`${firstEvent.personality?.firstName} ${firstEvent.personality?.lastName}`}
-                                    />
-                                    <AvatarFallback>
-                                        {firstEvent.personality?.firstName?.charAt(
-                                            0
-                                        )}
-                                    </AvatarFallback>
-                                </Avatar>
-                                <div className="ml-4">
-                                    <p className="font-bold text-white">{`${firstEvent.personality?.firstName} ${firstEvent.personality?.lastName}`}</p>
-                                    <p className="text-gray-400">
-                                        {firstEvent.personality?.title}
-                                    </p>
-                                </div>
-                            </div>
-                            <Button className="mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600">
+                            <AvatarPersonality
+                                personalityPhotoUrl={
+                                    firstEventOrLatestPersonalityPhotoUrl
+                                }
+                                firstName={
+                                    firstEventOrLatest.personality?.firstName
+                                }
+                                lastName={
+                                    firstEventOrLatest.personality?.lastName
+                                }
+                                title={firstEventOrLatest.personality?.title}
+                            />
+                            <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600'>
                                 <span>Nous contacter</span>
-                                <ArrowRight className="w-4 h-4 ml-2" />
+                                <ArrowRight className='w-4 h-4 ml-2' />
                             </Button>
                         </div>
-                        <div className="flex items-center justify-center w-1/2">
-                            {firstEvent.mainImage?.asset ? (
+                        <div className='flex items-center justify-center md:w-1/2'>
+                            {firstEventOrLatest.mainImage?.asset ? (
                                 <Image
-                                    src={firstEventImageUrl}
+                                    src={firstEventOrLatestImageUrl}
                                     alt="Poster de l\'événement"
                                     width={350}
                                     height={200}
@@ -130,6 +130,34 @@ export default async function Events() {
                         </div>
                     </div>
                 </article>
+                <div className='flex justify-center'>
+                    <a
+                        href='#event-filter-section'
+                        className='absolute -bottom-10'
+                    >
+                        <svg
+                            className='w-10 pt-16 fill-current text-jkdBlue animate-bounce'
+                            viewBox='0 0 32 32'
+                            xmlns='http://www.w3.org/2000/svg'
+                        >
+                            <title />
+                            <g data-name='Layer 2' id='Layer_2'>
+                                <path
+                                    className='cls-1'
+                                    d='M16.47,16.88,26.34,7a1,1,0,0,0-1.41-1.41l-9.06,9.06-8.8-8.8a1,1,0,0,0-1.41,0h0a1,1,0,0,0,0,1.42l9.61,9.61A.85.85,0,0,0,16.47,16.88Z'
+                                />
+                                <path
+                                    className='cls-1'
+                                    d='M16.47,26.46l9.87-9.88a1,1,0,0,0-1.41-1.41l-9.06,9.06-8.8-8.8a1,1,0,0,0-1.41,0h0a1,1,0,0,0,0,1.41l9.61,9.62A.85.85,0,0,0,16.47,26.46Z'
+                                />
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+            {/* Section des événements restants */}
+            <section id='event-filter-section' className='scroll-smooth'>
+                <ClientEventFilter events={remainingEvents} />
             </section>
         </main>
     );
