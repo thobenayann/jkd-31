@@ -1,4 +1,5 @@
 import { NavigationEvents } from '@/components/navigation-event';
+import Footer from '@/components/shared/footer';
 import Nav from '@/components/shared/menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
@@ -19,7 +20,7 @@ const fontSans = FontSans({
 const fontSerif = FontSerif({
     subsets: ['latin'],
     variable: '--font-serif',
-    weight: ['400', '700'],
+    weight: ['300', '400', '700'],
 });
 
 const cinzel = FontCinzel({
@@ -63,6 +64,7 @@ export default function RootLayout({
                         </NavigationEvents>
                     </Suspense>
                     {children}
+                    <Footer />
                 </ThemeProvider>
             </body>
         </html>

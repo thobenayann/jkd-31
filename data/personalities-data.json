@@ -1,0 +1,72 @@
+[
+    {
+        "firstBranch": [
+            {
+                "firstName": "Bruce",
+                "lastName": "Lee",
+                "title": "Fondateur du système",
+                "imgUrl": "/images/content/home/personalities/bruce-lee.jpg"
+            }
+        ]
+    },
+    {
+        "SecondBranch": [
+            {
+                "firstName": "Dan",
+                "lastName": "Inosanto",
+                "title": "Ambassadeur, USA, Fondateur de l’Inosanto Academy à Los Angeles",
+                "imgUrl": "/images/content/home/personalities/daniel-inosanto.jpg"
+            },
+            {
+                "firstName": "Taky",
+                "lastName": "KIMURA",
+                "title": "Ambassadeur, 1924 - 2021",
+                "imgUrl": "/images/content/home/personalities/taky-kimura.jpg"
+            },
+            {
+                "firstName": "James",
+                "lastName": "YIMM LEE",
+                "title": "Ambassadeur, 1920 - 1972",
+                "imgUrl": "/images/content/home/personalities/james-yimm-lee.jpg"
+            }
+        ]
+    },
+    {
+        "thirdBranch": [
+            {
+                "firstName": "David",
+                "lastName": "DELANNOY",
+                "title": "Président de l’EDAM, FR, Représentant du Jeet Kune Do Kali Silat en France",
+                "imgUrl": "/images/content/home/personalities/david-delannoy.jpg"
+            }
+        ]
+    },
+    {
+        "fourthBranch": [
+            {
+                "firstName": "Nicolas",
+                "lastName": "MASSON",
+                "title": "Instructeur, FR, Ji Dao Muret",
+                "imgUrl": "/images/content/home/personalities/nico.png"
+            },
+            {
+                "firstName": "William",
+                "lastName": "FAUGERE",
+                "title": "Instructeur, FR, Ji Dao Muret",
+                "imgUrl": "/images/content/home/personalities/will.png"
+            },
+            {
+                "firstName": "Julien",
+                "lastName": "BERTOLINO",
+                "title": "Instructeur, FR, Ji Dao Muret",
+                "imgUrl": "/images/content/home/personalities/ju.png"
+            },
+            {
+                "firstName": "Maxime",
+                "lastName": "GRANDCLAUDON",
+                "title": "Instructeur, FR, Ji Dao Muret",
+                "imgUrl": "/images/content/home/personalities/max.png"
+            }
+        ]
+    }
+]
