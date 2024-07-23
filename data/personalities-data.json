@@ -5,7 +5,8 @@
                 "firstName": "Bruce",
                 "lastName": "Lee",
                 "title": "Fondateur du système",
-                "imgUrl": "/images/content/home/personalities/bruce-lee.jpg"
+                "imgUrl": "/images/content/home/personalities/bruce-lee.jpg",
+                "withMoreInfo": true
             }
         ]
     },
@@ -17,21 +18,24 @@
                 "title": "Ambassadeur",
                 "flagUrl": "/images/content/home/flags/us.svg",
                 "imgUrl": "/images/content/home/personalities/dan.png",
-                "shortInfo": "Fondateur de l’Inosanto Academy à Los Angeles"
+                "shortInfo": "Fondateur de l’Inosanto Academy à Los Angeles",
+                "withMoreInfo": true
             },
             {
                 "firstName": "Taky",
                 "lastName": "KIMURA",
                 "title": "Ambassadeur",
                 "imgUrl": "/images/content/home/personalities/taky.png",
-                "shortInfo": "1924 - 2021"
+                "shortInfo": "1924 - 2021",
+                "withMoreInfo": false
             },
             {
                 "firstName": "James",
                 "lastName": "YIMM LEE",
                 "title": "Ambassadeur",
                 "imgUrl": "/images/content/home/personalities/james.png",
-                "shortInfo": "1920 - 1972"
+                "shortInfo": "1920 - 1972",
+                "withMoreInfo": false
             }
         ]
     },
@@ -43,7 +47,8 @@
                 "title": "Président de l’EDAM",
                 "flagUrl": "/images/content/home/flags/fr.svg",
                 "imgUrl": "/images/content/home/personalities/david-delannoy.jpg",
-                "shortInfo": "Représentant du Jeet Kune Do Kali Silat en France"
+                "shortInfo": "Représentant du Jeet Kune Do Kali Silat en France",
+                "withMoreInfo": true
             }
         ]
     },
@@ -55,7 +60,8 @@
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr.svg",
                 "imgUrl": "/images/content/home/personalities/nico.png",
-                "shortInfo": "Ji Dao Muret"
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
             },
             {
                 "firstName": "William",
@@ -63,7 +69,8 @@
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr.svg",
                 "imgUrl": "/images/content/home/personalities/will.png",
-                "shortInfo": "Ji Dao Muret"
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
             },
             {
                 "firstName": "Julien",
@@ -71,7 +78,8 @@
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr.svg",
                 "imgUrl": "/images/content/home/personalities/ju.png",
-                "shortInfo": "Ji Dao Muret"
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
             },
             {
                 "firstName": "Maxime",
@@ -79,7 +87,8 @@
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr.svg",
                 "imgUrl": "/images/content/home/personalities/max.png",
-                "shortInfo": "Ji Dao Muret"
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
             }
         ]
     }

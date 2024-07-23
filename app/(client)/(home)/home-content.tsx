@@ -91,6 +91,7 @@ export default function HomeContent() {
                                 personalityPhotoUrl={bruceLee[0].imgUrl}
                                 imageShape='round'
                                 cardHeaderClass='items-end'
+                                withMoreInfo={bruceLee[0].withMoreInfo}
                             />
                         ) : null}
                     </div>
@@ -116,6 +117,9 @@ export default function HomeContent() {
                                           }
                                           cardHeaderClass='items-center object-cover object-top'
                                           shortInfo={personality.shortInfo}
+                                          withMoreInfo={
+                                              personality.withMoreInfo
+                                          }
                                       />
                                   </FadeInWrapper>
                               ))
@@ -141,6 +145,9 @@ export default function HomeContent() {
                                           }
                                           cardHeaderClass='items-center object-cover object-top'
                                           shortInfo={personality.shortInfo}
+                                          withMoreInfo={
+                                              personality.withMoreInfo
+                                          }
                                       />
                                   </FadeInWrapper>
                               ))
@@ -166,6 +173,9 @@ export default function HomeContent() {
                                           }
                                           cardHeaderClass='items-center object-cover object-top'
                                           shortInfo={personality.shortInfo}
+                                          withMoreInfo={
+                                              personality.withMoreInfo
+                                          }
                                       />
                                   </FadeInWrapper>
                               ))

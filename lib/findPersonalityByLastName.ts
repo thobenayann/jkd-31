@@ -5,6 +5,7 @@ export interface Personality {
     flagUrl?: string;
     imgUrl: string;
     shortInfo?: string;
+    withMoreInfo: boolean;
 }
 
 interface Branch {
