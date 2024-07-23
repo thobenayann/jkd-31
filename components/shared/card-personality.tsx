@@ -12,6 +12,7 @@ interface CardPersonalityProps {
     shortInfo?: string;
     imageShape?: 'round' | 'square';
     cardHeaderClass?: string;
+    withMoreInfo?: boolean;
 }
 
 const CardPersonality: React.FC<CardPersonalityProps> = ({
@@ -23,9 +24,10 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
     shortInfo,
     imageShape = 'square',
     cardHeaderClass,
+    withMoreInfo = false,
 }) => {
     return (
-        <Card className='w-56 border-none shadow-lg'>
+        <Card className='w-56 border-none shadow-lg backdrop-blur-sm bg-transparent'>
             <CardHeader
                 className={cn(
                     'flex p-0 w-full relative overflow-hidden',
@@ -68,14 +70,16 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                 {shortInfo && (
                     <p className='text-gray-400 text-sm'>{shortInfo}</p>
                 )}
-                <div className='pt-4'>
-                    <a
-                        href='#'
-                        className='text-jkdBlue font-semibold hover:text-jkdBlue/85 text-sm'
-                    >
-                        En savoir plus -&gt;
-                    </a>
-                </div>
+                {withMoreInfo ? (
+                    <div className='pt-4'>
+                        <a
+                            href='#'
+                            className='text-jkdBlue font-semibold hover:text-jkdBlue/85 text-sm'
+                        >
+                            En savoir plus -&gt;
+                        </a>
+                    </div>
+                ) : null}
             </CardContent>
         </Card>
     );
