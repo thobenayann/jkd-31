@@ -1,8 +1,10 @@
-interface Personality {
+export interface Personality {
     firstName: string;
     lastName: string;
     title: string;
+    flagUrl?: string;
     imgUrl: string;
+    shortInfo?: string;
 }
 
 interface Branch {
@@ -18,13 +20,14 @@ const flattenPersonalities = (data: PersonalitiesData): Personality[] => {
     return data.flatMap((branch) => Object.values(branch).flat());
 };
 
-export const findPersonalityByLastName = (
-    lastName: string,
+export const findPersonalitiesByLastNames = (
+    lastNames: string[],
     data: PersonalitiesData
-): Personality | undefined => {
+): Personality[] => {
     const flattenedData = flattenPersonalities(data);
-    return flattenedData.find(
-        (personality) =>
-            personality.lastName.toLowerCase() === lastName.toLowerCase()
+    const lowerCaseLastNames = lastNames.map((name) => name.toLowerCase());
+
+    return flattenedData.filter((personality) =>
+        lowerCaseLastNames.includes(personality.lastName.toLowerCase())
     );
 };
