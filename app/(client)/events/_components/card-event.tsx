@@ -28,13 +28,16 @@ function CardEvent({
 
     return (
         <article className='flex flex-col rounded-md overflow-hidden shadow-lg shadow-zinc-200'>
-            <div className='overflow-hidden'>
+            <div className='w-full h-96 relative'>
                 <Image
                     src={mainImageUrl}
-                    width={300}
-                    height={300}
                     alt='placeholder'
-                    className='transition-transform hover:scale-105 duration-300 ease-in-out'
+                    className='transition-transform hover:scale-105 duration-300 ease-in-out cursor-pointer'
+                    fill
+                    style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                    }}
                 />
             </div>
             <div className='flex flex-col space-y-1 px-2 py-4'>

@@ -42,26 +42,31 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
 
     return (
         <div>
-            <div className='flex justify-center mt-8'>
-                <Select
-                    value={selectedOption}
-                    onValueChange={setSelectedOption}
-                >
-                    <SelectTrigger className='w-fit space-x-2'>
-                        <SelectValue placeholder='Sélectionner les événements' />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Options</SelectLabel>
-                            <SelectItem value='next'>
-                                3 prochains événements
-                            </SelectItem>
-                            <SelectItem value='past'>
-                                3 derniers événements
-                            </SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
+            <div className='flex flex-col space-y-4 items-center justify-center mt-16 max-md:py-8 w-full'>
+                <h2 className='text-2xl font-bold text-white text-center px-10'>
+                    Nos autres événements à venir
+                </h2>
+                <div className='flex justify-center px-6 w-full'>
+                    <Select
+                        value={selectedOption}
+                        onValueChange={setSelectedOption}
+                    >
+                        <SelectTrigger className='w-full md:w-fit space-x-2'>
+                            <SelectValue placeholder='Sélectionner les événements' />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Options</SelectLabel>
+                                <SelectItem value='next'>
+                                    3 prochains événements
+                                </SelectItem>
+                                <SelectItem value='past'>
+                                    3 derniers événements
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>
             <NextEventCard events={filteredEvents} />
         </div>

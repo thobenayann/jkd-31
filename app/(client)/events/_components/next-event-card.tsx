@@ -8,7 +8,7 @@ interface NextEventCardProps {
 
 function NextEventCard({ events }: NextEventCardProps) {
     return (
-        <section className='container flex p-20 justify-between'>
+        <section className='container flex max-md:flex-col max-md:space-y-20 md:p-20 md:justify-between'>
             {events.map((event, index) => {
                 const mainImageUrl = event.mainImage?.asset?._ref
                     ? urlFor(event.mainImage.asset._ref).url()
