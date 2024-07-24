@@ -27,7 +27,7 @@ function CardEvent({
     const formattedEventDates = formatEventDates(eventDates);
 
     return (
-        <article className='flex flex-col rounded-md overflow-hidden shadow-lg shadow-zinc-200'>
+        <article className='flex flex-col rounded-md overflow-hidden shadow-lg shadow-zinc-200 w-full'>
             <div className='w-full h-96 relative'>
                 <Image
                     src={mainImageUrl}
