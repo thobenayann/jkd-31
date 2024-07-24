@@ -90,6 +90,10 @@ const config = {
                 sans: ['var(--font-sans)', ...fontFamily.sans],
                 serif: ['var(--font-serif)', ...fontFamily.serif],
                 cinzel: ['var(--font-cinzel)', ...fontFamily.serif],
+                cinzelDecorative: [
+                    'var(--font-cinzel-decorative)',
+                    ...fontFamily.serif,
+                ],
             },
         },
     },

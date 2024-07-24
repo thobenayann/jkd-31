@@ -14,6 +14,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import WordCloud from './_component/word-cloud';
 
 export default function HomeContent() {
     const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -62,6 +63,13 @@ export default function HomeContent() {
                         className='opacity-50'
                     />
                 )}
+            </div>
+            {/* Word Cloud */}
+            <div className='absolute left-0 top-0 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+                <WordCloud />
+            </div>
+            <div className='absolute right-0 top-0 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+                <WordCloud />
             </div>
             <section className='container flex max-md:flex-col max-md:space-y-14 max-md:items-center justify-between pb-6 w-full'>
                 <FadeInWrapper>

@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import {
     Cinzel as FontCinzel,
+    Cinzel_Decorative as FontCinzelDecorative,
     Inter as FontSans,
     Merriweather as FontSerif,
 } from 'next/font/google';
@@ -31,6 +32,14 @@ const cinzel = FontCinzel({
     variable: '--font-cinzel',
 });
 
+const cinzelDecorative = FontCinzelDecorative({
+    weight: ['400', '700'],
+    style: ['normal'],
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-cinzel-decorative',
+});
+
 export const metadata: Metadata = {
     title: "Site de l'association Ji Dao",
     description:
@@ -52,7 +61,8 @@ export default function RootLayout({
                     'min-h-screen bg-background font-sans antialiased',
                     fontSans.variable,
                     fontSerif.variable,
-                    cinzel.variable
+                    cinzel.variable,
+                    cinzelDecorative.variable
                 )}
             >
                 <ThemeProvider
