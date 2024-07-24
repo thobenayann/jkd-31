@@ -1,4 +1,7 @@
-export interface Personality {
+export interface LongInfo {
+    [key: string]: string | undefined;
+}
+export interface PersonalityType {
     firstName: string;
     lastName: string;
     title: string;
@@ -6,25 +9,26 @@ export interface Personality {
     imgUrl: string;
     shortInfo?: string;
     withMoreInfo: boolean;
+    longInfo?: LongInfo[];
 }
 
 interface Branch {
-    firstBranch?: Personality[];
-    secondBranch?: Personality[];
-    thirdBranch?: Personality[];
-    fourthBranch?: Personality[];
+    firstBranch?: PersonalityType[];
+    secondBranch?: PersonalityType[];
+    thirdBranch?: PersonalityType[];
+    fourthBranch?: PersonalityType[];
 }
 
 type PersonalitiesData = Branch[];
 
-const flattenPersonalities = (data: PersonalitiesData): Personality[] => {
+const flattenPersonalities = (data: PersonalitiesData): PersonalityType[] => {
     return data.flatMap((branch) => Object.values(branch).flat());
 };
 
 export const findPersonalitiesByLastNames = (
     lastNames: string[],
     data: PersonalitiesData
-): Personality[] => {
+): PersonalityType[] => {
     const flattenedData = flattenPersonalities(data);
     const lowerCaseLastNames = lastNames.map((name) => name.toLowerCase());
 

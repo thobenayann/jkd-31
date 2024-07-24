@@ -43,7 +43,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='fr' className='scroll-smooth'>
+        <html
+            lang='fr'
+            className='scroll-smooth scrollbar-thin scrollbar-thumb-jkdBlue/50 scrollbar-track-gray-900'
+        >
             <body
                 className={cn(
                     'min-h-screen bg-background font-sans antialiased',

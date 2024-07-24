@@ -1,6 +1,7 @@
 'use client';
 
 import CardPersonality from '@/components/shared/card-personality';
+import ExpandableCardPersonality from '@/components/shared/expandable-card-personality';
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import { Button } from '@/components/ui/button';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
@@ -8,28 +9,32 @@ import personalities from '@/data/personalities-data.json';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import {
     findPersonalitiesByLastNames,
-    Personality,
+    PersonalityType,
 } from '@/lib/findPersonalityByLastName';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function HomeContent() {
     const isDesktop = useMediaQuery('(min-width: 768px)');
+    const [activePersonality, setActivePersonality] =
+        useState<PersonalityType | null>(null);
+
     if (!personalities) return null;
 
-    const bruceLee: Personality[] = findPersonalitiesByLastNames(
+    const bruceLee: PersonalityType[] = findPersonalitiesByLastNames(
         ['Lee'],
         personalities
     );
-    const danTakyJames: Personality[] = findPersonalitiesByLastNames(
+    const danTakyJames: PersonalityType[] = findPersonalitiesByLastNames(
         ['Inosanto', 'Kimura', 'Yimm lee'],
         personalities
     );
-    const delannoy: Personality[] = findPersonalitiesByLastNames(
+    const delannoy: PersonalityType[] = findPersonalitiesByLastNames(
         ['Delannoy'],
         personalities
     );
-    const instructors: Personality[] = findPersonalitiesByLastNames(
+    const instructors: PersonalityType[] = findPersonalitiesByLastNames(
         ['Masson', 'Faugere', 'Bertolino', 'Grandclaudon'],
         personalities
     );
@@ -92,6 +97,9 @@ export default function HomeContent() {
                                 imageShape='round'
                                 cardHeaderClass='items-end'
                                 withMoreInfo={bruceLee[0].withMoreInfo}
+                                onMoreInfoClick={() =>
+                                    setActivePersonality(bruceLee[0])
+                                }
                             />
                         ) : null}
                     </div>
@@ -119,6 +127,9 @@ export default function HomeContent() {
                                           shortInfo={personality.shortInfo}
                                           withMoreInfo={
                                               personality.withMoreInfo
+                                          }
+                                          onMoreInfoClick={() =>
+                                              setActivePersonality(personality)
                                           }
                                       />
                                   </FadeInWrapper>
@@ -148,6 +159,9 @@ export default function HomeContent() {
                                           withMoreInfo={
                                               personality.withMoreInfo
                                           }
+                                          onMoreInfoClick={() =>
+                                              setActivePersonality(personality)
+                                          }
                                       />
                                   </FadeInWrapper>
                               ))
@@ -176,6 +190,9 @@ export default function HomeContent() {
                                           withMoreInfo={
                                               personality.withMoreInfo
                                           }
+                                          onMoreInfoClick={() =>
+                                              setActivePersonality(personality)
+                                          }
                                       />
                                   </FadeInWrapper>
                               ))
@@ -183,6 +200,10 @@ export default function HomeContent() {
                     </section>
                 </FadeInWrapper>
             </div>
+            <ExpandableCardPersonality
+                activePersonality={activePersonality}
+                setActivePersonality={setActivePersonality}
+            />
         </div>
     );
 }
