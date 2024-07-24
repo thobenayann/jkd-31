@@ -1,10 +1,12 @@
 import { NavigationEvents } from '@/components/navigation-event';
+import Footer from '@/components/shared/footer';
 import Nav from '@/components/shared/menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import {
     Cinzel as FontCinzel,
+    Cinzel_Decorative as FontCinzelDecorative,
     Inter as FontSans,
     Merriweather as FontSerif,
 } from 'next/font/google';
@@ -19,7 +21,7 @@ const fontSans = FontSans({
 const fontSerif = FontSerif({
     subsets: ['latin'],
     variable: '--font-serif',
-    weight: ['400', '700'],
+    weight: ['300', '400', '700'],
 });
 
 const cinzel = FontCinzel({
@@ -28,6 +30,14 @@ const cinzel = FontCinzel({
     subsets: ['latin'],
     display: 'swap',
     variable: '--font-cinzel',
+});
+
+const cinzelDecorative = FontCinzelDecorative({
+    weight: ['400', '700'],
+    style: ['normal'],
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-cinzel-decorative',
 });
 
 export const metadata: Metadata = {
@@ -42,13 +52,17 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='fr' className='scroll-smooth'>
+        <html
+            lang='fr'
+            className='scroll-smooth scrollbar-thin scrollbar-thumb-jkdBlue/50 scrollbar-track-gray-900'
+        >
             <body
                 className={cn(
                     'min-h-screen bg-background font-sans antialiased',
                     fontSans.variable,
                     fontSerif.variable,
-                    cinzel.variable
+                    cinzel.variable,
+                    cinzelDecorative.variable
                 )}
             >
                 <ThemeProvider
@@ -63,6 +77,7 @@ export default function RootLayout({
                         </NavigationEvents>
                     </Suspense>
                     {children}
+                    <Footer />
                 </ThemeProvider>
             </body>
         </html>

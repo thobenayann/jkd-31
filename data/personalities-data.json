@@ -1,0 +1,158 @@
+[
+    {
+        "firstBranch": [
+            {
+                "firstName": "Bruce",
+                "lastName": "Lee",
+                "title": "Fondateur du système",
+                "imgUrl": "/images/content/home/personalities/bruce-lee.jpg",
+                "withMoreInfo": true,
+                "longInfo": [
+                    {
+                        "content-1": "Bruce Lee est né en 1940 à San Francisco aux Etats-Unis."
+                    },
+                    {
+                        "content-2": "Vers l’âge de 3 ans, sa famille décide de repartir en Chine."
+                    },
+                    {
+                        "content-3": "A Hong-Kong, son père est dans le milieu cinématographique et lance Bruce Lee. Si bien, qu’à 5 ans, il est déjà acteur. A 12 ans, il débute les arts martiaux, et découvre vite que cela sera sa passion à vie."
+                    },
+                    {
+                        "content-4": "A 14 ans, il rencontre William Cheung, qui l’initie au Wing Chun Kung Fu. Il poursuivra l’apprentissage de cet art jusqu’à ses 17 ans au près de William Cheung et de son propre maître, Yip Man (maître de Wing Chun Kung Fu)."
+                    },
+                    {
+                        "content-5": "A 18 ans, il retourne aux Etats-Unis pour terminer ses études, et obtenir un diplôme universitaire de philosophie et de psychologie. A cette époque, il commence à enseigner le Kung Fu dans les parcs."
+                    },
+                    {
+                        "content-6": "A 24 ans, il se marie avec Linda Emery et dans le même temps, enseigne beaucoup plus sérieusement les arts martiaux. Il gagna un duel, pour lequel l’enjeu était la fermeture de son école de Kung Fu, et se rendit compte à ce moment que l’enseignement traditionnel des arts martiaux semblait inefficace et devait être revu. Dans un travail de recherche, et en alliant son expérience personnelle martiale et son expérience personnelle philosophique, il créa et développa le Jeet Kune Do, la « voie du poing qui intercepte »."
+                    },
+                    {
+                        "content-7": "A 25 ans, il y eut la naissance de son fils Brandon, suivi de sa fille Shannon à 29 ans."
+                    },
+                    {
+                        "content-8": "A cette même période, Ed Parker (fondateur du Kenpo américain), l’invite à une démonstration. Bruce Lee, offrira en public la démonstration de son « One inch punch ». De là, il se fit remarquer et approcher par le cinéma et commença sa carrière cinématographique par une série."
+                    },
+                    {
+                        "content-9": "En 1970 (30 ans), Bruce Lee subit une grave blessure au dos, dû à une surcharge de poids à l’entraînement. Il resta immobilisé pendant 6 mois. Pendant cette période, il en profite pour mettre sur page la théorie et la philosophie du Jeet Kune Do en écrivant le Tao du Jeet Kune Do."
+                    },
+                    {
+                        "content-10": "En 1971, une fois remis sur pied, il enchaîna plusieurs films (La fureur de vaincre, Opération dragon,…) jusqu’à son dernier qu’il ne put achever : Le jeu de la mort. En effet, il décéda juste après avoir commencé ce film d’un œdème cérébral le 20 juillet 1973 à tout juste 32 ans."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "SecondBranch": [
+            {
+                "firstName": "Dan",
+                "lastName": "Inosanto",
+                "title": "Ambassadeur",
+                "flagUrl": "/images/content/home/flags/us-flag.svg",
+                "imgUrl": "/images/content/home/personalities/dan.png",
+                "shortInfo": "Fondateur de l’Inosanto Academy à Los Angeles",
+                "withMoreInfo": true,
+                "longInfo": [
+                    {
+                        "content-1": "Dan Inosanto est né en 1936 aux USA, il est d’origine Philippines. A 10 ans, il s’initie aux Ju-Jitsu. Mais son amour pour le football US l’emportera, ce qui lui permit de devenir professeur de sport. A 21 ans, il s’entraîne au judo (avec Duke Yoshimura) puis au karaté. En voulant approfondir le karaté kempo, il rencontrera Ed Parker, le fondateur de cet art, allant avec lui jusqu’à la ceinture noire. Toujours dans la continuité de son ouverture d’esprit et de sa soif de connaissance, il apprendra en tout une vingtaine de style d’arts martiaux philippins, dont l’Eskrima."
+                    },
+                    {
+                        "content-2": "A 28 ans, Dan Inosanto, par le biais d’Ed Parker, rencontra Bruce Lee (qui avait 24 ans). Ils devinrent amis, et ce jusqu’à son décès. C’est ainsi que Bruce Lee lui appris le Jeet Kune Do. Bruce Lee nomma trois personnes « ambassadeurs » du Jeet Kune Do : Dan Inosanto, Taky Kimura et James Yimm Lee. Ce sont ces personnes uniquement, qui ont le droit d’enseigner cet art martial."
+                    },
+                    {
+                        "content-3": "Dan Inosanto devint acteur comme Bruce Lee, et ils tournèrent ensemble dans plusieurs films."
+                    },
+                    {
+                        "content-4": "En 1982, il créa sa propre académie à Los Angeles, où il enseigne toujours à l’heure actuelle. Il a certifié beaucoup d’instructeurs qui le représentent dans le monde entier."
+                    }
+                ]
+            },
+            {
+                "firstName": "Taky",
+                "lastName": "KIMURA",
+                "title": "Ambassadeur",
+                "imgUrl": "/images/content/home/personalities/taky.png",
+                "shortInfo": "1924 - 2021",
+                "withMoreInfo": false
+            },
+            {
+                "firstName": "James",
+                "lastName": "YIMM LEE",
+                "title": "Ambassadeur",
+                "imgUrl": "/images/content/home/personalities/james.png",
+                "shortInfo": "1920 - 1972",
+                "withMoreInfo": false
+            }
+        ]
+    },
+    {
+        "thirdBranch": [
+            {
+                "firstName": "David",
+                "lastName": "DELANNOY",
+                "title": "Président de l’EDAM",
+                "flagUrl": "/images/content/home/flags/fr-flag.svg",
+                "imgUrl": "/images/content/home/personalities/david-delannoy.jpg",
+                "shortInfo": "Représentant du Jeet Kune Do Kali Silat en France",
+                "withMoreInfo": true,
+                "longInfo": [
+                    {
+                        "content-1": "David Delannoy débute les arts martiaux en 1984 en pratiquant le Viet Vo Dao, puis de 1987 à 1990, il étudie le Kung Fu sous la direction de Pov Yana, de 90 à 94, il s’entraine avec Lionel Morand. De 93 à 96, il participe aux séminaires d’Hapkido dirigé par Antonio Carbonell, il obtient la ceinture noire 1ère Dan."
+                    },
+                    {
+                        "content-2": "En 1994, David s’intéresse au Jeet Kune Do et au Kali, après plusieurs séminaires aux États Unis et sur recommandation de l’Inosanto Academy, il dirige en 1996, l’association d’Ile de France de JKD et Kali Philippin qui laissera place à l’Ecole Delannoy d’arts martiaux en 1999. Il est le représentant français du jeet kune do kali silat en France de l’inosanto Academy."
+                    },
+                    {
+                        "content-3": "Claude Delannoy préside actuellement l’EDAM. Il créé la French Academy Martials Arts en 1999 et ceci afin de regrouper les écoles et créer une cohésion nationale. David Delannoy est nommé Directeur Technique National par la FAMA et apprenti instructeur sous Dan Inosanto et Rick Young en novembre 2004."
+                    },
+                    {
+                        "content-4": "Soucieux du développement sérieux du JKD/Kali, il concoit la progression technique sur 14 années. Un personnage entier et authentique doté d’un exeptionnel bagage technique, sachant rendre à chaque technique son origine stylistique, il attache une particulière attention au travail physique."
+                    },
+                    {
+                        "content-5": "Au delà du domaine technico-physique, il implique sensiblement les aspects historique et culturel des disciplines. Il insiste sur les qualités humaines à développer: loyauté, humilité, honneur et persévérance; des qualités qu’il démontre jour après jour. Sous son apparence réservée, un homme d’une grande bravoure, dèrrière son petit gabarit, une méthode éfficace. Un homme exeptionnel à rencontrer."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "fourthBranch": [
+            {
+                "firstName": "Nicolas",
+                "lastName": "MASSON",
+                "title": "Instructeur",
+                "flagUrl": "/images/content/home/flags/fr-flag.svg",
+                "imgUrl": "/images/content/home/personalities/nico.png",
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
+            },
+            {
+                "firstName": "William",
+                "lastName": "FAUGERE",
+                "title": "Instructeur",
+                "flagUrl": "/images/content/home/flags/fr-flag.svg",
+                "imgUrl": "/images/content/home/personalities/will.png",
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
+            },
+            {
+                "firstName": "Julien",
+                "lastName": "BERTOLINO",
+                "title": "Instructeur",
+                "flagUrl": "/images/content/home/flags/fr-flag.svg",
+                "imgUrl": "/images/content/home/personalities/ju.png",
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
+            },
+            {
+                "firstName": "Maxime",
+                "lastName": "GRANDCLAUDON",
+                "title": "Instructeur",
+                "flagUrl": "/images/content/home/flags/fr-flag.svg",
+                "imgUrl": "/images/content/home/personalities/max.png",
+                "shortInfo": "Ji Dao Muret",
+                "withMoreInfo": false
+            }
+        ]
+    }
+]

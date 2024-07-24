@@ -56,7 +56,7 @@ const Nav = ({ hash }: NavProps) => {
             {/* Desktop NAV */}
             <nav className='fixed z-50 right-0 w-full shadow-md shadow-zinc-500'>
                 <AuroraBackground className='w-full h-full'>
-                    <div className='hidden xl:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
+                    <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
                         <Image
                             src='/images/logo/logo-jkd31.png'
                             alt='Ji Dao'
@@ -83,9 +83,9 @@ const Nav = ({ hash }: NavProps) => {
             </nav>
 
             {/* Table and mobile NAV */}
-            <nav className='flex flex-col items-center xl:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto xl:right-[2%] z-50 top-0 w-full xl:hidden'>
+            <nav className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'>
                 {/* inner */}
-                <div className='flex w-full xl:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
+                <div className='flex w-full md:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
                     {navData.map((link) => {
                         return (
                             <Link
