@@ -9,7 +9,7 @@ interface NextEventCardProps {
 function NextEventCard({ events }: NextEventCardProps) {
     return (
         <section className='container flex max-md:flex-col max-md:space-y-20 md:p-20 md:justify-between'>
-            <div className='flex max-md:flex-col max-md:items-center items-top justify-between w-full max-md:space-y-20 md:space-x-20'>
+            <div className='flex flex-col max-md:items-center items-top justify-between w-full max-md:space-y-20 md:space-x-20'>
                 {events.map((event, index) => {
                     const mainImageUrl = event.mainImage?.asset?._ref
                         ? urlFor(event.mainImage.asset._ref).url()
