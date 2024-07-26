@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { TransitionLink } from './transition-link';
 
 const Footer = () => {
     return (
@@ -21,12 +21,12 @@ const Footer = () => {
                 </div>
 
                 <span className='border-r-2' />
-                <Link
-                    href='/mentions-legales'
+                <TransitionLink
+                    href='/legal'
                     className='text-jkdBlue hover:text-blue-600 text-sm font-normal underline underline-offset-2'
                 >
                     Mentions Légales
-                </Link>
+                </TransitionLink>
             </div>
         </footer>
     );
