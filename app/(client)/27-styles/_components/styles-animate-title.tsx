@@ -11,7 +11,7 @@ export default function StylesAnimateTitle() {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     return (
-        <div className='flex flex-col items-center h-36'>
+        <header className='flex flex-col items-center max-md:mb-4 md:h-36'>
             {isDesktop ? (
                 <>
                     <GradualSpacing
@@ -50,12 +50,14 @@ export default function StylesAnimateTitle() {
                 </>
             )}
 
-            {isFirstAnimationComplete && (
-                <TextGenerateEffect
-                    words={`selon Paul VUNAK`}
-                    wordsClassName='italic font-serif font-light max-md:text-center text-sm md:text-base text-gray-400'
-                />
-            )}
-        </div>
+            <div className='h-14'>
+                {isFirstAnimationComplete && (
+                    <TextGenerateEffect
+                        words={`selon Paul VUNAK`}
+                        wordsClassName='italic font-serif font-light max-md:text-center text-sm md:text-base text-gray-400'
+                    />
+                )}
+            </div>
+        </header>
     );
 }
