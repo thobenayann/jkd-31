@@ -2,9 +2,9 @@
 
 import { CalendarSearch, House, Phone } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
+import { TransitionLink } from './transition-link';
 
 // nav data
 export const navData = [
@@ -65,7 +65,7 @@ const Nav = ({ hash }: NavProps) => {
                         />
                         <div className='flex items-center justify-end gap-x-10'>
                             {navData.map((link) => (
-                                <Link
+                                <TransitionLink
                                     className={getLinkClassName(link.path)}
                                     href={link.path}
                                     key={link.id}
@@ -75,7 +75,7 @@ const Nav = ({ hash }: NavProps) => {
                                     }
                                 >
                                     <span>{link.name}</span>
-                                </Link>
+                                </TransitionLink>
                             ))}
                         </div>
                     </div>
@@ -88,7 +88,7 @@ const Nav = ({ hash }: NavProps) => {
                 <div className='flex w-full md:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
                     {navData.map((link) => {
                         return (
-                            <Link
+                            <TransitionLink
                                 className={getLinkClassName(link.path)}
                                 href={link.path}
                                 key={link.id}
@@ -99,7 +99,7 @@ const Nav = ({ hash }: NavProps) => {
                             >
                                 {/* icon */}
                                 <div>{link.icon}</div>
-                            </Link>
+                            </TransitionLink>
                         );
                     })}
                 </div>

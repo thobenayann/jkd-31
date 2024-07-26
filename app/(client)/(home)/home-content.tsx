@@ -3,6 +3,7 @@
 import CardPersonality from '@/components/shared/card-personality';
 import ExpandableCardPersonality from '@/components/shared/expandable-card-personality';
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import { TransitionLink } from '@/components/shared/transition-link';
 import { Button } from '@/components/ui/button';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import personalities from '@/data/personalities-data.json';
@@ -12,7 +13,6 @@ import {
     PersonalityType,
 } from '@/lib/findPersonalityByLastName';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import WordCloud from './_components/word-cloud';
 
@@ -87,9 +87,9 @@ export default function HomeContent() {
                             asChild
                             className='bg-jkdBlue text-white w-fit hover:bg-jkdBlue/85'
                         >
-                            <Link href='/27-styles'>
+                            <TransitionLink href='/27-styles'>
                                 Les 27 styles qui ont influencé Bruce Lee
-                            </Link>
+                            </TransitionLink>
                         </Button>
                     </div>
                 </FadeInWrapper>

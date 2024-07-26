@@ -74,3 +74,15 @@
         @apply bg-background text-foreground;
     }
 }
+
+body {
+    transition-property: opacity, transform, filter, background;
+    transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+}
+
+.page-transition {
+    opacity: 0;
+    background: black;
+    filter: blur(6px);
+}
