@@ -1,0 +1,110 @@
+[
+    {
+        "title": "Wing Chun",
+        "description": "Style de Wushu de Chine du sud, orienté vers le combat rapproché à mains nues mais incluant aussi des techniques d'armes. Il est à la fois un style Interne (Nei Jia) et Externe (Wai Jia)."
+    },
+    {
+        "title": "Mante religieuse du Nord (Bei Tanglang Pai)",
+        "description": "Boxe de Shandong créée à la fin de la dynastie Ming par Wang Lang. Ce dernier se serait inspiré des attitudes des pattes de la Mante religieuse et des déplacements du singe pour mettre au point une nouvelle méthode de boxe. Ce style est également connu pour ses nombreux enchaînements et variations."
+    },
+    {
+        "title": "Mante religieuse du Sud (Nan Tanglang Pai)",
+        "description": "Ce style, issu de la division du style de la Mante religieuse, est connu sous le nom de 'Mante religieuse des six coordinations' (liuhe Tanglang quan). Il se distingue par ses techniques souples et fluides, inspirées des mouvements de la Mante religieuse."
+    },
+    {
+        "title": "Choy Lee Fut",
+        "description": "Le Choy Li Fut compte pas moins de 49 formes distribuées dans différents styles. En Choy Li Fut, le boxeur utilise ses hanches et ses bras en balancier, afin de décocher des techniques fouettées dans de larges mouvements. Les déplacements sont longs et il y a de nombreuses actions des jambes dont certaines sont empruntées à l'école Mojia."
+    },
+    {
+        "title": "Fan Tzi Pai (Boxe des Serres de l’aigle)",
+        "description": "Ce style provient du nord de la Chine. Les principes se disent comme suit: attraper, frapper, saisir et contrôler, séparer les tendons, briser les os, couper l'entrée d'air ou la circulation du Qi et appliquer une pression sur les points vitaux."
+    },
+    {
+        "title": "Taï Chi Chuan (Style de la famille Wu)",
+        "description": "Dérivé des arts martiaux traditionnels, le tai-chi est une discipline corporelle d’origine chinoise comportant un ensemble de mouvements continus et circulaires exécutés avec lenteur et précision dans un ordre préétabli. Il contribue à améliorer la souplesse et à renforcer le système musculosquelettique."
+    },
+    {
+        "title": "Pakua (Les huit trigrammes)",
+        "description": "Le Pakua Chang repose sur le déplacement en cercle et sur l’utilisation de la paume. Basé sur la théorie du Yi Jing, il regroupe un grand nombre de techniques de mains et de pieds."
+    },
+    {
+        "title": "Hsing-I Pai (Boxe de la forme et de la pensée)",
+        "description": "Le Hsing Yi est un art martial chinois interne inspiré de la philosophie taoïste. Il se caractérise par des mouvements explosifs percutants liés à des déplacements linéaires ou en zigzag (esquive)."
+    },
+    {
+        "title": "Bak Hoo Pai (Boxe de la Grue blanche)",
+        "description": "Ce style aurait été créé par une femme: Fang Chi Niang. Le style de la Grue Blanche enseigne surtout le combat rapproché, avec une large prépondérance de techniques de bras; il s'agit nettement d'un style du Sud."
+    },
+    {
+        "title": "Bak Fu Pai (Tigre blanc)",
+        "description": "Style : externe\nFondateur : Fung Doe Duk (Shaolin)\nProvince : Sichuan\nAncienneté : XVIIe siècle\nSe caractérise par des postures basses et fixes, des mouvements lents et principalement des techniques de self-defense. L’objectif pour le pratiquant est de dégager le maximum de puissance en utilisant le moins possible sa force."
+    },
+    {
+        "title": "Hung Gar Kuen (Système des 5 familles)",
+        "description": "Les racines du Hung Gar remontent à Bodhidharma (ou Da Mo) et le temple Siu Lam (Shaolin). Ce dernier mis au point et enseigna aux moines une série d'exercices appelés 'techniques des 18 Lohan'. Il s'agissait d'exercices de santé qui furent bientôt inclus dans les techniques d'auto-défense."
+    },
+    {
+        "title": "Ny Ying Ga (Système des 5 animaux)",
+        "description": "Ce style se divise en cinq catégories correspondant à cinq animaux : Dragon, Tigre, Panthère, Serpent et Grue. Chaque animal devient un système de combat à part entière avec des techniques de poings, de pieds, de Qin Na (techniques de clés), de saisie, de combat au sol propres à leur style."
+    },
+    {
+        "title": "Bak Mei Pai (Sourcils blancs)",
+        "description": "Style : mixte\nFondateur : Bak Mei (Shaolin)\nProvince : Sichuan\nAncienneté : XVIIe siècle\nCombine des techniques martiales taoïstes et bouddhistes de Shaolin. Peut se pratiquer aussi bien à pleine puissance et à vitesse maximale pour la variante externe qu’avec des mouvements fluides et relâchés pour la variante interne."
+    },
+    {
+        "title": "Bei Shaolin Pai (Boxe Shaolin du Nord)",
+        "description": "Le style de Shaolin se caractérise par des mouvements énergiques et puissants. Il y a d'abord une recherche de l'efficacité par rapport au coté artistique. Les positions défensives sont ramassées, ne laissant pas d'ouverture à d'éventuel coups et les attaques sont explosives."
+    },
+    {
+        "title": "Bei Shaolin Pai (Boxe Shaolin du Sud)",
+        "description": "Le style de Shaolin du Sud met l'accent sur des techniques de combat rapproché avec une utilisation intensive des bras et des mains. Les mouvements sont courts, rapides et puissants, souvent combinés avec des techniques de saisie et de projection."
+    },
+    {
+        "title": "Bok Pai",
+        "description": "Le Bok Pai est un style de Kung Fu qui met l'accent sur des mouvements explosifs et rapides, souvent avec une forte utilisation des jambes et des coups de pied. Ce style est connu pour ses techniques de frappe directes et efficaces."
+    },
+    {
+        "title": "Law Horn Kune (Boxe des Arhats)",
+        "description": "Liu Bai Chuan né en 1870 à Liu An Xian était un mandarin militaire sou le règne de l'empereur Guangxu. Il reçu de Yang Cheng Yu un moine du monastère de Shaolin, la Boxe des Luo Han. Au cours d'une rencontre avec Du Xing Wu chef de file de l'Ecole Naturelle, Liu Bai Chuan remarqua les dispositions particulières du jeune Wan Laisheng qui accompagnait son maître, et lui proposa de lui transmettre à son tour la Boxe des Luo Han."
+    },
+    {
+        "title": "Chin Na (ou Qin Na)",
+        "description": "Le Chin Na ou Qin Na est un ensemble de techniques de combat des arts martiaux chinois qui servent à saisir et contrôler un adversaire. Le mot Chin se rapporte à saisir ou agripper et le terme Na signifie contrôler. Avec les frappes et les techniques visant à projeter ou amener un adversaire au sol (shuai), il constitue les techniques de combat à mains nues des arts martiaux chinois."
+    },
+    {
+        "title": "Hou Ying Kuen (Boxe du singe)",
+        "description": "Style : externe\nFondateur : Qi Jiguang\nProvince : Sichuan\nAncienneté : XVIe siècle\nSe caractérise par des postures très basses et des déplacements fluides imitant les attitudes du singe, sortant d’une caverne, cueillant des fruits, quémandant, pris par surprise, se cachant, bondissant,… En exhibition, le pratiquant va jusqu’à se gratter, mordre et crier à la façon d’un singe."
+    },
+    {
+        "title": "Tsui Pa Hsien (Boxe de l'homme ivre)",
+        "description": "La Boxe de l'Homme Ivre apparaît pour la première fois dans un ouvrage rédigé au XVII siècle dans lequel est transcrit le chant des Huit Immortels taoïstes. C'est la raison pour laquelle on appelle ce style la 'Boxe Ivre des Huit Immortels' (Zui Baxian Quan)."
+    },
+    {
+        "title": "Escrime occidentale",
+        "description": "L'escrime occidentale est un sport de combat qui oppose deux adversaires munis d'une arme blanche. Elle met l'accent sur la technique, la rapidité et la précision. Les trois principales armes utilisées sont l'épée, le fleuret et le sabre."
+    },
+    {
+        "title": "Boxe occidentale (Savate)",
+        "description": "La boxe française, ou savate, est un sport de combat pieds-poings qui trouve ses origines en France. Elle combine des techniques de boxe anglaise avec des coups de pied spécifiques, et se distingue par sa finesse technique et sa précision."
+    },
+    {
+        "title": "Lutte occidentale",
+        "description": "La lutte est un sport de combat où deux adversaires s'affrontent au corps-à-corps, utilisant des techniques de projection, de contrôle et de soumission. Elle est pratiquée en compétition dans des catégories de poids spécifiques et est présente aux Jeux Olympiques."
+    },
+    {
+        "title": "Jiu-Jitsu",
+        "description": "Le Jiu-Jitsu est un art martial japonais ancien basé sur les techniques de contrôle, de projection et de soumission. Il met l'accent sur l'utilisation de l'énergie de l'adversaire contre lui-même et est à l'origine de nombreuses autres disciplines martiales comme le Judo et le Brazilian Jiu-Jitsu."
+    },
+    {
+        "title": "Escrima",
+        "description": "En 1521, apparaissent les premiers écrits espagnols relatant les origines guerrières du peuple philippin et différentes formes de combat avec armes jusque là transmis oralement. La philosophie de l'Escrima Traditionnel est très simple : une technique ne peut être entièrement exploitée sans la combinaison des concepts d'équilibre, de puissance, de vitesse, de centre, de rythme et d'attitude. Quand tous ces éléments sont combinés le résultat est plus efficace que l'accumulation de nombreuses techniques."
+    },
+    {
+        "title": "Sirakan (Boxe philippine)",
+        "description": "La boxe philippine, ou Sirakan, est une forme de combat traditionnelle qui combine des techniques de boxe occidentale avec des mouvements de combat philippins indigènes. Elle met l'accent sur la rapidité, l'agilité et l'utilisation stratégique des angles."
+    },
+    {
+        "title": "Muay Thaï (Boxe thaïlandaise)",
+        "description": "Le Muay Thaï, ou boxe thaïlandaise, est un art martial et sport de combat originaire de Thaïlande. Il se caractérise par l'utilisation des poings, des coudes, des genoux et des tibias, ainsi que par des techniques de clinch et de projection."
+    }
+]

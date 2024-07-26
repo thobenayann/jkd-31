@@ -14,7 +14,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import WordCloud from './_component/word-cloud';
+import WordCloud from './_components/word-cloud';
 
 export default function HomeContent() {
     const isDesktop = useMediaQuery('(min-width: 768px)');

@@ -11,11 +11,13 @@ const fadeInVariants = {
 interface FadeInWrapperProps {
     children: React.ReactNode;
     delay?: number;
+    className?: string;
 }
 
 const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
     children,
     delay = 0,
+    className,
 }) => {
     const controls = useAnimation();
     const ref = useRef<HTMLDivElement>(null);
@@ -52,6 +54,7 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             exit='hidden'
             variants={fadeInVariants}
             transition={{ duration: 0.8, delay }}
+            className={className}
         >
             {children}
         </motion.div>
