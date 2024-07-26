@@ -9,6 +9,7 @@ interface GradualSpacingProps {
     delayMultiple?: number;
     framerProps?: Variants;
     className?: string;
+    onAnimationComplete?: () => void;
 }
 
 export default function GradualSpacing({
@@ -20,6 +21,7 @@ export default function GradualSpacing({
         visible: { opacity: 1, x: 0 },
     },
     className,
+    onAnimationComplete,
 }: GradualSpacingProps) {
     return (
         <div className='flex max-md:justify-center'>
@@ -33,6 +35,11 @@ export default function GradualSpacing({
                         variants={framerProps}
                         transition={{ duration, delay: i * delayMultiple }}
                         className={cn('drop-shadow-sm ', className)}
+                        onAnimationComplete={
+                            i === text.length - 1
+                                ? onAnimationComplete
+                                : undefined
+                        }
                     >
                         {char === ' ' ? <span>&nbsp;</span> : char}
                     </motion.h1>
