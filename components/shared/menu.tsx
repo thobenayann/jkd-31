@@ -112,10 +112,7 @@ const Nav = ({ hash }: NavProps) => {
             </motion.nav>
 
             {/* Tablet and mobile NAV */}
-            <motion.nav
-                className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'
-                animate={controls}
-            >
+            <nav className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'>
                 <div className='flex w-full md:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
                     {navData.map((link) => {
                         return (
@@ -133,7 +130,7 @@ const Nav = ({ hash }: NavProps) => {
                         );
                     })}
                 </div>
-            </motion.nav>
+            </nav>
         </>
     );
 };
