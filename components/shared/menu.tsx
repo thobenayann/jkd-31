@@ -1,8 +1,10 @@
 'use client';
 
+import { motion, useAnimation, useScroll } from 'framer-motion';
 import { CalendarSearch, House, Phone } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
 import { TransitionLink } from './transition-link';
 
@@ -37,6 +39,11 @@ interface NavProps {
 
 const Nav = ({ hash }: NavProps) => {
     const currentPath = usePathname();
+
+    const [lastYPos, setLastYPos] = useState(0);
+    const controls = useAnimation();
+    const { scrollY } = useScroll();
+
     // Fonction pour déterminer le style du lien
     const getLinkClassName = (linkPath: string) => {
         const baseStyle =
@@ -51,10 +58,32 @@ const Nav = ({ hash }: NavProps) => {
         return `${baseStyle} ${specificStyle}`;
     };
 
+    useEffect(() => {
+        const updateMenuVisibility = () => {
+            if (scrollY.get() > lastYPos && scrollY.get() > 100) {
+                // Scroll Down
+                controls.start({ y: '-100%', transition: { duration: 0.2 } });
+            } else {
+                // Scroll Up
+                controls.start({ y: '0%', transition: { duration: 0.2 } });
+            }
+            setLastYPos(scrollY.get());
+        };
+
+        scrollY.on('change', updateMenuVisibility);
+
+        return () => {
+            scrollY.clearListeners();
+        };
+    }, [lastYPos, scrollY, controls]);
+
     return (
         <>
             {/* Desktop NAV */}
-            <nav className='fixed z-50 right-0 w-full shadow-md shadow-zinc-500'>
+            <motion.nav
+                className='fixed z-50 right-0 w-full shadow-md shadow-zinc-500'
+                animate={controls}
+            >
                 <AuroraBackground className='w-full h-full'>
                     <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
                         <Image
@@ -80,11 +109,13 @@ const Nav = ({ hash }: NavProps) => {
                         </div>
                     </div>
                 </AuroraBackground>
-            </nav>
+            </motion.nav>
 
-            {/* Table and mobile NAV */}
-            <nav className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'>
-                {/* inner */}
+            {/* Tablet and mobile NAV */}
+            <motion.nav
+                className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'
+                animate={controls}
+            >
                 <div className='flex w-full md:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
                     {navData.map((link) => {
                         return (
@@ -97,13 +128,12 @@ const Nav = ({ hash }: NavProps) => {
                                     hash === link.path ? 'page' : undefined
                                 }
                             >
-                                {/* icon */}
                                 <div>{link.icon}</div>
                             </TransitionLink>
                         );
                     })}
                 </div>
-            </nav>
+            </motion.nav>
         </>
     );
 };
