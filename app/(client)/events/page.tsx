@@ -81,7 +81,7 @@ export default async function Events() {
                             <h2 className='text-2xl font-bold text-white'>
                                 {firstEventOrLatest.title}
                             </h2>
-                            <p className='text-gray-300 text-center'>
+                            <p className='text-gray-300 max-md:text-center'>
                                 {firstEventOrLatest.description}
                             </p>
                             <div className='flex flex-col space-y-1'>

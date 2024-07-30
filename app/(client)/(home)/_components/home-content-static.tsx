@@ -42,7 +42,7 @@ export default function HomeContentStatic({
             <div className='absolute inset-0 top-52 flex justify-center items-center -z-10'>
                 {isDesktop ? (
                     <Image
-                        src='/images/content/home/vector.svg'
+                        src='/images/content/home/tree.svg'
                         alt='Background Image'
                         width={1280}
                         height={1000}
@@ -52,7 +52,7 @@ export default function HomeContentStatic({
                     />
                 ) : (
                     <Image
-                        src='/images/content/home/vector.svg'
+                        src='/images/content/home/tree.svg'
                         alt='Background Image'
                         fill
                         style={{ objectFit: 'cover' }}

@@ -19,13 +19,20 @@ export const navData = [
     },
     {
         id: 2,
+        name: 'L’association',
+        path: '/association',
+        icon: <CalendarSearch />,
+        ariaLabel: 'Découvrir l’association',
+    },
+    {
+        id: 3,
         name: 'Événements',
         path: '/events',
         icon: <CalendarSearch />,
         ariaLabel: 'Aller à la page des événements',
     },
     {
-        id: 3,
+        id: 4,
         name: 'Contact',
         path: '/contact',
         icon: <Phone />,

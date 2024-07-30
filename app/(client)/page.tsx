@@ -7,7 +7,7 @@ export default function Home() {
             <header
                 className='h-screen w-full bg-contain md:bg-cover bg-no-repeat bg-center md:bg-top'
                 style={{
-                    backgroundImage: `url(/images/content/home/logo-jkd.webp)`,
+                    backgroundImage: `url(/images/content/home/home-background.webp)`,
                 }}
             >
                 <div className='md:pl-52 pt-40 md:pt-80'>
