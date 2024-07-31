@@ -71,9 +71,16 @@ const WordCloud = () => {
     };
 
     useEffect(() => {
-        updateWords();
+        const timeoutId = setTimeout(() => {
+            updateWords();
+        }, 400); // On met du délai sur le calculs des mots à cause d'un effet de bord sur le calcul de la hauteur du container
+
         window.addEventListener('resize', updateWords);
-        return () => window.removeEventListener('resize', updateWords);
+
+        return () => {
+            clearTimeout(timeoutId); // Nettoyage du timeout
+            window.removeEventListener('resize', updateWords);
+        };
     }, []);
 
     return (
