@@ -6,7 +6,7 @@ import { StaffMember } from '@/types/specific-types';
 export default function StafSection() {
     const staff: StaffMember[] = associationConfig.staff;
     return (
-        <div className='lg:mx-20 2xl:mx-80 md:pb-28 mt-10 md:mt-24'>
+        <div className='lg:mx-20 2xl:mx-80 pb-10 md:pb-28 mt-10 md:mt-24'>
             <div className='flex flex-col space-y-16 md:space-y-20 lg:mr-48'>
                 <FadeInWrapper delay={0.2}>
                     <StaffDisplay
