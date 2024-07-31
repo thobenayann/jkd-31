@@ -44,7 +44,7 @@ export default function ContactModal({
                             colors='primary:#ffffff,secondary:#000000'
                             target={target}
                         />
-                        <span className='ml-2'>
+                        <span className='ml-2 text-blue-600 font-bold'>
                             {object === 'email' ? email : phone}
                         </span>
                     </div>
