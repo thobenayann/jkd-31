@@ -21,7 +21,7 @@ const BlurFadeImages: React.FC<BlurFadeImagesProps> = ({
     delay = 0.25,
 }) => {
     return (
-        <div className='flex space-x-4 w-full'>
+        <div className='flex max-md:flex-col max-md:space-y-10 md:space-x-4 w-full'>
             {images.map((image, idx) => (
                 <BlurFade
                     key={image.src}
@@ -40,7 +40,9 @@ const BlurFadeImages: React.FC<BlurFadeImagesProps> = ({
                             src={image.src}
                             alt={image.alt}
                             fill={image.fill}
-                            className={`w-full h-full ${image.className || ''}`}
+                            className={`w-full h-full shadow-md shadow-jkdBlue ${
+                                image.className || ''
+                            }`}
                             style={image.style}
                             sizes='(max-width: 768px) 100vw, 50vw'
                         />

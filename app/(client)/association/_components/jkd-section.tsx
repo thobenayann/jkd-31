@@ -6,7 +6,7 @@ import WordCloud from '../../(home)/_components/word-cloud';
 export default function JkdSection() {
     return (
         <>
-            <section className='relative lg:mx-20 2xl:mx-80 pb-28'>
+            <section className='relative lg:mx-20 2xl:mx-80 pb-10 md:pb-28'>
                 <header className='container flex max-md:flex-col max-md:space-y-14 max-md:items-center justify-between pb-6 w-full pt-10 md:pt-32'>
                     <FadeInWrapper>
                         <div className='flex flex-col max-md:items-center space-y-6'>
@@ -23,8 +23,11 @@ export default function JkdSection() {
                     </FadeInWrapper>
                 </header>
 
-                <article className='container text-justify flex flex-col text-sm md:text-base space-y-2 font-light'>
-                    <FadeInWrapper delay={0.6}>
+                <article className='container md:text-justify flex flex-col text-sm md:text-base space-y-2 font-light'>
+                    <FadeInWrapper
+                        delay={0.6}
+                        className='flex flex-col space-y-4'
+                    >
                         <p>
                             Jeet Kune Do est un art martial, principalement à
                             mains nues, créé par Bruce Lee aux alentours de
@@ -66,12 +69,13 @@ export default function JkdSection() {
                         </p>
                     </FadeInWrapper>
                     <FadeInWrapper className='place-self-center' delay={0.9}>
-                        <div className='w-96 py-10'>
+                        <div className='w-full md:w-96 my-10 overflow-hidden rounded-md shadow-md shadow-jkdBlue'>
                             <Image
                                 src='/images/content/association/asso.jpg'
                                 width={800}
                                 height={600}
                                 alt='équipe Ji Dao'
+                                className=' rounded-md hover:scale-110 transition-transform duration-300 ease-in-out'
                             />
                         </div>
                     </FadeInWrapper>
