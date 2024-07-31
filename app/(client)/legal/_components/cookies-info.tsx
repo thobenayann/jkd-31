@@ -14,7 +14,11 @@ export default function CookiesInfo() {
                 </Link>{' '}
                 pour mesurer les performances et les interactions des
                 utilisateurs. Aucune donnée personnelle identifiable n&apos;est
-                collectée et aucun cookie n&apos;est utilisé.
+                collectée et{' '}
+                <span className='underline underline-offset-4 decoration-jkdBlue decoration-2'>
+                    aucun cookie n&apos;est utilisé
+                </span>
+                .
             </p>
         </div>
     );

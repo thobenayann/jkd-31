@@ -4,20 +4,35 @@ import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 
 const fadeInVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    hidden: (direction: string) => {
+        switch (direction) {
+            case 'up':
+                return { opacity: 0, y: 20 };
+            case 'down':
+                return { opacity: 0, y: -20 };
+            case 'left':
+                return { opacity: 0, x: 20 };
+            case 'right':
+                return { opacity: 0, x: -20 };
+            default:
+                return { opacity: 0, y: 20 };
+        }
+    },
+    visible: { opacity: 1, x: 0, y: 0 },
 };
 
 interface FadeInWrapperProps {
     children: React.ReactNode;
     delay?: number;
     className?: string;
+    direction?: 'up' | 'down' | 'left' | 'right';
 }
 
 const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
     children,
     delay = 0,
     className,
+    direction = 'up',
 }) => {
     const controls = useAnimation();
     const ref = useRef<HTMLDivElement>(null);
@@ -35,8 +50,8 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
+        if (element) {
+            observer.observe(element);
         }
 
         return () => {
@@ -53,6 +68,7 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             animate={controls}
             exit='hidden'
             variants={fadeInVariants}
+            custom={direction}
             transition={{ duration: 0.8, delay }}
             className={className}
         >

@@ -7,7 +7,7 @@ export default function Styles() {
     return (
         <div className='flex flex-col items-center justify-center space-y-32 md:space-y-10 pb-10'>
             <div className='w-full h-full pt-10 md:py-32 relative overflow-hidden'>
-                <ParallaxBackground />
+                <ParallaxBackground imageUrl='url(/images/content/27-styles/self-bg-2.jpg)' />
                 <StylesAnimateTitle />
             </div>
 

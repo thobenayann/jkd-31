@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useAnimation, useScroll } from 'framer-motion';
-import { CalendarSearch, House, Phone } from 'lucide-react';
+import { CalendarSearch, House, Phone, Ribbon } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,13 +19,20 @@ export const navData = [
     },
     {
         id: 2,
+        name: 'L’association',
+        path: '/association',
+        icon: <Ribbon />,
+        ariaLabel: 'Découvrir l’association',
+    },
+    {
+        id: 3,
         name: 'Événements',
         path: '/events',
         icon: <CalendarSearch />,
         ariaLabel: 'Aller à la page des événements',
     },
     {
-        id: 3,
+        id: 4,
         name: 'Contact',
         path: '/contact',
         icon: <Phone />,
