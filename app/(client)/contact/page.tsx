@@ -17,6 +17,7 @@ const Contact = () => {
                 <Image
                     src='/images/content/contact/kali.jpg'
                     alt='Background de contact'
+                    priority
                     fill
                     className='max-md:hidden md:absolute inset-0 z-0 object-contain md:object-cover object-center lg:object-top brightness-50'
                 />
@@ -33,6 +34,7 @@ const Contact = () => {
                 </FadeInWrapper>
                 <Image
                     src='/images/content/contact/kali.jpg'
+                    priority
                     alt='Background de contact'
                     width={600}
                     height={600}

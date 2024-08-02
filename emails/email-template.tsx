@@ -55,8 +55,8 @@ export default function Email({
                             <h1 className='text-lg font-bold text-[#00305B]'>
                                 Vous avez reçu un email du formulaire de contact
                                 du site{' '}
-                                <Link href='https://movie-art.fr'>
-                                    movie-art.fr
+                                <Link href='https://jkd-self-defense-31.fr'>
+                                    jkd-self-defense-31.fr
                                 </Link>{' '}
                                 :
                             </h1>

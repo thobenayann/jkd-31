@@ -23,14 +23,14 @@ export const sendEmail = async (formData: FormData) => {
         const response = await resend.emails.send({
             from: config.from, // mail server (whatever you want before the @mydomain.com)
             to: config.to, // mail admin (the one who will receive the email)
-            subject: 'Nouveau message provenant de movie-art.fr',
+            subject: 'Nouveau message provenant de jkd-self-defense-31.fr',
             reply_to: formData.email,
             react: Email({ ...formData }),
         });
         console.log('Email sent successfully');
-        return Response.json(response);
-    } catch (error) {
+        return { success: true };
+    } catch (error: any) {
         console.error('Error sending email:', error);
-        return Response.json({ error });
+        return { success: false, error: error.message };
     }
 };
