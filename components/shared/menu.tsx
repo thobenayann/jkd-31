@@ -98,6 +98,7 @@ const Nav = ({ hash }: NavProps) => {
                             alt='Ji Dao'
                             width={40}
                             height={40}
+                            style={{ width: 'auto', height: 'auto' }}
                         />
                         <div className='flex items-center justify-end gap-x-10'>
                             {navData.map((link) => (

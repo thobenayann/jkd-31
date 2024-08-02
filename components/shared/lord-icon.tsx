@@ -37,12 +37,12 @@ const LordIcon: React.FC<LordIconProps> = ({
                 colors={colors}
                 style={style}
             ></lord-icon>
-            <a
+            {/* <a
                 href='https://lordicon.com/'
                 className='invisible absolute top-0 left-0'
             >
                 Icons by Lordicon.com
-            </a>
+            </a> */}
         </div>
     );
 };
