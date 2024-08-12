@@ -1,0 +1,45 @@
+[
+    {
+        "title": "Jeet Kune Do",
+        "subtitle": "Accès à tous les cours",
+        "price": 350,
+        "features": [
+            "Stages (2) avec David DELANNOY inclus",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officle à la première inscription",
+            "Tarif réduit à partir de la 5eme année"
+        ]
+    },
+    {
+        "title": "SELF-DEFENSE féminine",
+        "subtitle": "Accès self-mixte",
+        "price": 250,
+        "features": [
+            "Stages (2) avec David DELANNOY inclus",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officle à la première inscription"
+        ]
+    },
+    {
+        "title": "SELF-DEFENSE mixte",
+        "price": 195,
+        "features": [
+            "Stages (2) avec David DELANNOY inclus",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officle à la première inscription"
+        ]
+    },
+    {
+        "title": "Cours ado",
+        "price": 225,
+        "features": [
+            "Stages (2) avec David DELANNOY inclus",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officle à la première inscription"
+        ]
+    }
+]

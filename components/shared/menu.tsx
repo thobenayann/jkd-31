@@ -1,7 +1,13 @@
 'use client';
 
 import { motion, useAnimation, useScroll } from 'framer-motion';
-import { CalendarSearch, House, Phone, Ribbon } from 'lucide-react';
+import {
+    CalendarSearch,
+    GraduationCap,
+    House,
+    Phone,
+    Ribbon,
+} from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,7 +18,7 @@ import { TransitionLink } from './transition-link';
 export const navData = [
     {
         id: 1,
-        name: 'Accueil',
+        name: 'Acteurs du JKD',
         path: '/',
         icon: <House />,
         ariaLabel: 'Aller à la page d’accueil',
@@ -26,13 +32,20 @@ export const navData = [
     },
     {
         id: 3,
+        name: 'Tarifs',
+        path: '/tarifs',
+        icon: <GraduationCap />,
+        ariaLabel: 'Tarifs des cours',
+    },
+    {
+        id: 4,
         name: 'Événements',
         path: '/events',
         icon: <CalendarSearch />,
         ariaLabel: 'Aller à la page des événements',
     },
     {
-        id: 4,
+        id: 5,
         name: 'Contact',
         path: '/contact',
         icon: <Phone />,

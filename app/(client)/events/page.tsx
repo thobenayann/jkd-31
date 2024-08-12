@@ -61,7 +61,7 @@ export default async function Events() {
     const formattedEventDates = formatEventDates(firstEventOrLatest.eventDates);
 
     return (
-        <main className='w-full max-md:pb-28'>
+        <section className='w-full max-md:pb-28'>
             <header className='flex flex-col align-center space-y-2 pb-10'>
                 <h1 className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'>
                     Événements
@@ -159,6 +159,6 @@ export default async function Events() {
             <section id='event-filter-section' className='scroll-smooth'>
                 <ClientEventFilter events={remainingEvents} />
             </section>
-        </main>
+        </section>
     );
 }
