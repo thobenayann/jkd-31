@@ -72,8 +72,8 @@ export default function JkdSection() {
                         <InteractiveImage
                             src='/images/content/association/asso.jpg'
                             alt='équipe Ji Dao avec David'
-                            width={800}
-                            height={600}
+                            width={384}
+                            height={336}
                         />
                     </FadeInWrapper>
                 </article>

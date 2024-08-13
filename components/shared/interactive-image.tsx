@@ -1,5 +1,6 @@
 'use client';
 
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -7,19 +8,25 @@ import { useState } from 'react';
 
 interface InteractiveImageProps {
     src: string;
-    width: number;
-    height: number;
     alt: string;
     className?: string;
+    fill?: boolean;
+    width?: number;
+    height?: number;
+    objectFitOnMobile?: 'cover' | 'contain' | 'initial';
 }
 
 const InteractiveImage = ({
     src,
-    width,
-    height,
     alt,
     className,
+    fill = false,
+    width,
+    height,
+    objectFitOnMobile = 'cover',
 }: InteractiveImageProps) => {
+    const isDesktop = useMediaQuery('(min-width: 768px)');
+
     const [origin, setOrigin] = useState({ x: '50%', y: '50%' });
 
     const handleMouseMove = (
@@ -32,13 +39,34 @@ const InteractiveImage = ({
         setOrigin({ x: `${x}%`, y: `${y}%` });
     };
 
+    // Utilisation du switch pour définir objectFit
+    let objectFit: 'cover' | 'contain' | 'initial' = 'initial';
+
+    switch (true) {
+        case isDesktop && fill:
+            objectFit = 'cover';
+            break;
+        case !isDesktop && fill:
+            objectFit = objectFitOnMobile;
+            break;
+        default:
+            objectFit = 'initial';
+    }
+
     return (
         <div
-            className='w-full md:w-96 my-10 overflow-hidden rounded-md shadow-md shadow-jkdBlue'
+            className={cn(
+                'my-10 overflow-hidden md:rounded-md md:shadow-md md:shadow-jkdBlue',
+                className
+            )}
+            style={{
+                width: fill ? '100%' : width,
+                height: fill ? '100%' : height,
+            }}
             onMouseMove={handleMouseMove}
         >
             <motion.div
-                className={cn('w-full h-full', className)}
+                className='relative w-full h-full rounded-md overflow-hidden'
                 style={{
                     originX: origin.x,
                     originY: origin.y,
@@ -48,10 +76,15 @@ const InteractiveImage = ({
             >
                 <Image
                     src={src}
-                    width={width}
-                    height={height}
                     alt={alt}
-                    className='rounded-md'
+                    fill={fill}
+                    width={!fill ? width : undefined}
+                    height={!fill ? height : undefined}
+                    className='rounded-md overflow-hidden'
+                    style={{
+                        objectFit: objectFit,
+                        objectPosition: fill ? 'center' : 'initial',
+                    }}
                 />
             </motion.div>
         </div>

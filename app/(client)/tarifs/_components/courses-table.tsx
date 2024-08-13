@@ -1,5 +1,6 @@
 'use client';
 
+import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import {
     Select,
     SelectContent,
@@ -39,9 +40,9 @@ export default function CoursesTable({ data }: CoursesTableProps) {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     return (
-        <div className='w-full max-md:px-2 md:container'>
+        <FadeInWrapper className='w-full max-md:px-2 md:container' delay={0.2}>
             {/* Sélecteur de filtre */}
-            <div className='py-4'>
+            <div className='py-4 flex max-md:justify-center'>
                 <Select
                     onValueChange={(value) => setFilter(value)}
                     defaultValue='All'
@@ -56,16 +57,16 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                                 <GraduationCap color='#006599' />
                             </SelectLabel>
                             <SelectItem value='All'>Tous les cours</SelectItem>
-                            <SelectItem value='Jeet Kune Do'>
+                            <SelectItem value='jeet kune do'>
                                 Jeet Kune Do
                             </SelectItem>
-                            <SelectItem value='SELF-DEFENSE féminine'>
+                            <SelectItem value='self-defense féminine'>
                                 Self-Defense Féminine
                             </SelectItem>
-                            <SelectItem value='SELF-DEFENSE mixte'>
+                            <SelectItem value='self-defense mixte'>
                                 Self-Defense Mixte
                             </SelectItem>
-                            <SelectItem value='Cours ado'>Cours Ado</SelectItem>
+                            <SelectItem value='cours ado'>Cours Ado</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -81,7 +82,7 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableHead>
                             {filteredData.map((course) => (
                                 <TableHead
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className='py-4 px-4 text-white uppercase max-md:text-xs max-md:text-center'
                                 >
                                     {course.title}
@@ -96,10 +97,10 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 text-white ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
@@ -114,10 +115,10 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 text-white ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
@@ -134,10 +135,10 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
@@ -162,7 +163,7 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableHead>
                             {filteredData.map((course) => (
                                 <TableHead
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className='py-4 px-4 text-white uppercase max-md:text-xs max-md:text-center'
                                 >
                                     {course.title}
@@ -177,10 +178,10 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 max-md:text-center  ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
@@ -199,18 +200,18 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 max-md:text-center ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
                                 >
                                     {isDesktop
-                                        ? course.schedule.tuesday
+                                        ? course.schedule.wednesday
                                         : simplifyTimeRange(
-                                              course.schedule.tuesday
+                                              course.schedule.wednesday
                                           )}
                                 </TableCell>
                             ))}
@@ -221,18 +222,18 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             </TableCell>
                             {filteredData.map((course) => (
                                 <TableCell
-                                    key={course.title}
+                                    key={course.title.toLowerCase()} // Normalisation du titre
                                     className={`py-4 px-4 max-md:text-center ${
                                         filter !== 'All' &&
-                                        course.title !== filter
+                                        course.title.toLowerCase() !== filter
                                             ? 'opacity-30'
                                             : 'bg-gray-900'
                                     }`}
                                 >
                                     {isDesktop
-                                        ? course.schedule.tuesday
+                                        ? course.schedule.thursday
                                         : simplifyTimeRange(
-                                              course.schedule.tuesday
+                                              course.schedule.thursday
                                           )}
                                 </TableCell>
                             ))}
@@ -240,6 +241,6 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                     </TableBody>
                 </Table>
             </div>
-        </div>
+        </FadeInWrapper>
     );
 }

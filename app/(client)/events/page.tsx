@@ -1,6 +1,8 @@
 import AvatarPersonality from '@/components/shared/avatar-personality';
 import ClockBadge from '@/components/shared/clock-badge';
+import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import { Button } from '@/components/ui/button';
+import GradualSpacing from '@/components/ui/gradual-spacing';
 import { formatEventDates } from '@/lib/formatEventDate';
 import { getCurrentSeason } from '@/lib/getCurrentSeason';
 import { sortEventsByDate } from '@/lib/sortEventsByDate';
@@ -62,16 +64,22 @@ export default async function Events() {
 
     return (
         <section className='w-full max-md:pb-28'>
-            <header className='flex flex-col align-center space-y-2 pb-10'>
-                <h1 className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'>
-                    Événements
-                </h1>
-                <p className='text-center text-xl text-gray-400'>
-                    {currentSeason}
-                </p>
+            <header className='flex flex-col items-center align-center space-y-2 pb-10'>
+                <GradualSpacing
+                    text='Événements'
+                    className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
+                />
+                <FadeInWrapper delay={0.2}>
+                    <p className='text-center text-xl text-gray-400'>
+                        {currentSeason}
+                    </p>
+                </FadeInWrapper>
             </header>
             {/* Section de l'événement principal */}
-            <section className='bg-gray-900 max-md:pb-10 max-md:border-b-2 max-md:border-dashed relative'>
+            <FadeInWrapper
+                className='bg-gray-900 max-md:pb-10 max-md:border-b-2 max-md:border-dashed relative'
+                delay={0.4}
+            >
                 <article className='container flex flex-col items-center p-6'>
                     <strong className='text-2xl mb-10'>
                         {formattedEventDates}
@@ -154,7 +162,7 @@ export default async function Events() {
                         </svg>
                     </a>
                 </div>
-            </section>
+            </FadeInWrapper>
             {/* Section des événements restants */}
             <section id='event-filter-section' className='scroll-smooth'>
                 <ClientEventFilter events={remainingEvents} />
