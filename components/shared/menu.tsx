@@ -106,13 +106,15 @@ const Nav = ({ hash }: NavProps) => {
             >
                 <AuroraBackground className='w-full h-full'>
                     <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
-                        <Image
-                            src='/images/logo/logo-jkd31.png'
-                            alt='Ji Dao'
-                            width={40}
-                            height={40}
-                            style={{ width: 'auto', height: 'auto' }}
-                        />
+                        <TransitionLink href='/' aria-label='accueil'>
+                            <Image
+                                src='/images/logo/logo-jkd31.png'
+                                alt='Ji Dao'
+                                width={40}
+                                height={40}
+                                style={{ width: 'auto', height: 'auto' }}
+                            />
+                        </TransitionLink>
                         <div className='flex items-center justify-end gap-x-10'>
                             {navData.map((link) => (
                                 <TransitionLink
