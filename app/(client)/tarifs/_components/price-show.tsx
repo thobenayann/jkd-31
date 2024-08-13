@@ -1,3 +1,4 @@
+import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import FeatureAccordeon from './feature-accordeon';
 
 interface PriceShowProps {
@@ -14,7 +15,7 @@ export default function PriceShow({
     features,
 }: PriceShowProps) {
     return (
-        <article className='outline outline-1 shadow-md shadow-gray-700 outline-gray-700 bg-gray-800 text-white rounded-md flex flex-col items-center py-4 px-2 md:p-8 space-y-8 h-fit max-md:min-w-full'>
+        <FadeInWrapper className='outline outline-1 shadow-md shadow-gray-700 outline-gray-700 bg-gray-800 text-white rounded-md flex flex-col items-center py-4 px-2 md:p-8 space-y-8 h-fit max-md:min-w-full'>
             <header className='flex flex-col items-center space-y-2 text-center'>
                 <h2 className='text-xl md:text-2xl font-semibold uppercase'>
                     {title}
@@ -35,6 +36,6 @@ export default function PriceShow({
             <ul className='flex flex-col'>
                 <FeatureAccordeon features={features} />
             </ul>
-        </article>
+        </FadeInWrapper>
     );
 }
