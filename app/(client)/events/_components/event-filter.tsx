@@ -1,5 +1,6 @@
 'use client';
 
+import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import {
     Select,
     SelectContent,
@@ -41,7 +42,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
     }, [selectedOption, events]);
 
     return (
-        <div>
+        <FadeInWrapper delay={0.2}>
             <div className='flex flex-col space-y-4 items-center justify-center mt-16 max-md:py-8 w-full'>
                 <h2 className='text-2xl font-bold text-white text-center px-10'>
                     Nos autres événements à venir
@@ -69,7 +70,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                 </div>
             </div>
             <NextEventCard events={filteredEvents} />
-        </div>
+        </FadeInWrapper>
     );
 };
 

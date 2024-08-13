@@ -1,6 +1,6 @@
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import InteractiveImage from '@/components/shared/interactive-image';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
-import Image from 'next/image';
 import WordCloud from '../../(home)/_components/word-cloud';
 
 export default function JkdSection() {
@@ -69,15 +69,12 @@ export default function JkdSection() {
                         </p>
                     </FadeInWrapper>
                     <FadeInWrapper className='place-self-center' delay={0.9}>
-                        <div className='w-full md:w-96 my-10 overflow-hidden rounded-md shadow-md shadow-jkdBlue'>
-                            <Image
-                                src='/images/content/association/asso.jpg'
-                                width={800}
-                                height={600}
-                                alt='équipe Ji Dao'
-                                className=' rounded-md hover:scale-110 transition-transform duration-300 ease-in-out'
-                            />
-                        </div>
+                        <InteractiveImage
+                            src='/images/content/association/asso.jpg'
+                            alt='équipe Ji Dao avec David'
+                            width={384}
+                            height={336}
+                        />
                     </FadeInWrapper>
                 </article>
             </section>
