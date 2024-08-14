@@ -46,18 +46,18 @@ export default function AssoSection() {
                             className='flex flex-col space-y-4 font-light'
                             direction='right'
                         >
-                            <p className='text-white'>
+                            <p className='text-white text-sm md:text-base'>
                                 Notre association a été crée en 1998 par
                                 Jean-Marc Rodriguez sous le nom Do Gei.
                             </p>
-                            <p className='text-white'>
+                            <p className='text-white text-sm md:text-base'>
                                 Elle a été refondu en 2011 sous le nom Ji Dao.
                                 Et en 2023 elle devient « On ne sait pas encore
                                 ».
                             </p>
                         </FadeInWrapper>
                         <FadeInWrapper>
-                            <p className='text-white font-light'>
+                            <p className='text-white font-light text-sm md:text-base'>
                                 Nous avons eu à cœur de développer l’association
                                 et de pouvoir proposer des cours qui parlent à
                                 un public plus ciblé. Nous avons créer une
@@ -89,7 +89,7 @@ export default function AssoSection() {
                         className='flex flex-col justify-center space-y-6 md:w-1/2 font-light'
                         direction='left'
                     >
-                        <p className='text-white'>
+                        <p className='text-white text-sm md:text-base'>
                             Pour nous il n’y a aucune compétition, nous
                             n’enseignons que la défense personnelle. Et pour
                             cela, nous apprenons aux élèves le combat à chaque
@@ -103,7 +103,7 @@ export default function AssoSection() {
                             Jeet Kune Do a pour principe de s’adapter à
                             l’individu !
                         </p>
-                        <p className='text-white'>
+                        <p className='text-white text-sm md:text-base'>
                             Nous avons à cœur de développer votre condition
                             physique, il est important de pouvoir avoir le
                             cardio nécessaire soit pour fuir quand c’est

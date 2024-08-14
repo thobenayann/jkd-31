@@ -68,12 +68,14 @@ export default function JkdSection() {
                             et d’acquérir une puissance de frappe.
                         </p>
                     </FadeInWrapper>
-                    <FadeInWrapper className='place-self-center' delay={0.9}>
+                    <FadeInWrapper
+                        className='place-self-center w-screen md:w-96 px-2 pb-6 h-96 md:h-96'
+                        delay={0.9}
+                    >
                         <InteractiveImage
                             src='/images/content/association/asso.jpg'
                             alt='équipe Ji Dao avec David'
-                            width={384}
-                            height={336}
+                            fill
                         />
                     </FadeInWrapper>
                 </article>

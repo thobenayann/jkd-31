@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { motion, useAnimation, useScroll } from 'framer-motion';
 import {
     CalendarSearch,
@@ -19,6 +20,7 @@ export const navData = [
     {
         id: 1,
         name: 'Acteurs du JKD',
+        mobileName: 'Accueil',
         path: '/',
         icon: <House />,
         ariaLabel: 'Aller à la page d’accueil',
@@ -26,6 +28,7 @@ export const navData = [
     {
         id: 2,
         name: 'L’association',
+        mobileName: "L'Asso",
         path: '/association',
         icon: <Ribbon />,
         ariaLabel: 'Découvrir l’association',
@@ -33,6 +36,7 @@ export const navData = [
     {
         id: 3,
         name: 'Tarifs',
+        mobileName: 'Tarifs',
         path: '/tarifs',
         icon: <GraduationCap />,
         ariaLabel: 'Tarifs des cours',
@@ -40,6 +44,7 @@ export const navData = [
     {
         id: 4,
         name: 'Événements',
+        mobileName: 'Events',
         path: '/events',
         icon: <CalendarSearch />,
         ariaLabel: 'Aller à la page des événements',
@@ -47,6 +52,7 @@ export const navData = [
     {
         id: 5,
         name: 'Contact',
+        mobileName: 'Contact',
         path: '/contact',
         icon: <Phone />,
         ariaLabel: 'Aller à la section contact',
@@ -136,11 +142,14 @@ const Nav = ({ hash }: NavProps) => {
 
             {/* Tablet and mobile NAV */}
             <nav className='flex flex-col items-center md:justify-center gap-y-4 fixed h-20 md:h-max bottom-0 mt-auto md:right-[2%] z-50 top-0 w-full md:hidden'>
-                <div className='flex w-full md:flex-col items-center justify-center gap-x-10 gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'>
+                <div className='flex w-full items-center justify-between px-6 h-[80px] bg-white/10 backdrop-blur-sm text-3xl'>
                     {navData.map((link) => {
                         return (
                             <TransitionLink
-                                className={getLinkClassName(link.path)}
+                                className={cn(
+                                    'flex flex-col w-12',
+                                    getLinkClassName(link.path)
+                                )}
                                 href={link.path}
                                 key={link.id}
                                 aria-label={link.ariaLabel}
@@ -149,6 +158,9 @@ const Nav = ({ hash }: NavProps) => {
                                 }
                             >
                                 <div>{link.icon}</div>
+                                <span className='text-[10px]'>
+                                    {link.mobileName}
+                                </span>
                             </TransitionLink>
                         );
                     })}
