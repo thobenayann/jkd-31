@@ -97,10 +97,36 @@ export default defineType({
             title: 'title',
             author: 'author.name',
             media: 'mainImage',
+            eventDates: 'eventDates',
         },
         prepare(selection) {
-            const { author } = selection;
-            return { ...selection, subtitle: author && `by ${author}` };
+            const { title, media, eventDates } = selection;
+            let eventDate;
+
+            switch (true) {
+                case Array.isArray(eventDates) && eventDates.length === 1:
+                    eventDate = `Date: ${new Date(
+                        eventDates[0]
+                    ).toLocaleDateString('fr-FR')}`;
+                    break;
+
+                case Array.isArray(eventDates) && eventDates.length > 1:
+                    eventDate = `Dates: ${eventDates
+                        .map((date) =>
+                            new Date(date).toLocaleDateString('fr-FR')
+                        )
+                        .join(' et ')}`;
+                    break;
+
+                default:
+                    eventDate = 'Pas de date';
+                    break;
+            }
+            return {
+                title,
+                subtitle: eventDate,
+                media,
+            };
         },
     },
 });
