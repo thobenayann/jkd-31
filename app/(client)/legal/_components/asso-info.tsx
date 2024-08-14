@@ -9,7 +9,7 @@ export default function AssoInfo() {
                 Informations sur l&apos;Association
             </h2>
             <p className='text-gray-300 mb-4'>
-                Nom de l&apos;association : <strong>Ji DAO</strong>
+                Nom de l&apos;association : <strong>JKD Self Defense 31</strong>
             </p>
             <p className='text-gray-300 mb-4'>
                 Adresse :{' '}

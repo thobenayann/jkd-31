@@ -74,7 +74,7 @@ export default function JkdSection() {
                     >
                         <InteractiveImage
                             src='/images/content/association/asso.jpg'
-                            alt='équipe Ji Dao avec David'
+                            alt='équipe JKD Self Defense 31 avec David'
                             fill
                         />
                     </FadeInWrapper>

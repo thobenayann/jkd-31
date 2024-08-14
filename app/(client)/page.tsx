@@ -1,5 +1,6 @@
 import GradualSpacing from '@/components/ui/gradual-spacing';
 import HomeContent from './(home)/home-content';
+import HomeTitle from './(home)/_components/home-title';
 
 export default function Home() {
     return (
@@ -10,12 +11,7 @@ export default function Home() {
                     backgroundImage: `url(/images/content/home/home-background.webp)`,
                 }}
             >
-                <div className='md:pl-52 pt-40 md:pt-80'>
-                    <GradualSpacing
-                        className='max-md:text-center font-cinzel text-white text-6xl md:text-7xl'
-                        text='Ji Dao'
-                    />
-                </div>
+                <HomeTitle />
             </header>
             <HomeContent />
         </div>

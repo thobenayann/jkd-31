@@ -41,9 +41,39 @@ const cinzelDecorative = FontCinzelDecorative({
 });
 
 export const metadata: Metadata = {
-    title: "Site de l'association Ji Dao",
+    title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
     description:
-        'Le site de l’association Ji Dao, pour la pratique du Jeet Kune Do à Muret (31).',
+        "Découvrez le Jeet Kune Do à Muret avec l'association JKD Self Defense 31. Cours d'arts martiaux, de self-défense et de développement physique pour tous les niveaux.",
+    keywords: [
+        'Jeet Kune Do',
+        'arts martiaux',
+        'self-défense',
+        'Toulouse',
+        'Muret',
+        'Ji Dao',
+        'JKD Self Defense 31',
+    ],
+    openGraph: {
+        title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
+        description:
+            'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
+        url: process.env.VERCEL_URL || '',
+        images: [
+            {
+                url: `https://${process.env.VERCEL_URL}/images/logo/logo.svg`,
+                width: 1200,
+                height: 630,
+                alt: 'Jeet Kune Do Toulouse',
+            },
+        ],
+        siteName: 'JKD Self Defense 31 - Jeet Kune Do Toulouse',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
+        description:
+            'Découvrez le Jeet Kune Do avec JKD Self Defense 31 à Toulouse.',
+    },
 };
 
 export default function RootLayout({

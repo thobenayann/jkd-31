@@ -12,7 +12,7 @@ export default function LegalHeader() {
             />
             <div className='h-14 flex justify-center text-center'>
                 <TextGenerateEffect
-                    words={`Les informations légales l'association sportive Ji DAO.`}
+                    words={`Les informations légales l'association sportive JKD Self Defense 31.`}
                     wordsClassName='italic font-serif font-light max-md:text-center text-sm md:text-base text-gray-400'
                 />
             </div>

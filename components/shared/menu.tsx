@@ -115,7 +115,7 @@ const Nav = ({ hash }: NavProps) => {
                         <TransitionLink href='/' aria-label='accueil'>
                             <Image
                                 src='/images/logo/logo-jkd31.png'
-                                alt='Ji Dao'
+                                alt='JKD Self Defense 31'
                                 width={40}
                                 height={40}
                                 style={{ width: 'auto', height: 'auto' }}

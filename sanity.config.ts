@@ -18,7 +18,7 @@ export default defineConfig({
     basePath: studioUrl,
     projectId,
     dataset,
-    title: 'Ji Dao 31 - Création de contenu',
+    title: 'JKD Self Defense 31 - Création de contenu',
     icon: MyLogo,
     // Add and edit the content schema in the './sanity/schema' folder
     schema,

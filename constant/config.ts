@@ -1,7 +1,7 @@
 import { StaffRoles } from '@/types/specific-types';
 
 export const associationConfig = {
-    name: 'Ji DAO',
+    name: 'JKD Self Defense 31',
     address: '6 Rue Pierre Bauduc, 31600 Muret, France',
     phoneNumber: '+33 6 84 05 93 26',
     email: 'president@jeetkunedo31.com',
