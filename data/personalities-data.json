@@ -92,7 +92,7 @@
                 "lastName": "DELANNOY",
                 "title": "Président de l’EDAM",
                 "flagUrl": "/images/content/home/flags/fr-flag.svg",
-                "imgUrl": "/images/content/home/personalities/david-delannoy.jpg",
+                "imgUrl": "/images/content/home/personalities/david-delannoy.webp",
                 "shortInfo": "Représentant du Jeet Kune Do Kali Silat en France",
                 "withMoreInfo": true,
                 "longInfo": [
@@ -122,7 +122,7 @@
                 "lastName": "MASSON",
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr-flag.svg",
-                "imgUrl": "/images/content/home/personalities/nico.png",
+                "imgUrl": "/images/content/home/personalities/nico.webp",
                 "shortInfo": "JKD Self Defense 31",
                 "withMoreInfo": false
             },
@@ -140,7 +140,7 @@
                 "lastName": "BERTOLINO",
                 "title": "Instructeur",
                 "flagUrl": "/images/content/home/flags/fr-flag.svg",
-                "imgUrl": "/images/content/home/personalities/ju.png",
+                "imgUrl": "/images/content/home/personalities/ju.webp",
                 "shortInfo": "JKD Self Defense 31",
                 "withMoreInfo": false
             },
