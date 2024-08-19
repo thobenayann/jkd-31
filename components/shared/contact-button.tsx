@@ -29,6 +29,7 @@ export default function ContactModal({
     iconSrc,
 }: ContactModalProps) {
     const target = 'contact-group-' + object === 'email' ? 'email' : 'phone';
+
     return (
         <>
             <Credenza>

@@ -1,6 +1,5 @@
-import GradualSpacing from '@/components/ui/gradual-spacing';
-import HomeContent from './(home)/home-content';
 import HomeTitle from './(home)/_components/home-title';
+import HomeContent from './(home)/home-content';
 
 export default function Home() {
     return (

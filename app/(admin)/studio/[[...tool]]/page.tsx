@@ -7,14 +7,18 @@
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio'
+import config from '@/sanity.config';
+import dynamic from 'next/dynamic';
 
-import config from '@/sanity.config'
+export { metadata, viewport } from 'next-sanity/studio';
 
-export const dynamic = 'force-static'
-
-export { metadata, viewport } from 'next-sanity/studio'
+const LazyNextStudio = dynamic(
+    () => import('next-sanity/studio').then((mod) => mod.NextStudio),
+    {
+        ssr: false, // Désactive le rendu côté serveur pour ce composant
+    }
+);
 
 export default function StudioPage() {
-  return <NextStudio config={config} />
+    return <LazyNextStudio config={config} />;
 }

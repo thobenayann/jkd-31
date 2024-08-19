@@ -1,8 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { defineElement } from '@lordicon/element';
-import lottie from 'lottie-web';
 import { useEffect } from 'react';
 
 interface LordIconProps {
@@ -24,7 +22,11 @@ const LordIcon: React.FC<LordIconProps> = ({
 }) => {
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            defineElement(lottie.loadAnimation);
+            import('lottie-web').then((lottie) => {
+                import('@lordicon/element').then((module) => {
+                    module.defineElement(lottie.default.loadAnimation);
+                });
+            });
         }
     }, []);
 

@@ -13,7 +13,7 @@ const Footer = () => {
                         Réalisation{' '}
                     </p>
                     <a
-                        className='text-jkdBlue text-sm hover:text-blue-600 block'
+                        className='text-[#00A2FF] text-sm hover:text-blue-600 block'
                         href='https://thobena-yann-developpeur-web.netlify.app/'
                     >
                         Yann THOBENA
@@ -23,7 +23,7 @@ const Footer = () => {
                 <span className='border-r-2' />
                 <TransitionLink
                     href='/legal'
-                    className='text-jkdBlue hover:text-blue-600 text-sm font-normal underline underline-offset-2'
+                    className='text-[#00A2FF] hover:text-blue-600 text-sm font-normal underline underline-offset-2'
                 >
                     Mentions Légales
                 </TransitionLink>
