@@ -3,6 +3,7 @@ import Footer from '@/components/shared/footer';
 import Nav from '@/components/shared/menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import {
     Cinzel as FontCinzel,
@@ -109,6 +110,7 @@ export default function RootLayout({
                     {children}
                     <Footer />
                 </ThemeProvider>
+                <SpeedInsights />
             </body>
         </html>
     );

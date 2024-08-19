@@ -20,6 +20,7 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.48.1",
     "@tanstack/react-table": "^8.20.1",
+    "@vercel/speed-insights": "^1.0.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lottie-web": "^5.12.2",
