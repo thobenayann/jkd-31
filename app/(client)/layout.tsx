@@ -10,7 +10,6 @@ import {
     Inter as FontSans,
     Merriweather as FontSerif,
 } from 'next/font/google';
-import Script from 'next/script';
 import { Suspense } from 'react';
 import '../globals.css';
 
@@ -111,16 +110,6 @@ export default function RootLayout({
                     <Footer />
                 </ThemeProvider>
             </body>
-            <Script
-                strategy='beforeInteractive'
-                src='/_next/static/chunks/react-dom.production.min.js'
-                rel='preload'
-            />
-            <Script
-                strategy='beforeInteractive'
-                src='/_next/static/chunks/react.production.min.js'
-                rel='preload'
-            />
         </html>
     );
 }
