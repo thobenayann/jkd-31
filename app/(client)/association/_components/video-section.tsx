@@ -3,7 +3,10 @@ import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 
 export default function VideoSection() {
     return (
-        <div className='lg:px-20 2xl:px-80 pb-10 md:pb-28 pt-10 md:pt-24 bg-gray-900'>
+        <div
+            className='lg:px-20 2xl:px-80 pb-10 md:pb-28 pt-10 md:pt-24 bg-gray-900'
+            id='demo'
+        >
             <h2 className='flex justify-center'>
                 <TextGenerateEffect
                     words={'Mannequin Challenge'}

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const fadeInVariants = {
     hidden: (direction: string) => {
@@ -36,12 +36,14 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
 }) => {
     const controls = useAnimation();
     const ref = useRef<HTMLDivElement>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         const element = ref.current;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && isMounted) {
                     controls.start('visible');
                 }
             },
@@ -54,12 +56,18 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             observer.observe(element);
         }
 
+        // Nettoyage
         return () => {
             if (element) {
                 observer.unobserve(element);
             }
         };
-    }, [controls]);
+    }, [controls, isMounted]);
+
+    // S'assurer que le composant est monté avant d'appeler controls.start()
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <motion.div

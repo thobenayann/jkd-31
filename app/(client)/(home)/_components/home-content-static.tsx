@@ -8,7 +8,9 @@ import {
     findPersonalitiesByLastNames,
     PersonalityType,
 } from '@/lib/findPersonalityByLastName';
+import { motion, useAnimation, useScroll } from 'framer-motion';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import WordCloud from './word-cloud';
 
 interface HomeContentStaticProps {
@@ -36,6 +38,34 @@ export default function HomeContentStatic({
         ['Masson', 'Faugere', 'Bertolino', 'Grandclaudon'],
         personalities
     );
+
+    // Détecter le scroll et afficher le bouton fixe en bas
+    const controls = useAnimation(); // Animation control from Framer Motion
+    const { scrollYProgress } = useScroll(); // Hook to track the scroll progress
+    const [showButton, setShowButton] = useState(false);
+
+    useEffect(() => {
+        // This will trigger the animation when the component is fully mounted
+        const unsubscribe = scrollYProgress.on('change', (latest) => {
+            if (latest > 0.15) {
+                setShowButton(true); // Show button if scrolling down 15%
+            } else {
+                setShowButton(false); // Hide button if scrolling up
+            }
+        });
+
+        // Cleanup the scroll listener when the component unmounts
+        return () => unsubscribe();
+    }, [scrollYProgress]);
+
+    useEffect(() => {
+        // Handle animation once the button's visibility changes
+        if (showButton) {
+            controls.start({ opacity: 1, y: 0 });
+        } else {
+            controls.start({ opacity: 0, y: 50 });
+        }
+    }, [showButton, controls]);
 
     return (
         <div className='pt-10 pb-10 md:mb-36 relative'>
@@ -173,6 +203,22 @@ export default function HomeContentStatic({
                     </section>
                 </FadeInWrapper>
             </div>
+            {/* Bouton fixe en bas de la page */}
+            {showButton && (
+                <motion.div
+                    className='fixed bottom-24 md:bottom-4 right-4 z-50'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Button className='bg-jkdBlue text-white w-fit hover:bg-jkdBlue/85'>
+                        <TransitionLink href='/association#demo'>
+                            Notre démo
+                        </TransitionLink>
+                    </Button>
+                </motion.div>
+            )}
         </div>
     );
 }
