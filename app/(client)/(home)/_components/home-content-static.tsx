@@ -212,7 +212,10 @@ export default function HomeContentStatic({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <Button className='bg-jkdBlue text-white w-fit hover:bg-jkdBlue/85'>
+                    <Button
+                        className='bg-jkdBlue text-white w-fit hover:bg-jkdBlue/85'
+                        size='lg'
+                    >
                         <TransitionLink href='/association#demo'>
                             Notre démo
                         </TransitionLink>

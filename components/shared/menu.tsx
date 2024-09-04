@@ -9,10 +9,10 @@ import {
     Phone,
     Ribbon,
 } from 'lucide-react';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
+import GradualSpacing from '../ui/gradual-spacing';
 import { TransitionLink } from './transition-link';
 
 // nav data
@@ -112,7 +112,7 @@ const Nav = ({ hash }: NavProps) => {
             >
                 <AuroraBackground className='w-full h-full'>
                     <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-2 bg-transparent backdrop-blur-sm text-lg text-white'>
-                        <TransitionLink href='/' aria-label='accueil'>
+                        {/* <TransitionLink href='/' aria-label='accueil'>
                             <Image
                                 src='/images/logo/logo-jkd-sd-31.webp'
                                 alt='JKD Self Defense 31'
@@ -120,7 +120,11 @@ const Nav = ({ hash }: NavProps) => {
                                 height={100}
                                 style={{ width: 'auto', height: 'auto' }}
                             />
-                        </TransitionLink>
+                        </TransitionLink> */}
+                        <GradualSpacing
+                            className='max-md:text-center font-cinzel text-white text-base md:text-lg'
+                            text='Jeet Kune Do, Kali, Silat, Self-défense'
+                        />
                         <div className='flex items-center justify-end gap-x-10'>
                             {navData.map((link) => (
                                 <TransitionLink
