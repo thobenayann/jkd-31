@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         url: `https://${process.env.VERCEL_URL}/association`,
         images: [
             {
-                url: `https://${process.env.VERCEL_URL}/images/logo/logo.svg`,
+                url: `https://${process.env.VERCEL_URL}/images/logo/logo-jkd-sd-31.webp`,
                 width: 1200,
                 height: 630,
                 alt: 'Association JKD Self Defense 31',

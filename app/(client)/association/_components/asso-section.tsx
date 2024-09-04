@@ -52,8 +52,7 @@ export default function AssoSection() {
                             </p>
                             <p className='text-white text-sm md:text-base'>
                                 Elle a été refondu en 2011 sous le nom Ji Dao.
-                                Et en 2023 elle devient « On ne sait pas encore
-                                ».
+                                Et en 2023 elle devient « JKD Self Defense 31 ».
                             </p>
                         </FadeInWrapper>
                         <FadeInWrapper>
@@ -108,7 +107,7 @@ export default function AssoSection() {
                             physique, il est important de pouvoir avoir le
                             cardio nécessaire soit pour fuir quand c’est
                             possible, soit pour tenir le temps de se défendre.
-                            Pour autant on accepte tout niveaux physiques.
+                            Pour autant on accepte tous niveaux physiques.
                         </p>
                     </FadeInWrapper>
                 </div>

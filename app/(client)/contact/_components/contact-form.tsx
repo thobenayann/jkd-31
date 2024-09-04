@@ -207,11 +207,11 @@ export default function ContactForm() {
                             )}
                         </Button>
                     </div>
-                    <div className='flex justify-center md:justify-end py-6 md:p-0'>
+                    <div className='flex justify-center md:justify-end py-6 md:p-0 md:h-20'>
                         <Image
-                            width={50}
-                            height={50}
-                            src={'/images/logo/logo-jkd31.png'}
+                            width={200}
+                            height={200}
+                            src={'/images/logo/logo-jkd-sd-31.webp'}
                             alt="logo de l'association"
                             style={{ width: 'auto', height: 'auto' }}
                         />

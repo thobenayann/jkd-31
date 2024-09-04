@@ -42,7 +42,7 @@ const Contact = () => {
                 />
                 <ContactForm />
             </header>
-            <main className='w-full flex items-end md:mt-[300px]'>
+            <main className='w-full flex items-end md:mt-[25rem]'>
                 <section className='flex flex-col items-center w-full space-y-10 md:space-y-0'>
                     <a
                         href='https://www.facebook.com/jkd.jidao'

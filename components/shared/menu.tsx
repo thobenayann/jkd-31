@@ -111,13 +111,13 @@ const Nav = ({ hash }: NavProps) => {
                 animate={controls}
             >
                 <AuroraBackground className='w-full h-full'>
-                    <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-4 bg-transparent backdrop-blur-sm text-lg text-white'>
+                    <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-2 bg-transparent backdrop-blur-sm text-lg text-white'>
                         <TransitionLink href='/' aria-label='accueil'>
                             <Image
-                                src='/images/logo/logo-jkd31.png'
+                                src='/images/logo/logo-jkd-sd-31.webp'
                                 alt='JKD Self Defense 31'
-                                width={40}
-                                height={40}
+                                width={120}
+                                height={100}
                                 style={{ width: 'auto', height: 'auto' }}
                             />
                         </TransitionLink>

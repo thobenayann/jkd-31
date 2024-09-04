@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-import logo from '../../public/images/logo/logo-jkd31.png';
+import logo from '../../public/images/logo/logo-jkd-admin.webp';
 
 export const MyLogo = () => {
     return (
         <Image
             src={logo}
             alt='My Logo'
-            height={18}
+            height={25}
             style={{ objectFit: 'contain', width: 'auto' }}
         />
     );
