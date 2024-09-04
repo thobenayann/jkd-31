@@ -91,16 +91,16 @@ export default function HomeContentStatic({
                     />
                 )}
             </div>
-            <div className='absolute left-0 top-0 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+            <div className='absolute left-0 top-0 h-full 2xl:w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
                 <WordCloud />
             </div>
-            <div className='absolute right-0 top-0 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+            <div className='absolute right-0 top-0 h-full 2xl:w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
                 <WordCloud />
             </div>
             <section className='container flex max-md:flex-col max-md:space-y-14 max-md:items-center justify-between pb-6 w-full'>
                 <FadeInWrapper>
                     <div className='flex flex-col max-md:items-center space-y-6'>
-                        <h2 className='text-4xl max-md:text-center md:text-6xl font-bold leading-none md:max-w-xl'>
+                        <h2 className='text-4xl max-md:text-center md:text-6xl font-bold leading-none md:max-w-xl z-10'>
                             Les acteurs du Jeet Kune Do
                         </h2>
                         <cite className='max-md:text-center'>
@@ -138,7 +138,7 @@ export default function HomeContentStatic({
                     </div>
                 </FadeInWrapper>
             </section>
-            <div className='flex flex-col max-md:space-y-14 space-y-4'>
+            <div className='container flex flex-col max-md:space-y-14 space-y-4'>
                 <FadeInWrapper delay={0.4}>
                     <section className='container flex max-md:flex-col max-md:items-center max-md:space-y-14 md:space-x-8 max-md:border-b-2 max-md:border-dashed w-full'>
                         {danTakyJames.map((personality, index) => (

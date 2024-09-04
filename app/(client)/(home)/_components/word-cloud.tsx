@@ -85,7 +85,7 @@ const WordCloud = () => {
 
     return (
         <motion.div
-            className='overflow-hidden h-full relative'
+            className='overflow-hidden h-full relative z-0'
             ref={containerRef}
         >
             <motion.div
