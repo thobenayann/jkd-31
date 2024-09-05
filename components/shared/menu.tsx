@@ -121,9 +121,13 @@ const Nav = ({ hash }: NavProps) => {
                                 style={{ width: 'auto', height: 'auto' }}
                             />
                         </TransitionLink> */}
-                        <TransitionLink href='/' aria-label='accueil'>
+                        <TransitionLink
+                            href='/'
+                            aria-label='accueil'
+                            className='group'
+                        >
                             <GradualSpacing
-                                className='max-md:text-center font-cinzel text-white text-base md:text-lg'
+                                className='max-md:text-center font-cinzel text-white text-base md:text-lg  group-hover:text-jkdBlue transition-all duration-300'
                                 text='Jeet Kune Do, Kali, Silat, Self-défense'
                             />
                         </TransitionLink>
