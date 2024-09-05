@@ -9,10 +9,10 @@ import {
     Phone,
     Ribbon,
 } from 'lucide-react';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
+import GradualSpacing from '../ui/gradual-spacing';
 import { TransitionLink } from './transition-link';
 
 // nav data
@@ -111,14 +111,24 @@ const Nav = ({ hash }: NavProps) => {
                 animate={controls}
             >
                 <AuroraBackground className='w-full h-full'>
-                    <div className='hidden md:flex w-full items-center justify-between px-4 h-max py-2 bg-transparent backdrop-blur-sm text-lg text-white'>
-                        <TransitionLink href='/' aria-label='accueil'>
+                    <div className='hidden h-14 md:flex w-full items-center justify-between px-4 py-2 bg-transparent backdrop-blur-sm text-lg text-white'>
+                        {/* <TransitionLink href='/' aria-label='accueil'>
                             <Image
                                 src='/images/logo/logo-jkd-sd-31.webp'
                                 alt='JKD Self Defense 31'
                                 width={120}
                                 height={100}
                                 style={{ width: 'auto', height: 'auto' }}
+                            />
+                        </TransitionLink> */}
+                        <TransitionLink
+                            href='/'
+                            aria-label='accueil'
+                            className='group'
+                        >
+                            <GradualSpacing
+                                className='max-md:text-center font-cinzel text-white text-base md:text-lg  group-hover:text-jkdBlue transition-all duration-300'
+                                text='Jeet Kune Do, Kali, Silat, Self-défense'
                             />
                         </TransitionLink>
                         <div className='flex items-center justify-end gap-x-10'>

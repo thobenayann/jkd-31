@@ -24,7 +24,7 @@
         "title": "SELF-DEFENSE féminine",
         "subtitle": "Accès self-mixte",
         "price": {
-            "inscription": 250,
+            "inscription": 255,
             "reduced": 225,
             "fifth_year": null
         },
@@ -74,7 +74,7 @@
         ],
         "schedule": {
             "tuesday": "18h30 - 19h45",
-            "wednesday": "-",
+            "wednesday": "18h30 - 19h45",
             "thursday": "-"
         }
     }

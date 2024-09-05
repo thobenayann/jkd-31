@@ -23,16 +23,16 @@ export const associationConfig = {
             role: ['Trésorier'] as StaffRoles[],
         },
         {
-            name: 'Julien BERTOLINO',
-            role: ['Secrétaire', 'Instructeur'] as StaffRoles[],
+            name: 'Nicolas MASSON',
+            role: ['Responsable technique', 'Instructeur'] as StaffRoles[],
         },
         {
             name: 'William FAUGERE',
             role: ['Responsable communication', 'Instructeur'] as StaffRoles[],
         },
         {
-            name: 'Nicolas MASSON',
-            role: ['Responsable technique', 'Instructeur'] as StaffRoles[],
+            name: 'Julien BERTOLINO',
+            role: ['Secrétaire', 'Instructeur'] as StaffRoles[],
         },
         {
             name: 'Maxime GRANDCLAUDON',
