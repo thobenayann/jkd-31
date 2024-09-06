@@ -204,7 +204,7 @@ export default function HomeContentStatic({
                 </FadeInWrapper>
             </div>
             {/* Bouton fixe en bas de la page */}
-            {showButton && (
+            {(showButton || !isDesktop) && (
                 <motion.div
                     className='fixed bottom-24 md:bottom-4 right-4 z-50'
                     initial={{ opacity: 0 }}

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
         title: 'Notre Association - JKD Self Defense 31',
         description: 'Découvrez notre association, ses membres et ses valeurs.',
     },
+    metadataBase: new URL(process.env.VERCEL_URL || 'http://localhost:3000'),
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
