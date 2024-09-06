@@ -19,7 +19,11 @@ export const metadata: Metadata = {
         description:
             'Les 27 Styles qui ont influencés Bruce Lee pour le Jeet Kune Do - JKD Self Defense 31 à Muret.',
     },
-    metadataBase: new URL(process.env.VERCEL_URL || 'http://localhost:3000'),
+    metadataBase: new URL(
+        process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : 'http://localhost:3000'
+    ),
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
