@@ -19,7 +19,6 @@ export const metadata: Metadata = {
         description:
             "N'hésitez pas à nous contacter pour toute question sur nos cours de Jeet Kune Do ou pour rejoindre l'association JKD Self Defense 31 à Muret.",
     },
-    metadataBase: new URL(process.env.VERCEL_URL || 'http://localhost:3000'),
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

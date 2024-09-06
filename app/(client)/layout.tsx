@@ -67,7 +67,11 @@ export const metadata: Metadata = {
         description:
             'Découvrez le Jeet Kune Do avec JKD Self Defense 31 à Toulouse.',
     },
-    metadataBase: new URL(process.env.VERCEL_URL || 'http://localhost:3000'),
+    metadataBase: new URL(
+        process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : 'http://localhost:3000'
+    ),
 };
 
 export default function RootLayout({
