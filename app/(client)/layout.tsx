@@ -59,14 +59,6 @@ export const metadata: Metadata = {
         description:
             'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
         url: process.env.VERCEL_URL || '',
-        images: [
-            {
-                url: `https://${process.env.VERCEL_URL}/images/logo/logo-jkd-sd-31.webp`,
-                width: 1200,
-                height: 630,
-                alt: 'Jeet Kune Do Toulouse',
-            },
-        ],
         siteName: 'JKD Self Defense 31 - Jeet Kune Do Toulouse',
     },
     twitter: {

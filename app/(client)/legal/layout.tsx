@@ -12,14 +12,6 @@ export const metadata: Metadata = {
         description:
             "Mentions légales du site de l'association JKD Self Defense 31 à Muret.",
         url: `https://${process.env.VERCEL_URL}/association`,
-        images: [
-            {
-                url: `https://${process.env.VERCEL_URL}/images/logo/logo-jkd-sd-31.webp`,
-                width: 1200,
-                height: 630,
-                alt: 'Association JKD Self Defense 31',
-            },
-        ],
     },
     twitter: {
         card: 'summary_large_image',

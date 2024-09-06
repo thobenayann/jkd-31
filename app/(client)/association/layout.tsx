@@ -11,14 +11,6 @@ export const metadata: Metadata = {
         title: 'Notre Association - JKD Self Defense 31',
         description: 'Tout savoir sur notre association et son engagement.',
         url: `https://${process.env.VERCEL_URL}/association`,
-        images: [
-            {
-                url: `https://${process.env.VERCEL_URL}/images/logo/logo-jkd-sd-31.webp`,
-                width: 1200,
-                height: 630,
-                alt: 'Association JKD Self Defense 31',
-            },
-        ],
     },
     twitter: {
         card: 'summary_large_image',
