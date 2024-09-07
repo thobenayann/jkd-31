@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         description:
             'Découvrez les tarifs de nos cours, les horaires et réductions.',
         url: `https://${
-            process.env.PRODUCTION_URL || process.env.VERCEL_URL
+            process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
         }/tarifs`,
     },
     twitter: {
