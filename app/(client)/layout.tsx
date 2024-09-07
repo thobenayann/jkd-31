@@ -60,7 +60,6 @@ export const metadata: Metadata = {
             'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
         url:
             process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-            process.env.VERCEL_URL ||
             'http://localhost:3000',
         siteName: 'JKD Self Defense 31 - Jeet Kune Do Toulouse',
         images: [
@@ -80,9 +79,7 @@ export const metadata: Metadata = {
         images: '/opengraph-image.png',
     },
     metadataBase: new URL(
-        process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-            : 'http://localhost:3000'
+        process.env.VERCEL_PROJECT_PRODUCTION_URL || 'http://localhost:3000'
     ),
 };
 
