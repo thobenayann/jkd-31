@@ -11,9 +11,9 @@ export const metadata: Metadata = {
         title: 'Événements - JKD Self Defense 31',
         description:
             "Restez informé des prochains événements, stages et démonstrations organisés par l'association JKD Self Defense 31 à Muret.",
-        url: `https://${
-            process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
-        }/events`,
+        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
+            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/events`
+            : 'http://localhost:3000/events',
     },
     twitter: {
         card: 'summary_large_image',

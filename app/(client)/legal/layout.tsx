@@ -11,9 +11,9 @@ export const metadata: Metadata = {
         title: 'Mentions légales - JKD Self Defense 31',
         description:
             "Mentions légales du site de l'association JKD Self Defense 31 à Muret.",
-        url: `https://${
-            process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
-        }/legal`,
+        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
+            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/legal`
+            : 'http://localhost:3000/legal',
     },
     twitter: {
         card: 'summary_large_image',

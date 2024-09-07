@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Notre Association - JKD Self Defense 31',
         description: 'Tout savoir sur notre association et son engagement.',
-        url: `https:/${
-            process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
-        }/association`,
+        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
+            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/association`
+            : 'http://localhost:3000/association',
     },
     twitter: {
         card: 'summary_large_image',

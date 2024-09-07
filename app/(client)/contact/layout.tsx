@@ -11,9 +11,9 @@ export const metadata: Metadata = {
         title: 'Contactez-nous - JKD Self Defense 31',
         description:
             "N'hésitez pas à nous contacter pour toute question sur nos cours de Jeet Kune Do ou pour rejoindre l'association JKD Self Defense 31 à Muret.",
-        url: `https://${
-            process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
-        }/contact`,
+        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
+            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/contact`
+            : 'http://localhost:3000/contact',
     },
     twitter: {
         card: 'summary_large_image',
