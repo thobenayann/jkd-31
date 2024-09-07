@@ -127,7 +127,7 @@ const Nav = ({ hash }: NavProps) => {
                             className='group'
                         >
                             <GradualSpacing
-                                className='max-md:text-center font-cinzel text-white text-base md:text-lg  group-hover:text-jkdBlue transition-all duration-300'
+                                className='max-md:text-center font-cinzel text-white text-base md:text-lg group-hover:text-jkdBlue'
                                 text='Jeet Kune Do, Kali, Silat, Self-défense'
                             />
                         </TransitionLink>
