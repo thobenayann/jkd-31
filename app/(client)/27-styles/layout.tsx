@@ -11,7 +11,9 @@ export const metadata: Metadata = {
         title: "27 styles d'arts martiaux - JKD Self Defense 31",
         description:
             'Les 27 Styles qui ont influencés Bruce Lee pour le Jeet Kune Do - JKD Self Defense 31 à Muret.',
-        url: `https://${process.env.VERCEL_URL}/association`,
+        url: `https://${
+            process.env.PRODUCTION_URL || process.env.VERCEL_URL
+        }/27-styles`,
     },
     twitter: {
         card: 'summary_large_image',

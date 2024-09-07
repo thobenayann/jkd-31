@@ -11,7 +11,9 @@ export const metadata: Metadata = {
         title: 'Tarifs des cours - JKD Self Defense 31',
         description:
             'Découvrez les tarifs de nos cours, les horaires et réductions.',
-        url: `https://${process.env.VERCEL_URL}/association`,
+        url: `https://${
+            process.env.PRODUCTION_URL || process.env.VERCEL_URL
+        }/tarifs`,
     },
     twitter: {
         card: 'summary_large_image',
