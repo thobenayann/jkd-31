@@ -15,12 +15,7 @@ interface EmailProps {
     message: string;
 }
 
-export default function Email({
-    message,
-    firstName,
-    lastName,
-    email,
-}: EmailProps) {
+export function Email({ message, firstName, lastName, email }: EmailProps) {
     const baseUrl =
         process.env.VERCEL_ENV === 'development'
             ? 'http://localhost:3000'
