@@ -1,10 +1,10 @@
+// services/sendEmail.ts
 'use server';
 
-import Email from '@/emails/email-template';
-import { Resend } from 'resend';
+import { Email } from '@/emails/email-template';
+import { render } from '@react-email/components';
+import nodemailer from 'nodemailer';
 import emailConfig from './emailConfig';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface FormData {
     firstName: string;
@@ -19,18 +19,32 @@ export const sendEmail = async (formData: FormData) => {
         process.env.VERCEL_ENV === 'production' ? 'production' : 'development';
     const config = emailConfig[environment];
 
+    // Créer un transporteur Nodemailer avec les informations de Gandi
+    const transporter = nodemailer.createTransport({
+        host: 'mail.gandi.net',
+        port: 465, // Utiliser SSL sur le port 465
+        secure: true, // true pour SSL
+        auth: {
+            user: process.env.SERVER_MAIL, // Adresse email complète pour l'authentification
+            pass: process.env.SERVER_MAIL_PASSWORD, // Mot de passe de l'email
+        },
+    });
+    // Rendre le template React Email en HTML
+    const emailHtml = render(Email({ ...formData }));
+
     try {
-        const response = await resend.emails.send({
-            from: config.from, // mail server (whatever you want before the @mydomain.com)
-            to: config.to, // mail admin (the one who will receive the email)
-            subject: 'Nouveau message provenant de jkd-self-defense-31.fr',
-            reply_to: formData.email,
-            react: Email({ ...formData }),
+        const response = await transporter.sendMail({
+            from: config.from, // Adresse expéditeur (e.g., no-reply@domain.com)
+            to: config.to, // Adresse du destinataire (admin)
+            subject: 'Nouveau message provenant du site jkd-self-defense-31.fr',
+            replyTo: formData.email, // Adresse email de la personne ayant rempli le formulaire
+            html: emailHtml, // Contenu HTML généré par React Email
         });
-        console.log('Email sent successfully');
+
+        console.log('Email envoyé avec succès');
         return { success: true };
     } catch (error: any) {
-        console.error('Error sending email:', error);
+        console.error("Erreur lors de l'envoi de l'email:", error);
         return { success: false, error: error.message };
     }
 };
