@@ -1,5 +1,4 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import webpack from 'webpack';
 
 const withBundleAnalyzerConfigured = withBundleAnalyzer({
     enabled:
@@ -16,11 +15,6 @@ const config = {
         ],
     },
     webpack: (config, { isServer }) => {
-        // Ignore toutes les locales sauf 'fr'
-        config.plugins.push(
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr/)
-        );
-
         return config;
     },
 };
