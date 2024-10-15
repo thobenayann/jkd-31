@@ -135,6 +135,10 @@ export default async function Events() {
                                     width={350}
                                     height={200}
                                     priority
+                                    style={{
+                                        width: 'auto',
+                                        height: 'auto',
+                                    }}
                                 />
                             ) : null}
                         </div>

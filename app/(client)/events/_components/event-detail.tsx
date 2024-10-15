@@ -56,6 +56,11 @@ export default function EventDetail({ event }: EventDetailProps) {
                         width={1200}
                         height={600}
                         className='w-full max-h-[600px] mb-8 rounded-lg shadow-lg'
+                        style={{
+                            width: 'auto',
+                            height: 'auto',
+                        }}
+                        priority
                     />
                 </FadeInWrapper>
                 <FadeInWrapper delay={0.4}>

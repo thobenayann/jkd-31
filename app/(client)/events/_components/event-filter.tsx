@@ -22,9 +22,10 @@ interface ClientEventFilterProps {
 const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
     const [selectedOption, setSelectedOption] = useState('next');
     const [filteredEvents, setFilteredEvents] = useState<Evenement[]>([]);
-    const [isSelecting, setIsSelecting] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         const today = new Date();
         if (selectedOption === 'next') {
             const nextEvents = events
@@ -41,14 +42,12 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                 .slice(-3);
             setFilteredEvents(pastEvents);
         }
+        // Simuler un délai de chargement
+        setTimeout(() => setIsLoading(false), 100);
     }, [selectedOption, events]);
 
     const handleSelectChange = (value: string) => {
-        setIsSelecting(true);
         setSelectedOption(value);
-        // Utiliser un setTimeout pour s'assurer que l'état isSelecting est mis à jour après le rendu
-        // suite à un effet de bord rencontré
-        setTimeout(() => setIsSelecting(false), 100);
     };
 
     return (
@@ -79,7 +78,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                     </Select>
                 </div>
             </div>
-            {!isSelecting && <NextEventCard events={filteredEvents} />}
+            <NextEventCard events={filteredEvents} isLoading={isLoading} />
         </FadeInWrapper>
     );
 };
