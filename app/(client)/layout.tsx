@@ -42,6 +42,10 @@ const cinzelDecorative = FontCinzelDecorative({
     variable: '--font-cinzel-decorative',
 });
 
+const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000';
+
 export const metadata: Metadata = {
     title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
     description:
@@ -59,10 +63,8 @@ export const metadata: Metadata = {
         title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
         description:
             'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
-        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-            : 'http://localhost:3000',
-        siteName: 'JKD Self Defense 31 - Jeet Kune Do Toulouse',
+        url: baseUrl,
+        siteName: 'JKD Self Defense 31 - Arts Martiaux et Self-Défense',
         images: [
             {
                 url: '/opengraph-image.png',
@@ -77,13 +79,9 @@ export const metadata: Metadata = {
         title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
         description:
             'Découvrez le Jeet Kune Do avec JKD Self Defense 31 à Toulouse.',
-        images: '/opengraph-image.png',
+        images: ['/opengraph-image.png'],
     },
-    metadataBase: new URL(
-        process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-            : 'http://localhost:3000'
-    ),
+    metadataBase: new URL(baseUrl),
 };
 
 export default function RootLayout({
