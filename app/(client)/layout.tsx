@@ -53,7 +53,8 @@ export const metadata: Metadata = {
     keywords: [
         'Jeet Kune Do',
         'arts martiaux',
-        'self-défense',
+        'self-defense',
+        'self defense',
         'Toulouse',
         'Muret',
         'Ji Dao',
