@@ -10,14 +10,18 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined };
 };
 
+async function getEvent(eventId: string): Promise<Evenement | null> {
+    return sanityFetch({
+        query: EVENT_QUERY,
+        params: { eventId },
+    });
+}
+
 export async function generateMetadata(
-    { params, searchParams }: Props,
+    { params }: Props,
     parent: ResolvingMetadata
 ): Promise<Metadata> {
-    const event: Evenement | null = await sanityFetch({
-        query: EVENT_QUERY,
-        params: { eventId: params.eventId },
-    });
+    const event = await getEvent(params.eventId);
 
     if (!event) {
         return {
@@ -61,10 +65,7 @@ export default async function EventPage({
 }: {
     params: { eventId: string };
 }) {
-    const event: Evenement | null = await sanityFetch({
-        query: EVENT_QUERY,
-        params: { eventId: params.eventId },
-    });
+    const event = await getEvent(params.eventId);
 
     if (!event) {
         return <div>Événement non trouvé</div>;
