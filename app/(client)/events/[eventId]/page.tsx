@@ -45,7 +45,7 @@ export async function generateMetadata(
             ],
             type: 'website',
             locale: 'fr_FR',
-            siteName: 'Votre Nom de Site',
+            siteName: 'JKD Self Defense 31',
         },
         twitter: {
             card: 'summary_large_image',
