@@ -22,7 +22,10 @@ interface ClientEventFilterProps {
 const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
     const [selectedOption, setSelectedOption] = useState('next');
     const [filteredEvents, setFilteredEvents] = useState<Evenement[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
+        setIsLoading(true);
         const today = new Date();
         if (selectedOption === 'next') {
             const nextEvents = events
@@ -39,7 +42,13 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                 .slice(-3);
             setFilteredEvents(pastEvents);
         }
+        // Simuler un délai de chargement
+        setTimeout(() => setIsLoading(false), 100);
     }, [selectedOption, events]);
+
+    const handleSelectChange = (value: string) => {
+        setSelectedOption(value);
+    };
 
     return (
         <FadeInWrapper delay={0.2}>
@@ -50,7 +59,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                 <div className='flex justify-center px-6 w-full'>
                     <Select
                         value={selectedOption}
-                        onValueChange={setSelectedOption}
+                        onValueChange={handleSelectChange}
                     >
                         <SelectTrigger className='w-full md:w-fit space-x-2'>
                             <SelectValue placeholder='Sélectionner les événements' />
@@ -69,7 +78,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                     </Select>
                 </div>
             </div>
-            <NextEventCard events={filteredEvents} />
+            <NextEventCard events={filteredEvents} isLoading={isLoading} />
         </FadeInWrapper>
     );
 };

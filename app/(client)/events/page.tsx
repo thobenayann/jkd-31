@@ -28,7 +28,7 @@ export default async function Events() {
     const currentSeason = getCurrentSeason();
 
     // Trouver le premier événement futur ou le dernier événement passé
-    const sortedEvents = sortEventsByDate(events);
+    const sortedEvents: Evenement[] = sortEventsByDate(events as Evenement[]);
     let firstEventOrLatest: Evenement | undefined = sortedEvents.find(
         (event) => new Date(event.eventDates?.[0] || '') >= today
     );
@@ -93,14 +93,16 @@ export default async function Events() {
                                 {firstEventOrLatest.description}
                             </p>
                             <div className='flex flex-col space-y-1'>
-                                {firstEventOrLatest.timeSlots?.map(
+                                {firstEventOrLatest?.eventDates?.map(
                                     (timeSlot, index) =>
-                                        firstEventOrLatest.eventDates ? (
+                                        firstEventOrLatest?.eventDates?.[
+                                            index
+                                        ] ? (
                                             <ClockBadge
                                                 key={index}
                                                 date={
                                                     firstEventOrLatest
-                                                        .eventDates?.[index]
+                                                        .eventDates[index]
                                                 }
                                                 time={timeSlot}
                                                 withDay={true}
@@ -133,6 +135,10 @@ export default async function Events() {
                                     width={350}
                                     height={200}
                                     priority
+                                    style={{
+                                        width: 'auto',
+                                        height: 'auto',
+                                    }}
                                 />
                             ) : null}
                         </div>
@@ -165,7 +171,17 @@ export default async function Events() {
             </FadeInWrapper>
             {/* Section des événements restants */}
             <section id='event-filter-section' className='scroll-smooth'>
-                <ClientEventFilter events={remainingEvents} />
+                <div className='container mx-auto p-4'>
+                    <ClientEventFilter
+                        events={remainingEvents.map((event) => ({
+                            ...event,
+                            imageUrl: event.mainImage?.asset?._ref
+                                ? urlFor(event.mainImage.asset._ref).url()
+                                : '',
+                            formattedDates: formatEventDates(event.eventDates),
+                        }))}
+                    />
+                </div>
             </section>
         </section>
     );
