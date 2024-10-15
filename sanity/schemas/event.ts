@@ -101,7 +101,7 @@ export default defineType({
         },
         prepare(selection) {
             const { title, media, eventDates } = selection;
-            let eventDate;
+            let eventDate: string;
 
             switch (true) {
                 case Array.isArray(eventDates) && eventDates.length === 1:
@@ -112,7 +112,7 @@ export default defineType({
 
                 case Array.isArray(eventDates) && eventDates.length > 1:
                     eventDate = `Dates: ${eventDates
-                        .map((date) =>
+                        .map((date: string) =>
                             new Date(date).toLocaleDateString('fr-FR')
                         )
                         .join(' et ')}`;
