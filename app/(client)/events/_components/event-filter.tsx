@@ -22,6 +22,8 @@ interface ClientEventFilterProps {
 const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
     const [selectedOption, setSelectedOption] = useState('next');
     const [filteredEvents, setFilteredEvents] = useState<Evenement[]>([]);
+    const [isSelecting, setIsSelecting] = useState(false);
+
     useEffect(() => {
         const today = new Date();
         if (selectedOption === 'next') {
@@ -41,6 +43,14 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
         }
     }, [selectedOption, events]);
 
+    const handleSelectChange = (value: string) => {
+        setIsSelecting(true);
+        setSelectedOption(value);
+        // Utiliser un setTimeout pour s'assurer que l'état isSelecting est mis à jour après le rendu
+        // suite à un effet de bord rencontré
+        setTimeout(() => setIsSelecting(false), 100);
+    };
+
     return (
         <FadeInWrapper delay={0.2}>
             <div className='flex flex-col space-y-4 items-center justify-center mt-16 max-md:py-8 w-full'>
@@ -50,7 +60,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                 <div className='flex justify-center px-6 w-full'>
                     <Select
                         value={selectedOption}
-                        onValueChange={setSelectedOption}
+                        onValueChange={handleSelectChange}
                     >
                         <SelectTrigger className='w-full md:w-fit space-x-2'>
                             <SelectValue placeholder='Sélectionner les événements' />
@@ -69,7 +79,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                     </Select>
                 </div>
             </div>
-            <NextEventCard events={filteredEvents} />
+            {!isSelecting && <NextEventCard events={filteredEvents} />}
         </FadeInWrapper>
     );
 };

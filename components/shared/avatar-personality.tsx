@@ -5,6 +5,7 @@ interface AvatarPersonalityProps {
     firstName?: string;
     lastName?: string;
     title?: string;
+    avatarClassName?: string;
 }
 
 function AvatarPersonality({
@@ -12,10 +13,11 @@ function AvatarPersonality({
     firstName = 'N/A',
     lastName = 'N/A',
     title = 'Unknown Title',
+    avatarClassName = '',
 }: AvatarPersonalityProps) {
     return (
         <div className='flex items-center mt-4'>
-            <Avatar>
+            <Avatar className={avatarClassName}>
                 {personalityPhotoUrl ? (
                     <AvatarImage
                         src={personalityPhotoUrl}

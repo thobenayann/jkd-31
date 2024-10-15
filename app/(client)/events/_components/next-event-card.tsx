@@ -22,7 +22,8 @@ function NextEventCard({ events }: NextEventCardProps) {
 
                         return (
                             <CardEvent
-                                key={index}
+                                key={event._id}
+                                id={event._id}
                                 title={event.title || ''}
                                 eventDates={event.eventDates || []}
                                 timeSlots={event.timeSlots || []}
@@ -37,9 +38,7 @@ function NextEventCard({ events }: NextEventCardProps) {
                         );
                     })}
                 </div>
-            ) : null}
-
-            {events.length === 0 ? (
+            ) : (
                 <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-4'>
                     <div className='flex flex-col items-center gap-1 text-center'>
                         <h3 className='text-base md:text-2xl font-bold tracking-tight'>
@@ -48,7 +47,7 @@ function NextEventCard({ events }: NextEventCardProps) {
                         </h3>
                     </div>
                 </div>
-            ) : null}
+            )}
         </section>
     );
 }
