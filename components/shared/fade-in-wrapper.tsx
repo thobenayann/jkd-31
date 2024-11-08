@@ -31,7 +31,7 @@ interface FadeInWrapperProps {
 const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
     children,
     delay = 0,
-    className,
+    className = '',
     direction = 'up',
 }) => {
     const controls = useAnimation();
@@ -48,7 +48,8 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
                 }
             },
             {
-                threshold: 0.1, // Trigger when 10% of the element is visible
+                threshold: 0.1,
+                rootMargin: '50px',
             }
         );
 
@@ -56,7 +57,6 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             observer.observe(element);
         }
 
-        // Nettoyage
         return () => {
             if (element) {
                 observer.unobserve(element);
@@ -64,7 +64,6 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
         };
     }, [controls, isMounted]);
 
-    // S'assurer que le composant est monté avant d'appeler controls.start()
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -77,8 +76,15 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             exit='hidden'
             variants={fadeInVariants}
             custom={direction}
-            transition={{ duration: 0.8, delay }}
+            transition={{
+                duration: 0.8,
+                delay,
+                ease: 'easeOut',
+            }}
             className={className}
+            style={{
+                willChange: 'opacity, transform',
+            }}
         >
             {children}
         </motion.div>
