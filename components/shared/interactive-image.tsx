@@ -14,6 +14,7 @@ interface InteractiveImageProps {
     width?: number;
     height?: number;
     objectFitOnMobile?: 'cover' | 'contain' | 'initial';
+    sizes?: string;
 }
 
 const InteractiveImage = ({
@@ -24,6 +25,7 @@ const InteractiveImage = ({
     width,
     height,
     objectFitOnMobile = 'cover',
+    sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
 }: InteractiveImageProps) => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -39,7 +41,6 @@ const InteractiveImage = ({
         setOrigin({ x: `${x}%`, y: `${y}%` });
     };
 
-    // Utilisation du switch pour définir objectFit
     let objectFit: 'cover' | 'contain' | 'initial' = 'initial';
 
     switch (true) {
@@ -80,9 +81,10 @@ const InteractiveImage = ({
                     fill={fill}
                     width={!fill ? width : undefined}
                     height={!fill ? height : undefined}
+                    sizes={fill ? sizes : undefined}
                     className='rounded-md overflow-hidden'
                     style={{
-                        objectFit: objectFit,
+                        objectFit,
                         objectPosition: fill ? 'center' : 'initial',
                     }}
                 />

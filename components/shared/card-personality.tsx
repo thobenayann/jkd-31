@@ -41,26 +41,30 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                         imageShape === 'round' ? 'h-full' : 'h-32'
                     )}
                 >
-                    <motion.div layoutId={`image-${layoutIdPrefix}`}>
+                    <motion.div
+                        layoutId={`image-${layoutIdPrefix}`}
+                        className='w-full h-full'
+                    >
                         {imageShape === 'round' ? (
-                            <Image
-                                src={personalityPhotoUrl}
-                                alt={`${firstName} ${lastName}`}
-                                width={150}
-                                height={150}
-                                className={cn(
-                                    'object-cover object-center rounded-full'
-                                )}
-                            />
+                            <div className='relative w-[150px] h-[150px]'>
+                                <Image
+                                    src={personalityPhotoUrl}
+                                    alt={`${firstName} ${lastName}`}
+                                    fill
+                                    sizes='150px'
+                                    className='object-cover object-center rounded-full'
+                                />
+                            </div>
                         ) : (
-                            <Image
-                                src={personalityPhotoUrl}
-                                alt={`${firstName} ${lastName}`}
-                                fill
-                                className={cn(
-                                    'object-cover object-top rounded-md'
-                                )}
-                            />
+                            <div className='relative w-full h-full'>
+                                <Image
+                                    src={personalityPhotoUrl}
+                                    alt={`${firstName} ${lastName}`}
+                                    fill
+                                    sizes='(max-width: 768px) 100vw, 224px'
+                                    className='object-cover object-top rounded-md'
+                                />
+                            </div>
                         )}
                     </motion.div>
                 </CardHeader>
@@ -76,14 +80,17 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                         >
                             {title}
                         </motion.span>
-                        {flagUrl ? (
-                            <Image
-                                src={flagUrl}
-                                alt='flag'
-                                width={24}
-                                height={24}
-                            />
-                        ) : null}
+                        {flagUrl && (
+                            <div className='relative w-6 h-6'>
+                                <Image
+                                    src={flagUrl}
+                                    alt='flag'
+                                    fill
+                                    sizes='24px'
+                                    className='object-contain'
+                                />
+                            </div>
+                        )}
                     </div>
                     {shortInfo && (
                         <motion.p
@@ -93,20 +100,20 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                             {shortInfo}
                         </motion.p>
                     )}
-                    {withMoreInfo ? (
+                    {withMoreInfo && (
                         <div className='pt-4'>
                             <a
                                 href='#'
                                 className='text-jkdBlue font-semibold hover:text-jkdBlue/85 text-sm'
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    onMoreInfoClick && onMoreInfoClick();
+                                    onMoreInfoClick?.();
                                 }}
                             >
                                 En savoir plus -&gt;
                             </a>
                         </div>
-                    ) : null}
+                    )}
                 </CardContent>
             </Card>
         </motion.div>

@@ -23,10 +23,12 @@ export default function VideoSection() {
                 >
                     <iframe
                         className='absolute top-0 left-0 w-full h-full'
-                        src='https://www.youtube.com/embed/_b_DuXq0_LE?si=vLnr8pVloDatnhq-'
+                        src='https://www.youtube-nocookie.com/embed/XC9sKXWn0OE'
                         title='Mannequin Challenge Video'
-                        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin'
-                        allowFullScreen
+                        loading='lazy'
+                        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                        sandbox='allow-same-origin allow-scripts'
+                        referrerPolicy='strict-origin'
                     />
                 </div>
             </FadeInWrapper>
