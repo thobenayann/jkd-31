@@ -6,8 +6,8 @@ import { Metadata, ResolvingMetadata } from 'next';
 import EventDetail from '../_components/event-detail';
 
 type Props = {
-    params: { eventId: string };
-    searchParams: { [key: string]: string | string[] | undefined };
+    params: Promise<{ eventId: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 async function getEvent(eventId: string): Promise<Evenement | null> {
@@ -17,10 +17,8 @@ async function getEvent(eventId: string): Promise<Evenement | null> {
     });
 }
 
-export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const params = await props.params;
     const event = await getEvent(params.eventId);
 
     if (!event) {
@@ -60,11 +58,12 @@ export async function generateMetadata(
     };
 }
 
-export default async function EventPage({
-    params,
-}: {
-    params: { eventId: string };
-}) {
+export default async function EventPage(
+    props: {
+        params: Promise<{ eventId: string }>;
+    }
+) {
+    const params = await props.params;
     const event = await getEvent(params.eventId);
 
     if (!event) {

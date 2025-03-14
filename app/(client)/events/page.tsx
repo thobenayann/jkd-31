@@ -1,6 +1,7 @@
 import AvatarPersonality from '@/components/shared/avatar-personality';
 import ClockBadge from '@/components/shared/clock-badge';
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import { FormattedText } from '@/components/shared/formatted-text';
 import { Button } from '@/components/ui/button';
 import GradualSpacing from '@/components/ui/gradual-spacing';
 import { formatEventDates } from '@/lib/formatEventDate';
@@ -89,9 +90,10 @@ export default async function Events() {
                             <h2 className='text-2xl font-bold text-white'>
                                 {firstEventOrLatest.title}
                             </h2>
-                            <p className='text-gray-300 max-md:text-center'>
-                                {firstEventOrLatest.description}
-                            </p>
+                            <FormattedText
+                                text={firstEventOrLatest.description}
+                                className='text-gray-300 max-md:text-center'
+                            />
                             <div className='flex flex-col space-y-1'>
                                 {firstEventOrLatest?.eventDates?.map(
                                     (timeSlot, index) =>

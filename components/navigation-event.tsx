@@ -11,7 +11,7 @@ import React, { Children, ReactElement, useEffect, useState } from 'react';
  */
 
 interface NavigationEventsProps {
-    children: ReactElement;
+    children: ReactElement<any>;
 }
 
 export function NavigationEvents({ children }: NavigationEventsProps) {
