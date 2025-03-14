@@ -19,6 +19,12 @@ export const sendEmail = async (formData: FormData) => {
         process.env.VERCEL_ENV === 'production' ? 'production' : 'development';
     const config = emailConfig[environment];
 
+    // Afficher des informations de débogage en développement
+    if (environment === 'development') {
+        console.log('Environnement de développement détecté');
+        console.log("Envoi d'email à:", config.to);
+    }
+
     // Créer un transporteur Nodemailer avec les informations de Gandi
     const transporter = nodemailer.createTransport({
         host: 'mail.gandi.net',
@@ -29,17 +35,29 @@ export const sendEmail = async (formData: FormData) => {
             pass: process.env.SERVER_MAIL_PASSWORD, // Mot de passe de l'email
         },
     });
+
     // Rendre le template React Email en HTML
     const emailHtml = render(Email({ ...formData }));
 
     try {
-        const response = await transporter.sendMail({
+        const mailOptions = {
             from: config.from, // Adresse expéditeur (e.g., no-reply@domain.com)
-            to: config.to, // Adresse du destinataire (admin)
+            to: config.to, // Adresse du destinataire (admin ou test)
             subject: 'Nouveau message provenant du site jkd-self-defense-31.fr',
             replyTo: formData.email, // Adresse email de la personne ayant rempli le formulaire
             html: emailHtml, // Contenu HTML généré par React Email
-        });
+        };
+
+        // Afficher les options d'email en développement
+        if (environment === 'development') {
+            console.log("Options d'email:", mailOptions);
+        }
+
+        const response = await transporter.sendMail(mailOptions);
+
+        if (environment === 'development') {
+            console.log("Réponse du serveur d'email:", response);
+        }
 
         console.log('Email envoyé avec succès');
         return { success: true };

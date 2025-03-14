@@ -1,6 +1,7 @@
 import AvatarPersonality from '@/components/shared/avatar-personality';
 import ClockBadge from '@/components/shared/clock-badge';
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import { FormattedText } from '@/components/shared/formatted-text';
 import { Button } from '@/components/ui/button';
 import { formatEventDates } from '@/lib/formatEventDate';
 import { Evenement } from '@/sanity.types';
@@ -77,9 +78,10 @@ export default function EventDetail({ event }: EventDetailProps) {
                     delay={0.6}
                     className='bg-gray-900 p-6 rounded-lg mb-8'
                 >
-                    <p className='text-md max-md:text-center md:text-lg text-white mb-4'>
-                        {event.description}
-                    </p>
+                    <FormattedText
+                        text={event.description}
+                        className='text-md max-md:text-center md:text-lg text-white mb-4'
+                    />
                     <div className='flex flex-col max-md:items-center space-y-2'>
                         {event.timeSlots?.map((timeSlot, index) =>
                             event.eventDates?.[index] ? (

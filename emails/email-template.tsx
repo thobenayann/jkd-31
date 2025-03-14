@@ -16,6 +16,7 @@ interface EmailProps {
 }
 
 export function Email({ message, firstName, lastName, email }: EmailProps) {
+    const isDevelopment = process.env.VERCEL_ENV !== 'production';
     const baseUrl =
         process.env.VERCEL_ENV === 'development'
             ? 'http://localhost:3000'
@@ -46,6 +47,16 @@ export function Email({ message, firstName, lastName, email }: EmailProps) {
                             />
                         </Section>
                         <Hr className='border-[#cccccc]' /> */}
+                        {isDevelopment && (
+                            <Section>
+                                <div className='bg-yellow-100 p-4 rounded-md border-2 border-red-500 mb-4'>
+                                    <p className='text-red-600 font-bold text-center'>
+                                        EMAIL DE TEST - ENVIRONNEMENT DE
+                                        DÉVELOPPEMENT
+                                    </p>
+                                </div>
+                            </Section>
+                        )}
                         <Section>
                             <h1 className='text-lg font-bold text-[#00305B]'>
                                 Vous avez reçu un email du formulaire de contact
