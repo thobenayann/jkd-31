@@ -6,6 +6,7 @@ import {
     Link,
     Section,
     Tailwind,
+    Text,
 } from '@react-email/components';
 
 interface EmailProps {
@@ -50,38 +51,38 @@ export function Email({ message, firstName, lastName, email }: EmailProps) {
                         {isDevelopment && (
                             <Section>
                                 <div className='bg-yellow-100 p-4 rounded-md border-2 border-red-500 mb-4'>
-                                    <p className='text-red-600 font-bold text-center'>
+                                    <Text className='text-red-600 font-bold text-center'>
                                         EMAIL DE TEST - ENVIRONNEMENT DE
                                         DÉVELOPPEMENT
-                                    </p>
+                                    </Text>
                                 </div>
                             </Section>
                         )}
                         <Section>
-                            <h1 className='text-lg font-bold text-[#00305B]'>
+                            <Text className='text-lg font-bold text-[#00305B]'>
                                 Vous avez reçu un email du formulaire de contact
                                 du site{' '}
                                 <Link href='https://jkd-self-defense-31.fr'>
                                     jkd-self-defense-31.fr
                                 </Link>{' '}
                                 :
-                            </h1>
+                            </Text>
                         </Section>
                         <Section>
-                            <p className='text-gray-900 dark:text-white'>
+                            <Text className='text-gray-900 dark:text-white'>
                                 <span className='font-bold'>Nom :</span>{' '}
                                 {lastName} - {firstName}
-                            </p>
-                            <p className='text-gray-900 dark:text-white'>
+                            </Text>
+                            <Text className='text-gray-900 dark:text-white'>
                                 <span className='font-bold'>Email :</span>{' '}
                                 {email}
-                            </p>
-                            <p className='text-gray-900 dark:text-white font-bold'>
+                            </Text>
+                            <Text className='text-gray-900 dark:text-white font-bold'>
                                 Message :
-                            </p>
-                            <p className='text-gray-900 dark:text-white'>
+                            </Text>
+                            <Text className='text-gray-900 dark:text-white'>
                                 {message}
-                            </p>
+                            </Text>
                         </Section>
                     </Container>
                 </Body>

@@ -37,7 +37,7 @@ export const sendEmail = async (formData: FormData) => {
     });
 
     // Rendre le template React Email en HTML
-    const emailHtml = render(Email({ ...formData }));
+    const emailHtml = await render(Email({ ...formData }));
 
     try {
         const mailOptions = {
