@@ -10,22 +10,100 @@ interface ClockBadgeProps {
     withDay: boolean;
 }
 
+/**
+ * Détermine le type de format de temps
+ * @param time - La chaîne de temps à analyser
+ */
+type TimeFormat = 'timeRange' | 'isoDate' | 'simpleTime' | 'unknown';
+
+const getTimeFormat = (time: string): TimeFormat => {
+    if (time.includes(' - ') && !time.includes('-2')) {
+        return 'timeRange';
+    } else if (time.includes('-') && time.length >= 10) {
+        return 'isoDate';
+    } else if (time && time.length > 0) {
+        return 'simpleTime';
+    }
+    return 'unknown';
+};
+
+/**
+ * Formate une date pour afficher le jour de la semaine
+ * @param date - La date à formater
+ */
+const formatDayOfWeek = (date: Date): string => {
+    if (isNaN(date.getTime())) return '';
+    return capitalizeFirstLetter(format(date, 'EEEE', { locale: fr }));
+};
+
+/**
+ * Formate une date pour afficher le jour et le mois
+ * @param date - La date à formater
+ */
+const formatDayAndMonth = (date: Date): string => {
+    if (isNaN(date.getTime())) return '';
+    return format(date, 'd MMMM', { locale: fr });
+};
+
+/**
+ * Formate une heure à partir d'une date ISO
+ * @param isoDate - La date ISO à formater en heure
+ */
+const formatTimeFromIsoDate = (isoDate: string): string => {
+    const timeDate = new Date(isoDate);
+    if (isNaN(timeDate.getTime())) return isoDate;
+    return format(timeDate, 'HH:mm', { locale: fr });
+};
+
+/**
+ * Composant d'affichage d'un badge avec horloge pour les dates et heures d'événements
+ */
 function ClockBadge({ date, time, withDay }: ClockBadgeProps) {
     const parsedDate = new Date(date);
-    const formattedDate = isNaN(parsedDate.getTime())
-        ? ''
-        : format(parsedDate, 'EEEE', { locale: fr });
+    const dayOfWeek = formatDayOfWeek(parsedDate);
+    const dayAndMonth = formatDayAndMonth(parsedDate);
+    const timeFormat = getTimeFormat(time);
+
+    // Formatage de l'heure selon son format
+    let formattedTime: string;
+    switch (timeFormat) {
+        case 'timeRange':
+            formattedTime = time; // Garder la plage horaire telle quelle
+            break;
+        case 'isoDate':
+            formattedTime = formatTimeFromIsoDate(time);
+            break;
+        case 'simpleTime':
+        default:
+            formattedTime = time;
+    }
+
+    // Construction du texte à afficher selon le contexte
+    let displayText: string;
+    if (!withDay) {
+        // Sans le jour, on affiche simplement l'heure formatée
+        displayText = formattedTime;
+    } else {
+        // Avec le jour, on construit l'affichage selon le format de l'heure
+        switch (timeFormat) {
+            case 'timeRange':
+                displayText = `${dayOfWeek} - ${formattedTime}`;
+                break;
+            case 'isoDate':
+                displayText = `${dayOfWeek} ${dayAndMonth} à ${formattedTime}`;
+                break;
+            case 'simpleTime':
+                displayText = `${dayOfWeek} ${dayAndMonth}${formattedTime ? ` à ${formattedTime}` : ''}`;
+                break;
+            default:
+                displayText = `${dayOfWeek} ${dayAndMonth}`;
+        }
+    }
 
     return (
         <Badge className='flex items-center space-x-2 w-fit bg-blue-900 hover:bg-blue-800'>
             <Clock className='w-4 h-4 text-blue-300' />
-            {withDay ? (
-                <span className='text-blue-300'>{`${capitalizeFirstLetter(
-                    formattedDate
-                )} - ${time}`}</span>
-            ) : (
-                <span className='text-blue-300'>{`${time}`}</span>
-            )}
+            <span className='text-blue-300'>{displayText}</span>
         </Badge>
     );
 }

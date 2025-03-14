@@ -96,17 +96,17 @@ export default async function Events() {
                             />
                             <div className='flex flex-col space-y-1'>
                                 {firstEventOrLatest?.eventDates?.map(
-                                    (timeSlot, index) =>
-                                        firstEventOrLatest?.eventDates?.[
+                                    (date, index) =>
+                                        firstEventOrLatest?.timeSlots?.[
                                             index
                                         ] ? (
                                             <ClockBadge
                                                 key={index}
-                                                date={
+                                                date={date}
+                                                time={
                                                     firstEventOrLatest
-                                                        .eventDates[index]
+                                                        .timeSlots[index]
                                                 }
-                                                time={timeSlot}
                                                 withDay={true}
                                             />
                                         ) : null
