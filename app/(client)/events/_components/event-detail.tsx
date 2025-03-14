@@ -8,6 +8,7 @@ import { Evenement } from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Script from 'next/script';
 
 interface EventDetailProps {
@@ -95,7 +96,7 @@ export default function EventDetail({ event }: EventDetailProps) {
                         )}
                     </div>
                     <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600 mx-auto'>
-                        <span>Nous contacter</span>
+                        <Link href='/contact'>Nous contacter</Link>
                         <ArrowRight className='w-4 h-4 ml-2' />
                     </Button>
                 </FadeInWrapper>

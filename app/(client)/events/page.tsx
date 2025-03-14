@@ -13,6 +13,7 @@ import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import ClientEventFilter from './_components/event-filter';
 
 export default async function Events() {
@@ -125,7 +126,7 @@ export default async function Events() {
                                 title={firstEventOrLatest.personality?.title}
                             />
                             <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600'>
-                                <span>Nous contacter</span>
+                                <Link href='/contact'>Nous contacter</Link>
                                 <ArrowRight className='w-4 h-4 ml-2' />
                             </Button>
                         </div>
