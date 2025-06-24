@@ -41,14 +41,37 @@
         }
     },
     {
-        "title": "SELF-DEFENSE mixte",
+        "title": "Cours ado",
         "price": {
-            "inscription": 195,
-            "reduced": 195,
+            "inscription": 225,
+            "reduced": null,
             "fifth_year": null
         },
         "features": [
+            "Cours techniques",
+            "Physique adapté",
             "Stages (2) avec David DELANNOY inclus",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription"
+        ],
+        "schedule": {
+            "tuesday": "18h30 - 19h45",
+            "wednesday": "18h30 - 19h45",
+            "thursday": "-"
+        }
+    },
+    {
+        "title": "JKD Boxing",
+        "subtitle": "Jun Fan Kick Boxing",
+        "price": {
+            "inscription": 190,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Cours techniques",
+            "Sparring",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription"
@@ -60,22 +83,21 @@
         }
     },
     {
-        "title": "Cours ado",
+        "title": "Training Physique",
         "price": {
-            "inscription": 225,
+            "inscription": 190,
             "reduced": null,
             "fifth_year": null
         },
         "features": [
-            "Stages (2) avec David DELANNOY inclus",
+            "Entraînement physique spécialisé",
             "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription"
+            "Adhésion à la fédération"
         ],
         "schedule": {
-            "tuesday": "18h30 - 19h45",
-            "wednesday": "18h30 - 19h45",
-            "thursday": "-"
+            "tuesday": "20h - 20h30",
+            "wednesday": "-",
+            "thursday": "20h - 20h30"
         }
     }
 ]
