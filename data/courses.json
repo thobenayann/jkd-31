@@ -8,7 +8,7 @@
             "fifth_year": 287
         },
         "features": [
-            "Stages (2) avec David DELANNOY inclus",
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription",
@@ -21,26 +21,6 @@
         }
     },
     {
-        "title": "SELF-DEFENSE féminine",
-        "subtitle": "Accès self-mixte",
-        "price": {
-            "inscription": 255,
-            "reduced": 225,
-            "fifth_year": null
-        },
-        "features": [
-            "Stages (2) avec David DELANNOY inclus",
-            "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription"
-        ],
-        "schedule": {
-            "tuesday": "-",
-            "wednesday": "20h - 22h",
-            "thursday": "-"
-        }
-    },
-    {
         "title": "Cours ado",
         "price": {
             "inscription": 225,
@@ -50,7 +30,7 @@
         "features": [
             "Cours techniques",
             "Physique adapté",
-            "Stages (2) avec David DELANNOY inclus",
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription"
@@ -58,6 +38,44 @@
         "schedule": {
             "tuesday": "18h30 - 19h45",
             "wednesday": "18h30 - 19h45",
+            "thursday": "-"
+        }
+    },
+    {
+        "title": "JKD conditioning",
+        "price": {
+            "inscription": 190,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Entraînement physique spécialisé",
+            "Licence",
+            "Adhésion à la fédération"
+        ],
+        "schedule": {
+            "tuesday": "20h - 20h30",
+            "wednesday": "-",
+            "thursday": "20h - 20h30"
+        }
+    },
+    {
+        "title": "SELF-DEFENSE féminine",
+        "subtitle": "Accès self-mixte",
+        "price": {
+            "inscription": 255,
+            "reduced": 225,
+            "fifth_year": null
+        },
+        "features": [
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription"
+        ],
+        "schedule": {
+            "tuesday": "-",
+            "wednesday": "20h - 22h",
             "thursday": "-"
         }
     },
@@ -80,24 +98,6 @@
             "tuesday": "-",
             "wednesday": "-",
             "thursday": "19h - 20h"
-        }
-    },
-    {
-        "title": "Training Physique",
-        "price": {
-            "inscription": 190,
-            "reduced": null,
-            "fifth_year": null
-        },
-        "features": [
-            "Entraînement physique spécialisé",
-            "Licence",
-            "Adhésion à la fédération"
-        ],
-        "schedule": {
-            "tuesday": "20h - 20h30",
-            "wednesday": "-",
-            "thursday": "20h - 20h30"
         }
     }
 ]

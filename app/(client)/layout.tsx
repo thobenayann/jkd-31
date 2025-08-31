@@ -93,6 +93,7 @@ export default function RootLayout({
     return (
         <html
             lang='fr'
+            suppressHydrationWarning
             className='scroll-smooth scrollbar-thin scrollbar-thumb-jkdBlue/50 scrollbar-track-gray-900'
         >
             <body
@@ -109,6 +110,7 @@ export default function RootLayout({
                     defaultTheme='dark'
                     enableSystem
                     disableTransitionOnChange
+                    enableColorScheme={false}
                 >
                     <Suspense fallback={null}>
                         <NavigationEvents>
