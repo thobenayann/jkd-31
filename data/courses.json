@@ -1,26 +1,5 @@
 [
     {
-        "title": "Jeet Kune Do",
-        "subtitle": "Accès à tous les cours",
-        "price": {
-            "inscription": 350,
-            "reduced": 320,
-            "fifth_year": 287
-        },
-        "features": [
-            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
-            "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription",
-            "Tarif réduit à partir de la 5eme année"
-        ],
-        "schedule": {
-            "tuesday": "20h - 22h",
-            "wednesday": "-",
-            "thursday": "20h - 22h"
-        }
-    },
-    {
         "title": "Cours ado",
         "price": {
             "inscription": 225,
@@ -42,7 +21,7 @@
         }
     },
     {
-        "title": "JKD conditioning",
+        "title": "Jun Fan conditioning",
         "price": {
             "inscription": 190,
             "reduced": null,
@@ -57,6 +36,27 @@
             "tuesday": "20h - 20h30",
             "wednesday": "-",
             "thursday": "20h - 20h30"
+        }
+    },
+    {
+        "title": "Jeet Kune Do",
+        "subtitle": "Accès à tous les cours",
+        "price": {
+            "inscription": 350,
+            "reduced": 320,
+            "fifth_year": 287
+        },
+        "features": [
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription",
+            "Tarif réduit à partir de la 5eme année"
+        ],
+        "schedule": {
+            "tuesday": "20h - 22h",
+            "wednesday": "-",
+            "thursday": "20h - 22h"
         }
     },
     {
