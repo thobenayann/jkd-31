@@ -21,6 +21,27 @@
         }
     },
     {
+        "title": "JKD Boxing",
+        "subtitle": "Jun Fan Kick Boxing",
+        "price": {
+            "inscription": 190,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Cours techniques",
+            "Sparring",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription"
+        ],
+        "schedule": {
+            "tuesday": "-",
+            "wednesday": "-",
+            "thursday": "19h - 20h"
+        }
+    },
+    {
         "title": "Jun Fan conditioning",
         "price": {
             "inscription": 190,
@@ -77,27 +98,6 @@
             "tuesday": "-",
             "wednesday": "20h - 22h",
             "thursday": "-"
-        }
-    },
-    {
-        "title": "JKD Boxing",
-        "subtitle": "Jun Fan Kick Boxing",
-        "price": {
-            "inscription": 190,
-            "reduced": null,
-            "fifth_year": null
-        },
-        "features": [
-            "Cours techniques",
-            "Sparring",
-            "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription"
-        ],
-        "schedule": {
-            "tuesday": "-",
-            "wednesday": "-",
-            "thursday": "19h - 20h"
         }
     }
 ]
