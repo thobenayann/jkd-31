@@ -63,8 +63,11 @@ export default function CoursesTable({ data }: CoursesTableProps) {
                             <SelectItem value='self-defense féminine'>
                                 Self-Defense Féminine
                             </SelectItem>
-                            <SelectItem value='self-defense mixte'>
-                                Self-Defense Mixte
+                            <SelectItem value='jkd boxing'>
+                                JKD Boxing
+                            </SelectItem>
+                            <SelectItem value='training physique'>
+                                Training Physique
                             </SelectItem>
                             <SelectItem value='cours ado'>Cours Ado</SelectItem>
                         </SelectGroup>

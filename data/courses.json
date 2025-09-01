@@ -1,5 +1,65 @@
 [
     {
+        "title": "Cours ado",
+        "price": {
+            "inscription": 225,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Cours techniques",
+            "Physique adapté",
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription"
+        ],
+        "schedule": {
+            "tuesday": "18h30 - 19h45",
+            "wednesday": "18h30 - 19h45",
+            "thursday": "-"
+        }
+    },
+    {
+        "title": "JKD Boxing",
+        "subtitle": "Jun Fan Kick Boxing",
+        "price": {
+            "inscription": 190,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Cours techniques",
+            "Sparring",
+            "Licence",
+            "Adhésion à la fédération",
+            "T-shirt officiel à la première inscription"
+        ],
+        "schedule": {
+            "tuesday": "-",
+            "wednesday": "-",
+            "thursday": "19h - 20h"
+        }
+    },
+    {
+        "title": "Jun Fan conditioning",
+        "price": {
+            "inscription": 190,
+            "reduced": null,
+            "fifth_year": null
+        },
+        "features": [
+            "Entraînement physique spécialisé",
+            "Licence",
+            "Adhésion à la fédération"
+        ],
+        "schedule": {
+            "tuesday": "20h - 20h30",
+            "wednesday": "-",
+            "thursday": "20h - 20h30"
+        }
+    },
+    {
         "title": "Jeet Kune Do",
         "subtitle": "Accès à tous les cours",
         "price": {
@@ -8,7 +68,7 @@
             "fifth_year": 287
         },
         "features": [
-            "Stages (2) avec David DELANNOY inclus",
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription",
@@ -29,7 +89,7 @@
             "fifth_year": null
         },
         "features": [
-            "Stages (2) avec David DELANNOY inclus",
+            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription"
@@ -37,44 +97,6 @@
         "schedule": {
             "tuesday": "-",
             "wednesday": "20h - 22h",
-            "thursday": "-"
-        }
-    },
-    {
-        "title": "SELF-DEFENSE mixte",
-        "price": {
-            "inscription": 195,
-            "reduced": 195,
-            "fifth_year": null
-        },
-        "features": [
-            "Stages (2) avec David DELANNOY inclus",
-            "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription"
-        ],
-        "schedule": {
-            "tuesday": "-",
-            "wednesday": "-",
-            "thursday": "19h - 20h"
-        }
-    },
-    {
-        "title": "Cours ado",
-        "price": {
-            "inscription": 225,
-            "reduced": null,
-            "fifth_year": null
-        },
-        "features": [
-            "Stages (2) avec David DELANNOY inclus",
-            "Licence",
-            "Adhésion à la fédération",
-            "T-shirt officiel à la première inscription"
-        ],
-        "schedule": {
-            "tuesday": "18h30 - 19h45",
-            "wednesday": "18h30 - 19h45",
             "thursday": "-"
         }
     }
