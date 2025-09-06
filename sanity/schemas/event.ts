@@ -1,4 +1,4 @@
-import { defineType, Rule } from 'sanity';
+import { defineType, Rule, type ValidationContext } from 'sanity';
 
 export default defineType({
     name: 'evenement',
@@ -28,6 +28,39 @@ export default defineType({
             title: 'Descriptif',
             type: 'text',
             validation: (rule: Rule) => rule.optional(),
+        },
+        {
+            name: 'origin',
+            title: "Origine de l'événement",
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Interne', value: 'internal' },
+                    { title: 'Externe', value: 'external' },
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'internal',
+            validation: (rule: Rule) => rule.required(),
+        },
+        {
+            name: 'externalUrl',
+            title: "URL de l'événement externe",
+            type: 'url',
+            hidden: (ctx) =>
+                (ctx.parent as { origin?: 'internal' | 'external' } | undefined)
+                    ?.origin !== 'external',
+            validation: (rule: Rule) =>
+                rule
+                    .uri({ allowRelative: false, scheme: ['http', 'https'] })
+                    .custom((value, context: ValidationContext) => {
+                        const parent = context.parent as
+                            | { origin?: 'internal' | 'external' }
+                            | undefined;
+                        return parent?.origin === 'external' && !value
+                            ? 'URL requise pour un événement externe'
+                            : true;
+                    }),
         },
         {
             name: 'mainImage',
