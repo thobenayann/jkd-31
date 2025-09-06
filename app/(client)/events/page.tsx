@@ -40,7 +40,8 @@ export default async function Events() {
                     <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-16'>
                         <div className='flex flex-col items-center gap-2 text-center'>
                             <h3 className='text-base md:text-2xl font-bold tracking-tight'>
-                                Aucun événement n&apos;est disponible pour le moment.
+                                Aucun événement n&apos;est disponible pour le
+                                moment.
                             </h3>
                             <p className='text-sm text-gray-400'>
                                 Revenez plus tard ou contactez-nous pour plus

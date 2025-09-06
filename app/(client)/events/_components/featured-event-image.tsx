@@ -48,14 +48,22 @@ export function FeaturedEventImage(props: FeaturedEventImageProps) {
                     </span>
                 </button>
             </DialogTrigger>
-            <DialogContent className='max-w-[90vw] md:max-w-4xl p-0 bg-transparent border-0 shadow-none'>
-                <div className='relative w-[90vw] md:w-[800px] aspect-video'>
+            <DialogContent className='p-0 bg-transparent border-0 shadow-none max-w-none w-auto'>
+                <div className='flex items-center justify-center'>
                     <Image
                         src={src}
                         alt={alt}
-                        fill
-                        sizes='(max-width: 768px) 90vw, 800px'
+                        width={1600}
+                        height={900}
+                        sizes='(max-width: 1024px) 95vw, 1600px'
                         className='rounded-lg object-contain bg-black'
+                        style={{
+                            maxWidth: '95vw',
+                            maxHeight: '90vh',
+                            width: 'auto',
+                            height: 'auto',
+                        }}
+                        priority
                     />
                 </div>
             </DialogContent>
