@@ -12,9 +12,9 @@ import { sanityFetch } from '@/sanity/lib/fetch';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import ClientEventFilter from './_components/event-filter';
+import { FeaturedEventImage } from './_components/featured-event-image';
 
 export default async function Events() {
     const events: EVENTS_QUERYResult = await sanityFetch({
@@ -22,7 +22,35 @@ export default async function Events() {
     });
 
     if (!events || events.length === 0) {
-        return null;
+        const currentSeason = getCurrentSeason();
+        return (
+            <section className='w-full max-md:pb-28'>
+                <header className='flex flex-col items-center align-center space-y-2 pb-10'>
+                    <GradualSpacing
+                        text='Événements'
+                        className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
+                    />
+                    <FadeInWrapper delay={0.2}>
+                        <p className='text-center text-xl text-gray-400'>
+                            {currentSeason}
+                        </p>
+                    </FadeInWrapper>
+                </header>
+                <div className='container mx-auto p-6'>
+                    <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-16'>
+                        <div className='flex flex-col items-center gap-2 text-center'>
+                            <h3 className='text-base md:text-2xl font-bold tracking-tight'>
+                                Aucun événement n&apos;est disponible pour le moment.
+                            </h3>
+                            <p className='text-sm text-gray-400'>
+                                Revenez plus tard ou contactez-nous pour plus
+                                d&apos;informations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     // Date et saison actuelle
@@ -45,7 +73,34 @@ export default async function Events() {
 
     // Vérifier si firstEvent est toujours undefined
     if (!firstEventOrLatest) {
-        return null;
+        return (
+            <section className='w-full max-md:pb-28'>
+                <header className='flex flex-col items-center align-center space-y-2 pb-10'>
+                    <GradualSpacing
+                        text='Événements'
+                        className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
+                    />
+                    <FadeInWrapper delay={0.2}>
+                        <p className='text-center text-xl text-gray-400'>
+                            {currentSeason}
+                        </p>
+                    </FadeInWrapper>
+                </header>
+                <div className='container mx-auto p-6'>
+                    <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-16'>
+                        <div className='flex flex-col items-center gap-2 text-center'>
+                            <h3 className='text-base md:text-2xl font-bold tracking-tight'>
+                                Aucun événement à afficher.
+                            </h3>
+                            <p className='text-sm text-gray-400'>
+                                Revenez plus tard ou contactez-nous pour plus
+                                d&apos;informations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     // URL de l'image principale et de la photo de la personnalité
@@ -132,16 +187,10 @@ export default async function Events() {
                         </div>
                         <div className='flex items-center justify-center md:w-1/2'>
                             {firstEventOrLatest.mainImage?.asset ? (
-                                <Image
+                                <FeaturedEventImage
                                     src={firstEventOrLatestImageUrl}
-                                    alt="Poster de l\'événement"
-                                    width={350}
-                                    height={200}
-                                    priority
-                                    style={{
-                                        width: 'auto',
-                                        height: 'auto',
-                                    }}
+                                    alt={"Poster de l'événement"}
+                                    origin={(firstEventOrLatest as any)?.origin}
                                 />
                             ) : null}
                         </div>
@@ -175,15 +224,7 @@ export default async function Events() {
             {/* Section des événements restants */}
             <section id='event-filter-section' className='scroll-smooth'>
                 <div className='container mx-auto p-4'>
-                    <ClientEventFilter
-                        events={remainingEvents.map((event) => ({
-                            ...event,
-                            imageUrl: event.mainImage?.asset?._ref
-                                ? urlFor(event.mainImage.asset._ref).url()
-                                : '',
-                            formattedDates: formatEventDates(event.eventDates),
-                        }))}
-                    />
+                    <ClientEventFilter events={remainingEvents} />
                 </div>
             </section>
         </section>

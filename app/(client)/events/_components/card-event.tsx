@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { MoveUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { EventOriginBadge } from './event-origin-badge';
 
 interface CardEventProps {
     id: string;
@@ -17,6 +18,9 @@ interface CardEventProps {
     firstName: string;
     lastName: string;
     titlePersonality: string;
+    origin?: 'internal' | 'external';
+    imageFit?: 'cover' | 'contain';
+    containerClassName?: string;
 }
 
 function CardEvent({
@@ -29,6 +33,9 @@ function CardEvent({
     firstName,
     lastName,
     titlePersonality,
+    origin,
+    imageFit = 'cover',
+    containerClassName,
 }: CardEventProps) {
     const [isHovered, setIsHovered] = useState(false);
     const formattedEventDates = formatEventDates(eventDates);
@@ -43,7 +50,7 @@ function CardEvent({
                 <motion.div
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className='w-full h-96 relative'
+                    className={`w-full relative ${containerClassName ?? 'h-96'}`}
                 >
                     <Image
                         src={mainImageUrl}
@@ -52,9 +59,13 @@ function CardEvent({
                         fill
                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                         style={{
-                            objectFit: 'cover',
+                            objectFit: imageFit,
                             objectPosition: 'center',
                         }}
+                    />
+                    <EventOriginBadge
+                        origin={origin}
+                        className='absolute top-3 left-3'
                     />
                     {/* Project Info Overlay */}
                     <div

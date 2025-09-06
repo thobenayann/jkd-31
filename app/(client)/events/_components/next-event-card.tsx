@@ -27,11 +27,15 @@ function NextEventCard({ events, isLoading }: NextEventCardProps) {
     }
 
     return (
-        <section className='container flex max-md:flex-col max-md:space-y-20 md:p-20 md:justify-between'>
+        <section className='container md:p-20'>
             {events.length > 0 ? (
                 <FadeInWrapper
                     delay={0.2}
-                    className='flex max-md:flex-col max-md:items-center items-top justify-between w-full max-md:space-y-20 md:space-x-20'
+                    className={`grid gap-8 w-full ${
+                        events.length === 1
+                            ? 'grid-cols-1 md:grid-cols-2'
+                            : 'grid-cols-1 md:grid-cols-3'
+                    }`}
                 >
                     {events.map((event) => {
                         const mainImageUrl = event.mainImage?.asset?._ref
@@ -42,6 +46,7 @@ function NextEventCard({ events, isLoading }: NextEventCardProps) {
                             ? urlFor(event.personality.photo.asset._ref).url()
                             : '';
 
+                        const isSingle = events.length === 1;
                         return (
                             <CardEvent
                                 key={event._id}
@@ -55,6 +60,11 @@ function NextEventCard({ events, isLoading }: NextEventCardProps) {
                                 lastName={event.personality?.lastName || ''}
                                 titlePersonality={
                                     event.personality?.title || ''
+                                }
+                                origin={(event as any)?.origin}
+                                imageFit={isSingle ? 'contain' : 'cover'}
+                                containerClassName={
+                                    isSingle ? 'aspect-[16/9]' : undefined
                                 }
                             />
                         );

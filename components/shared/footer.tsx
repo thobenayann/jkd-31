@@ -14,7 +14,7 @@ const Footer = () => {
                     </p>
                     <a
                         className='text-[#00A2FF] text-sm hover:text-blue-600 block'
-                        href='https://thobena-yann-developpeur-web.netlify.app/'
+                        href='https://www.yanndevweb.com/'
                     >
                         Yann THOBENA
                     </a>

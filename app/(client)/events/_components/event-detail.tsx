@@ -10,6 +10,7 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
+import { EventOriginBadge } from './event-origin-badge';
 
 interface EventDetailProps {
     event: Evenement;
@@ -23,6 +24,12 @@ export default function EventDetail({ event }: EventDetailProps) {
         ? urlFor(event.personality.photo.asset._ref).url()
         : '';
     const formattedEventDates = formatEventDates(event.eventDates);
+    const isExternal = (event as any)?.origin === 'external';
+    const origin = (event as any)?.origin as
+        | 'internal'
+        | 'external'
+        | undefined;
+    const externalUrl: string | undefined = (event as any)?.externalUrl;
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -32,6 +39,7 @@ export default function EventDetail({ event }: EventDetailProps) {
         image: imageUrl,
         startDate: event.eventDates?.[0],
         endDate: event.eventDates?.[event.eventDates.length - 1],
+        url: isExternal && externalUrl ? externalUrl : undefined,
         location: {
             '@type': 'Place',
             name: "Lieu de l'événement", // Ajoutez le lieu réel si disponible
@@ -66,9 +74,12 @@ export default function EventDetail({ event }: EventDetailProps) {
                     />
                 </FadeInWrapper>
                 <FadeInWrapper delay={0.4}>
-                    <h1 className='text-2xl md:text-4xl font-bold mb-4 text-center'>
+                    <h1 className='text-2xl md:text-4xl font-bold mb-2 text-center'>
                         {event.title || 'Événement sans titre'}
                     </h1>
+                    <div className='flex items-center justify-center mb-4'>
+                        <EventOriginBadge origin={origin} />
+                    </div>
                     <div className='flex justify-center mb-6'>
                         <strong className='text-lg md:text-2xl text-gray-600'>
                             {formattedEventDates}
@@ -95,10 +106,23 @@ export default function EventDetail({ event }: EventDetailProps) {
                             ) : null
                         )}
                     </div>
-                    <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600 mx-auto'>
-                        <Link href='/contact'>Nous contacter</Link>
-                        <ArrowRight className='w-4 h-4 ml-2' />
-                    </Button>
+                    {isExternal && externalUrl ? (
+                        <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600 mx-auto'>
+                            <a
+                                href={externalUrl}
+                                target='_blank'
+                                rel='nofollow noopener noreferrer'
+                            >
+                                Voir l&apos;événement
+                            </a>
+                            <ArrowRight className='w-4 h-4 ml-2' />
+                        </Button>
+                    ) : (
+                        <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600 mx-auto'>
+                            <Link href='/contact'>Nous contacter</Link>
+                            <ArrowRight className='w-4 h-4 ml-2' />
+                        </Button>
+                    )}
                 </FadeInWrapper>
                 {event.personality && (
                     <FadeInWrapper

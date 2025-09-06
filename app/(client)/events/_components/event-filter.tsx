@@ -21,42 +21,53 @@ interface ClientEventFilterProps {
 
 const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
     const [selectedOption, setSelectedOption] = useState('next');
+    const [originFilter, setOriginFilter] = useState<
+        'all' | 'internal' | 'external'
+    >('all');
     const [filteredEvents, setFilteredEvents] = useState<Evenement[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
         const today = new Date();
+        const byOrigin = (evts: Evenement[]) =>
+            originFilter === 'all'
+                ? evts
+                : evts.filter((e: any) => e.origin === originFilter);
+
         if (selectedOption === 'next') {
-            const nextEvents = events
-                .filter(
+            const nextEvents = byOrigin(
+                events.filter(
                     (event) => new Date(event.eventDates?.[0] || '') >= today
                 )
-                .slice(0, 3);
+            ).slice(0, 3);
             setFilteredEvents(nextEvents);
         } else {
-            const pastEvents = events
-                .filter(
+            const pastEvents = byOrigin(
+                events.filter(
                     (event) => new Date(event.eventDates?.[0] || '') < today
                 )
-                .slice(-3);
+            ).slice(0, 3);
             setFilteredEvents(pastEvents);
         }
         // Simuler un délai de chargement
         setTimeout(() => setIsLoading(false), 100);
-    }, [selectedOption, events]);
+    }, [selectedOption, originFilter, events]);
 
     const handleSelectChange = (value: string) => {
         setSelectedOption(value);
     };
+    const handleOriginChange = (value: 'all' | 'internal' | 'external') => {
+        setOriginFilter(value);
+    };
 
     return (
         <FadeInWrapper delay={0.2}>
-            <div className='flex flex-col space-y-4 items-center justify-center mt-16 max-md:py-8 w-full'>
+            <div className='flex flex-col gap-4 items-center justify-center mt-16 max-md:py-8 w-full'>
                 <h2 className='text-2xl font-bold text-white text-center px-10'>
                     Nos autres événements à venir
                 </h2>
-                <div className='flex justify-center px-6 w-full'>
+                <div className='flex justify-center px-6 w-full gap-3'>
                     <Select
                         value={selectedOption}
                         onValueChange={handleSelectChange}
@@ -66,12 +77,33 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({ events }) => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Options</SelectLabel>
+                                <SelectLabel>Période</SelectLabel>
                                 <SelectItem value='next'>
                                     3 prochains événements
                                 </SelectItem>
                                 <SelectItem value='past'>
                                     3 derniers événements
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <Select
+                        value={originFilter}
+                        onValueChange={(v) => handleOriginChange(v as any)}
+                    >
+                        <SelectTrigger className='w-full md:w-fit space-x-2'>
+                            <SelectValue placeholder="Origine de l'événement" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Origine</SelectLabel>
+                                <SelectItem value='all'>Tous</SelectItem>
+                                <SelectItem value='internal'>
+                                    Interne
+                                </SelectItem>
+                                <SelectItem value='external'>
+                                    Externe
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>

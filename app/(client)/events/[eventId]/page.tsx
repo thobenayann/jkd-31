@@ -17,7 +17,10 @@ async function getEvent(eventId: string): Promise<Evenement | null> {
     });
 }
 
-export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata(
+    props: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
     const params = await props.params;
     const event = await getEvent(params.eventId);
 
@@ -30,13 +33,18 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
     const imageUrl = event.mainImage?.asset?._ref
         ? urlFor(event.mainImage.asset._ref).width(1200).height(630).url()
         : '';
+    const isExternal = (event as any)?.origin === 'external';
+    const externalUrl: string | undefined = (event as any)?.externalUrl;
 
     return {
         title: event.title,
         description: event.description,
+        alternates:
+            isExternal && externalUrl ? { canonical: externalUrl } : undefined,
         openGraph: {
             title: event.title,
             description: event.description,
+            url: isExternal && externalUrl ? externalUrl : undefined,
             images: [
                 {
                     url: imageUrl,
@@ -58,11 +66,9 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
     };
 }
 
-export default async function EventPage(
-    props: {
-        params: Promise<{ eventId: string }>;
-    }
-) {
+export default async function EventPage(props: {
+    params: Promise<{ eventId: string }>;
+}) {
     const params = await props.params;
     const event = await getEvent(params.eventId);
 
