@@ -95,16 +95,14 @@ export default function EventDetail({ event }: EventDetailProps) {
                         className='text-md max-md:text-center md:text-lg text-white mb-4'
                     />
                     <div className='flex flex-col max-md:items-center space-y-2'>
-                        {event.timeSlots?.map((timeSlot, index) =>
-                            event.eventDates?.[index] ? (
-                                <ClockBadge
-                                    key={index}
-                                    date={event.eventDates[index]}
-                                    time={timeSlot}
-                                    withDay={true}
-                                />
-                            ) : null
-                        )}
+                        {event.eventDates?.map((date, index) => (
+                            <ClockBadge
+                                key={index}
+                                date={date}
+                                time={event.timeSlots?.[index]}
+                                withDay={true}
+                            />
+                        ))}
                     </div>
                     {isExternal && externalUrl ? (
                         <Button className='mt-4 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg flex items-center w-fit border border-gray-600 mx-auto'>

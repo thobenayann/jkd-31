@@ -153,20 +153,18 @@ export default async function Events() {
                             />
                             <div className='flex flex-col space-y-1'>
                                 {firstEventOrLatest?.eventDates?.map(
-                                    (date, index) =>
-                                        firstEventOrLatest?.timeSlots?.[
-                                            index
-                                        ] ? (
-                                            <ClockBadge
-                                                key={index}
-                                                date={date}
-                                                time={
-                                                    firstEventOrLatest
-                                                        .timeSlots[index]
-                                                }
-                                                withDay={true}
-                                            />
-                                        ) : null
+                                    (date, index) => (
+                                        <ClockBadge
+                                            key={index}
+                                            date={date}
+                                            time={
+                                                firstEventOrLatest?.timeSlots?.[
+                                                    index
+                                                ]
+                                            }
+                                            withDay={true}
+                                        />
+                                    )
                                 )}
                             </div>
                             <AvatarPersonality
