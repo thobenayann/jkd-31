@@ -6,7 +6,7 @@ import { Badge } from '../ui/badge';
 
 interface ClockBadgeProps {
     date: string;
-    time: string;
+    time?: string;
     withDay: boolean;
 }
 
@@ -17,6 +17,7 @@ interface ClockBadgeProps {
 type TimeFormat = 'timeRange' | 'isoDate' | 'simpleTime' | 'unknown';
 
 const getTimeFormat = (time: string): TimeFormat => {
+    if (!time) return 'unknown';
     if (time.includes(' - ') && !time.includes('-2')) {
         return 'timeRange';
     } else if (time.includes('-') && time.length >= 10) {
@@ -58,14 +59,14 @@ const formatTimeFromIsoDate = (isoDate: string): string => {
 /**
  * Composant d'affichage d'un badge avec horloge pour les dates et heures d'événements
  */
-function ClockBadge({ date, time, withDay }: ClockBadgeProps) {
+function ClockBadge({ date, time = '', withDay }: ClockBadgeProps) {
     const parsedDate = new Date(date);
     const dayOfWeek = formatDayOfWeek(parsedDate);
     const dayAndMonth = formatDayAndMonth(parsedDate);
     const timeFormat = getTimeFormat(time);
 
     // Formatage de l'heure selon son format
-    let formattedTime: string;
+    let formattedTime: string = '';
     switch (timeFormat) {
         case 'timeRange':
             formattedTime = time; // Garder la plage horaire telle quelle
@@ -78,11 +79,21 @@ function ClockBadge({ date, time, withDay }: ClockBadgeProps) {
             formattedTime = time;
     }
 
+    // Déterminer si une heure est réellement présente
+    const hasTime = (() => {
+        if (timeFormat === 'unknown') return false;
+        if (timeFormat === 'timeRange') return true;
+        const trimmed = (formattedTime || '').trim();
+        if (!trimmed) return false;
+        // Ne pas afficher 00:00 (date seule)
+        return trimmed !== '00:00';
+    })();
+
     // Construction du texte à afficher selon le contexte
     let displayText: string;
     if (!withDay) {
-        // Sans le jour, on affiche simplement l'heure formatée
-        displayText = formattedTime;
+        // Sans le jour: afficher l'heure si disponible, sinon la date
+        displayText = hasTime ? formattedTime : `${dayAndMonth}`;
     } else {
         // Avec le jour, on construit l'affichage selon le format de l'heure
         switch (timeFormat) {
@@ -90,10 +101,12 @@ function ClockBadge({ date, time, withDay }: ClockBadgeProps) {
                 displayText = `${dayOfWeek} - ${formattedTime}`;
                 break;
             case 'isoDate':
-                displayText = `${dayOfWeek} ${dayAndMonth} à ${formattedTime}`;
+                displayText = hasTime
+                    ? `${dayOfWeek} ${dayAndMonth} à ${formattedTime}`
+                    : `${dayOfWeek} ${dayAndMonth}`;
                 break;
             case 'simpleTime':
-                displayText = `${dayOfWeek} ${dayAndMonth}${formattedTime ? ` à ${formattedTime}` : ''}`;
+                displayText = `${dayOfWeek} ${dayAndMonth}${hasTime ? ` de ${formattedTime}` : ''}`;
                 break;
             default:
                 displayText = `${dayOfWeek} ${dayAndMonth}`;

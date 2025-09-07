@@ -85,6 +85,29 @@ export const formatEventDates = (dates: string[] | undefined): string => {
             }
 
         default:
+            // Si toutes les dates sont dans le même mois/année → regrouper les jours
+            const sameMonth = formattedDates.every(
+                (d) =>
+                    d.getMonth() === formattedDates[0].getMonth() &&
+                    d.getFullYear() === formattedDates[0].getFullYear()
+            );
+
+            if (sameMonth) {
+                const days = formattedDates.map((d) =>
+                    format(d, 'd', { locale: fr })
+                );
+                const month = capitalizeFirstLetter(
+                    format(formattedDates[0], 'MMMM', { locale: fr })
+                );
+
+                if (days.length === 3) {
+                    // 26, 27 et 28 Juin
+                    return `${days[0]}, ${days[1]} et ${days[2]} ${month}`;
+                }
+                // 26, 27, 28 et 29 Juin (4+)
+                return `${days.slice(0, -1).join(', ')} et ${days.slice(-1)} ${month}`;
+            }
+
             const fullFormat = 'd MMMM';
             const formattedDateStrings = formattedDates.map((date) =>
                 capitalizeFirstLetter(format(date, fullFormat, { locale: fr }))
