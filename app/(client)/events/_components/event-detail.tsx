@@ -92,7 +92,7 @@ export default function EventDetail({ event }: EventDetailProps) {
                 >
                     <FormattedText
                         text={event.description}
-                        className='text-md max-md:text-center md:text-lg text-white mb-4'
+                        className='text-md md:text-lg text-white mb-4'
                     />
                     <div className='flex flex-col max-md:items-center space-y-2'>
                         {event.eventDates?.map((date, index) => (

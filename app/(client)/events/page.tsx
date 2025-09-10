@@ -144,12 +144,12 @@ export default async function Events() {
                     </strong>
                     <div className='flex max-md:flex-col max-md:space-y-6 md:space-x-4'>
                         <div className='flex flex-col space-y-4 p-2 max-md:items-center md:p-20 md:w-1/2'>
-                            <h2 className='text-2xl font-bold text-white'>
+                            <h2 className='text-2xl font-bold text-white max-md:text-center'>
                                 {firstEventOrLatest.title}
                             </h2>
                             <FormattedText
                                 text={firstEventOrLatest.description}
-                                className='text-gray-300 max-md:text-center'
+                                className='text-gray-300'
                             />
                             <div className='flex flex-col space-y-1'>
                                 {firstEventOrLatest?.eventDates?.map(

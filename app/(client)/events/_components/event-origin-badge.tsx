@@ -8,10 +8,11 @@ export function EventOriginBadge(props: EventOriginBadgeProps) {
     // Par défaut, considérer comme "interne" si le champ est manquant (compatibilité anciens contenus)
     const isExternal = origin === 'external';
     const base =
-        'inline-flex items-center rounded-full px-3 py-1 text-[10px] md:text-xs tracking-wide shadow-lg backdrop-blur ring-1 border font-bold';
+        'inline-flex items-center rounded-full px-3 py-1 text-[10px] md:text-xs tracking-wide font-semibold text-white shadow-lg border';
+    // Gradient haute-contraste: noir -> couleur accent
     const theme = isExternal
-        ? 'bg-amber-500/15 text-amber-300 ring-amber-400/30 border-amber-400/30'
-        : 'bg-jkdBlue/15 text-jkdBlue ring-jkdBlue/30 border-jkdBlue/30';
+        ? 'bg-[linear-gradient(135deg,#000_0%,#0a0a0a_50%,#F9DB06_100%)] border-[#F9DB06]'
+        : 'bg-[linear-gradient(135deg,#000_0%,#0a0a0a_50%,#E20614_100%)] border-[#E20614]';
 
     return (
         <span className={`${base} ${theme} ${className ?? ''}`}>
