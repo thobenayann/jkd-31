@@ -7,6 +7,7 @@ export const associationConfig = {
     email: 'president@jeetkunedo31.com',
     socialMedia: {
         facebook: 'https://www.facebook.com/jkd.jidao',
+        instagram: 'https://www.instagram.com/jeetkunedo_muret/',
     },
     legal: {
         director: 'Fanny GABORIT',
