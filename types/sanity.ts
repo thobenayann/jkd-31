@@ -1,4 +1,8 @@
-import { SanityReference } from '@sanity/image-url/lib/types/types';
+export type SanityReference = {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+};
 
 export interface SanityImageHotspot {
     _type: 'sanity.imageHotspot';
