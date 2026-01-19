@@ -1,6 +1,11 @@
 'use client';
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { Expand } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -49,6 +54,7 @@ export function FeaturedEventImage(props: FeaturedEventImageProps) {
                 </button>
             </DialogTrigger>
             <DialogContent className='p-0 bg-transparent border-0 shadow-none max-w-none w-auto'>
+                <DialogTitle className='sr-only'>{alt}</DialogTitle>
                 <div className='flex items-center justify-center'>
                     <Image
                         src={src}

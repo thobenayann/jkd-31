@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { sendEmail } from '@/services/sendEmail';
+import { sendEmail } from '@/services/send-email';
 import Image from 'next/image';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
@@ -24,9 +24,16 @@ export default function ContactForm() {
 
     const processForm: SubmitHandler<Inputs> = async (data) => {
         try {
-            await sendEmail(data);
-            toast.success('Email envoyé avec succès!');
-            reset();
+            const result = await sendEmail(data);
+            if (result.success) {
+                toast.success('Email envoyé avec succès!');
+                reset();
+            } else {
+                toast.error(
+                    result.error || "Erreur lors de l'envoi de l'email."
+                );
+                console.error('Email error:', result.error);
+            }
         } catch (error) {
             toast.error("Erreur lors de l'envoi de l'email.");
             console.error('Something went wrong:', error);
@@ -155,7 +162,7 @@ export default function ContactForm() {
                         id='message'
                         placeholder='...'
                         rows={6}
-                        className='mt-0 p-2 w-full border rounded-md outline-none focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue border-white/20 placeholder:text-white/30 placeholder:font-light text-white'
+                        className='mt-0 p-2 w-full border rounded-md outline-none focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue border-white/20 placeholder:text-gray-400 placeholder:font-light text-gray-800 bg-white'
                     ></textarea>
                     <p
                         className={`text-red-500 text-xs h-4 font-bold ${
