@@ -9,7 +9,7 @@ export const associationConfig = {
      * À garder identique à la fiche Google Business Profile.
      */
     venue: {
-        name: 'Salle Albert Camus',
+        name: 'Gymnase Albert Camus',
         streetAddress: '6 Rue Pierre Bauduc',
         postalCode: '31600',
         city: 'Muret',

@@ -57,7 +57,7 @@ Correspond aux tâches 1, 2 et 8 de [`../seo/technical/implementation-plan.md`](
 | Événements externes | Canonical et `url` JSON-LD = URL externe, pas d'`organizer` | La page est une republication ; la page d'origine fait référence. Choix hérité du commit "add external events", conservé. |
 | Rétention des événements passés dans le sitemap | 12 mois | Au-delà, aucun intérêt de référencement. |
 | Runner de tests | Vitest | `node --test` ne résout pas l'alias `@/` de `tsconfig`. Vitest le lit en une ligne de config et fonctionne sur un projet Next.js (Vite n'est que son moteur de transformation). |
-| Nom de la salle | "Salle Albert Camus" (pied de page) | Les descriptions d'événements disent "Gymnase Albert Camus". À trancher selon la fiche Google Business, puis aligner `constant/config.ts`. |
+| Nom de la salle | "Gymnase Albert Camus" | Nom officiel de l'équipement (annuaire de la mairie de Muret, FFME, Pages Jaunes). Le site disait "Salle", les descriptions d'événements "Gymnase". Tranché le 23 août 2026 : le nom sous lequel le lieu est référencé sur le web. |
 
 ### Changements de code
 
@@ -79,7 +79,7 @@ Correspond aux tâches 1, 2 et 8 de [`../seo/technical/implementation-plan.md`](
 
 | Document | `location` renseigné |
 |---|---|
-| 6 événements internes (`0f61c110`, `40d6963b`, `4fefbb49`, `541b342c`, `72723159`, `b8c3c7ba`) | Salle Albert Camus, 6 Rue Pierre Bauduc, 31600 Muret |
+| 6 événements internes (`0f61c110`, `40d6963b`, `4fefbb49`, `541b342c`, `72723159`, `b8c3c7ba`) | Gymnase Albert Camus, 6 Rue Pierre Bauduc, 31600 Muret (saisi "Salle" puis renommé "Gymnase" le même jour) |
 | `076fddca` Stage de printemps 2026 | Salle Mystère, complexe Jacqueline Auriol, 40 avenue Henri Peyrusse, 31600 Muret (lu dans la description) |
 | `d83cc058` Bootcamp Téléthon 2023 | Lac du Four de Louge, 31600 Muret (lu dans la description) |
 | 5 événements externes | **Non renseignés.** À saisir dans le Studio par Yann. |
@@ -92,7 +92,8 @@ Correspond aux tâches 1, 2 et 8 de [`../seo/technical/implementation-plan.md`](
 
 - [ ] Search Console : vérifier la propriété `https://www.jkd-selfdefense31.fr`, soumettre `/sitemap.xml`.
 - [ ] Studio Sanity : renseigner le lieu des 5 événements externes.
-- [ ] Fiche Google Business : trancher "Salle" ou "Gymnase" Albert Camus ; aligner nom, adresse, téléphone, horaires avec `constant/config.ts` (cohérence NAP).
+- [x] Fiche Google Business : nom "JKD Self Defense 31", adresse sans "Association Ji Dao", profils sociaux ajoutés (Yann, 23 août 2026). Reste : description, date de création, photos, vérification des horaires.
+- [ ] Pages Jaunes : la fiche "Ji Dao Self Defense Jeet Kune Do" porte l'ancien nom, à faire corriger.
 - [ ] Après quelques semaines : contrôler dans Search Console que `.com` et `vercel.app` disparaissent de l'index.
 
 ## Lots suivants (non commencés)
