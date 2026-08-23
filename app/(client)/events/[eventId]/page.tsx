@@ -33,8 +33,8 @@ export async function generateMetadata(
     const imageUrl = event.mainImage?.asset?._ref
         ? urlFor(event.mainImage.asset._ref).width(1200).height(630).url()
         : '';
-    const isExternal = (event as any)?.origin === 'external';
-    const externalUrl: string | undefined = (event as any)?.externalUrl;
+    const isExternal = event.origin === 'external';
+    const externalUrl = event.externalUrl;
 
     return {
         title: event.title,

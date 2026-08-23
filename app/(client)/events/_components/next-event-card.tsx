@@ -67,7 +67,7 @@ function NextEventCard({
                                 titlePersonality={
                                     event.personality?.title || ''
                                 }
-                                origin={(event as any)?.origin}
+                                origin={event.origin}
                                 imageFit={isSingle ? 'contain' : 'cover'}
                                 containerClassName={
                                     isSingle ? 'aspect-[16/9]' : undefined
