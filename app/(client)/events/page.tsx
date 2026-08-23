@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import GradualSpacing from '@/components/ui/gradual-spacing';
 import { formatEventDates } from '@/lib/formatEventDate';
 import { getCurrentSeason } from '@/lib/getCurrentSeason';
+import { hasUpcomingEvents } from '@/lib/selectEventsByPeriod';
 import { sortEventsByDate } from '@/lib/sortEventsByDate';
 import { Evenement, EVENTS_QUERYResult } from '@/sanity.types';
 import { sanityFetch } from '@/sanity/lib/fetch';
@@ -118,6 +119,12 @@ export default async function Events() {
         (event) => event !== firstEventOrLatest
     );
 
+    // Sans autre événement à venir, le filtre s'ouvre sur les derniers événements
+    // plutôt que sur une liste "à venir" vide.
+    const defaultPeriod = hasUpcomingEvents(remainingEvents, today)
+        ? 'next'
+        : 'past';
+
     const formattedEventDates = formatEventDates(firstEventOrLatest.eventDates);
 
     return (
@@ -223,7 +230,10 @@ export default async function Events() {
             {/* Section des événements restants */}
             <section id='event-filter-section' className='scroll-smooth'>
                 <div className='container mx-auto p-4'>
-                    <ClientEventFilter events={remainingEvents} />
+                    <ClientEventFilter
+                        events={remainingEvents}
+                        defaultPeriod={defaultPeriod}
+                    />
                 </div>
             </section>
         </section>
