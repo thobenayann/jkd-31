@@ -6,8 +6,8 @@ const Footer = () => {
     return (
         <footer className='flex flex-col p-4 pb-28 md:pb-4 w-full font-serif'>
             <p className='text-center text-gray-400 text-sm font-normal'>
-                ©2024 - Association JKD Self Defense 31 à Muret (31600) - Salle
-                Albert Camus - Tous droits réservés
+                ©2024 - Association JKD Self Defense 31 à Muret (31600) -
+                Gymnase Albert Camus - Tous droits réservés
             </p>
             <div className='grid w-full grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center'>
                 {/* Colonne gauche (vide en desktop pour centrer le bloc central) */}

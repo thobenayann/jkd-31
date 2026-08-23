@@ -15,7 +15,7 @@ const internalEvent: EventForJsonLd = {
     eventDates: ['2026-06-17', '2026-06-18'],
     origin: 'internal',
     location: {
-        name: 'Salle Albert Camus',
+        name: 'Gymnase Albert Camus',
         streetAddress: '6 Rue Pierre Bauduc',
         postalCode: '31600',
         city: 'Muret',
@@ -37,7 +37,7 @@ describe('buildEventJsonLd', () => {
         expect(ld.image).toBe('https://cdn.sanity.io/poster.jpg');
         expect(ld.location).toEqual({
             '@type': 'Place',
-            name: 'Salle Albert Camus',
+            name: 'Gymnase Albert Camus',
             address: {
                 '@type': 'PostalAddress',
                 streetAddress: '6 Rue Pierre Bauduc',
