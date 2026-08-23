@@ -23,12 +23,8 @@ export default function EventDetail({ event }: EventDetailProps) {
         ? urlFor(event.personality.photo.asset._ref).url()
         : '';
     const formattedEventDates = formatEventDates(event.eventDates);
-    const isExternal = (event as any)?.origin === 'external';
-    const origin = (event as any)?.origin as
-        | 'internal'
-        | 'external'
-        | undefined;
-    const externalUrl: string | undefined = (event as any)?.externalUrl;
+    const isExternal = event.origin === 'external';
+    const externalUrl = event.externalUrl;
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -77,7 +73,7 @@ export default function EventDetail({ event }: EventDetailProps) {
                         {event.title || 'Événement sans titre'}
                     </h1>
                     <div className='flex items-center justify-center mb-4'>
-                        <EventOriginBadge origin={origin} />
+                        <EventOriginBadge origin={event.origin} />
                     </div>
                     <div className='flex justify-center mb-6'>
                         <strong className='text-lg md:text-2xl text-gray-600'>

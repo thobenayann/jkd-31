@@ -151,7 +151,7 @@ export function ConfirmationEmail({
                                     lineHeight: '1.6',
                                 }}
                             >
-                                En attendant, n'hésitez pas à consulter notre
+                                En attendant, n&apos;hésitez pas à consulter notre
                                 site pour découvrir nos activités, nos cours et
                                 nos événements.
                             </Text>
@@ -199,7 +199,7 @@ export function ConfirmationEmail({
                                     marginBottom: '15px',
                                 }}
                             >
-                                Besoin d'informations ?
+                                Besoin d&apos;informations ?
                             </Text>
                             <Text
                                 style={{

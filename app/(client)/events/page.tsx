@@ -8,7 +8,7 @@ import { formatEventDates } from '@/lib/formatEventDate';
 import { getCurrentSeason } from '@/lib/getCurrentSeason';
 import { hasUpcomingEvents } from '@/lib/selectEventsByPeriod';
 import { sortEventsByDate } from '@/lib/sortEventsByDate';
-import { Evenement, EVENTS_QUERYResult } from '@/sanity.types';
+import { Evenement, EVENTS_QUERY_RESULT } from '@/sanity.types';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
@@ -18,7 +18,7 @@ import ClientEventFilter from './_components/event-filter';
 import { FeaturedEventImage } from './_components/featured-event-image';
 
 export default async function Events() {
-    const events: EVENTS_QUERYResult = await sanityFetch({
+    const events: EVENTS_QUERY_RESULT = await sanityFetch({
         query: EVENTS_QUERY,
     });
 
@@ -196,7 +196,7 @@ export default async function Events() {
                                 <FeaturedEventImage
                                     src={firstEventOrLatestImageUrl}
                                     alt={"Poster de l'événement"}
-                                    origin={(firstEventOrLatest as any)?.origin}
+                                    origin={firstEventOrLatest.origin}
                                 />
                             ) : null}
                         </div>
