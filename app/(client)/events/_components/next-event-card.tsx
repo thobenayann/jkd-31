@@ -7,9 +7,15 @@ import CardEvent from './card-event';
 interface NextEventCardProps {
     events: Evenement[];
     isLoading: boolean;
+    /** Message affiché quand aucun événement ne correspond au filtre. */
+    emptyMessage?: string;
 }
 
-function NextEventCard({ events, isLoading }: NextEventCardProps) {
+function NextEventCard({
+    events,
+    isLoading,
+    emptyMessage = "Nous n'avons pas encore publié d'événements à venir.",
+}: NextEventCardProps) {
     if (isLoading) {
         return (
             <section className='container flex max-md:flex-col max-md:space-y-20 md:p-20 md:justify-between'>
@@ -74,8 +80,7 @@ function NextEventCard({ events, isLoading }: NextEventCardProps) {
                 <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm py-4'>
                     <div className='flex flex-col items-center gap-1 text-center'>
                         <h3 className='text-base md:text-2xl font-bold tracking-tight'>
-                            Nous n&apos;avons pas encore publié
-                            d&apos;événements à venir.
+                            {emptyMessage}
                         </h3>
                     </div>
                 </div>

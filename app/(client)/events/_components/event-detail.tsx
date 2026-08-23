@@ -9,7 +9,6 @@ import { urlFor } from '@/sanity/lib/imageUrl';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import { EventOriginBadge } from './event-origin-badge';
 
 interface EventDetailProps {
@@ -53,8 +52,8 @@ export default function EventDetail({ event }: EventDetailProps) {
 
     return (
         <>
-            <Script
-                id='event-jsonld'
+            {/* Balise native (pas next/script) pour que le JSON-LD soit dans le HTML servi aux crawlers */}
+            <script
                 type='application/ld+json'
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
