@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Rapport SEO et plan d'action de JKD Self Defense 31, destiné à la présidente de l'association.">
+<meta name="theme-color" content="#0a1020">
+<title>Rapport SEO — JKD Self Defense 31</title>
+<style>html,body{margin:0;min-height:100%;background:#0a1020}body{min-width:320px}</style>
+</head>
+<body>
+<main id="jkd-president-report" class="report-shell">
+  <style>
+    #jkd-president-report {
+      --ink: #0a1020;
+      --ink-soft: #101a30;
+      --panel: #111a2e;
+      --panel-2: #16223b;
+      --paper: #f7f9fc;
+      --paper-2: #eef3fa;
+      --text: #f7f9fc;
+      --text-soft: #b9c4d6;
+      --text-ink: #172033;
+      --text-muted: #667085;
+      --blue: #2563eb;
+      --blue-soft: #7ea6ff;
+      --cyan: #22d3ee;
+      --red: #e5484d;
+      --green: #34d399;
+      --amber: #fbbf24;
+      --line: rgba(255, 255, 255, 0.11);
+      --line-dark: rgba(23, 32, 51, 0.12);
+      --shadow: 0 24px 80px rgba(3, 8, 20, 0.28);
+      width: 100%;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(115deg, transparent 0 47%, rgba(37, 99, 235, 0.045) 47% 49%, transparent 49% 100%),
+        linear-gradient(25deg, transparent 0 47%, rgba(34, 211, 238, 0.035) 47% 49%, transparent 49% 100%),
+        var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: clip;
+    }
+
+    #jkd-president-report * { box-sizing: border-box; }
+    #jkd-president-report a { color: inherit; }
+    #jkd-president-report button { font: inherit; }
+    #jkd-president-report button:focus-visible,
+    #jkd-president-report a:focus-visible,
+    #jkd-president-report summary:focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .report-shell .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .report-shell .hero { position: relative; padding: 72px 0 44px; overflow: hidden; }
+    .report-shell .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 50%;
+      width: min(720px, 70vw);
+      height: 520px;
+      transform: translate(-5%, -36%) rotate(-7deg);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 49px, rgba(255,255,255,.045) 49px 50px),
+        repeating-linear-gradient(90deg, transparent 0 79px, rgba(255,255,255,.04) 79px 80px);
+      mask-image: linear-gradient(to bottom, #000 15%, transparent 82%);
+      pointer-events: none;
+    }
+
+    .report-shell .masthead { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 54px; }
+    .report-shell .brand { display: flex; align-items: center; gap: 13px; font-weight: 700; letter-spacing: -.01em; }
+    .report-shell .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 13px;
+      background: linear-gradient(145deg, rgba(37,99,235,.28), rgba(34,211,238,.08));
+      font-family: Georgia, Cambria, serif;
+      font-size: 14px;
+    }
+    .report-shell .mast-meta { color: var(--text-soft); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .report-shell .eyebrow { margin: 0 0 16px; color: var(--cyan); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .report-shell h1,
+    .report-shell h2,
+    .report-shell h3 { margin-top: 0; font-family: Georgia, Cambria, serif; line-height: 1.08; letter-spacing: -.035em; }
+    .report-shell h1 { max-width: 850px; margin-bottom: 23px; font-size: clamp(42px, 7vw, 82px); font-weight: 500; }
+    .report-shell .hero-lead { max-width: 700px; margin: 0; color: var(--text-soft); font-size: clamp(18px, 2vw, 22px); }
+    .report-shell .hero-accent { color: transparent; background: linear-gradient(90deg, var(--blue-soft), var(--cyan)); background-clip: text; -webkit-background-clip: text; }
+    .report-shell .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .report-shell .action-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--text);
+      background: rgba(255,255,255,.055);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .report-shell .action-button:hover { border-color: rgba(34,211,238,.5); background: rgba(34,211,238,.08); }
+    .report-shell .action-button.primary { border-color: transparent; background: linear-gradient(100deg, var(--blue), #3478f6); box-shadow: 0 14px 32px rgba(37,99,235,.25); }
+
+    .report-shell .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 54px; }
+    .report-shell .decision-card {
+      position: relative;
+      min-height: 155px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      backdrop-filter: blur(12px);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .report-shell .decision-card:hover { transform: translateY(-3px); border-color: rgba(126,166,255,.45); }
+    .report-shell .decision-no { color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .report-shell .decision-card h2 { margin: 18px 0 8px; font-size: 22px; font-weight: 500; }
+    .report-shell .decision-card p { margin: 0; color: var(--text-soft); font-size: 14px; line-height: 1.5; }
+
+    .report-shell .tab-dock {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      padding: 0 0 20px;
+    }
+    .report-shell .tabbar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: max-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 15px;
+      background: rgba(10,16,32,.88);
+      box-shadow: 0 16px 45px rgba(0,0,0,.25);
+      backdrop-filter: blur(16px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .report-shell .tabbar::-webkit-scrollbar { display: none; }
+    .report-shell .tab {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--text-soft);
+      background: transparent;
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .report-shell .tab:hover { color: var(--text); background: rgba(255,255,255,.055); }
+    .report-shell .tab[aria-selected="true"] { color: #fff; background: linear-gradient(105deg, var(--blue), #2c6de8); box-shadow: 0 8px 22px rgba(37,99,235,.2); }
+
+    .report-shell .report-body { padding: 18px 0 86px; }
+    .report-shell .tab-panel { animation: panel-in .22s ease both; }
+    .report-shell.js .tab-panel:not(.is-active) { display: none; }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .report-shell .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 350px); gap: 38px; align-items: end; margin: 40px 0 26px; }
+    .report-shell .section-head h2 { margin-bottom: 0; font-size: clamp(34px, 5vw, 56px); font-weight: 500; }
+    .report-shell .section-head p { margin: 0; color: var(--text-soft); }
+    .report-shell .progress-line { height: 2px; margin: 25px 0 34px; background: linear-gradient(90deg, var(--blue), var(--cyan) 65%, rgba(34,211,238,0)); }
+
+    .report-shell .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .report-shell .metric {
+      min-height: 150px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: 0 10px 35px rgba(0,0,0,.12);
+    }
+    .report-shell .metric-label { color: var(--text-soft); font-size: 13px; }
+    .report-shell .metric-value { display: block; margin: 17px 0 7px; font-family: Georgia, Cambria, serif; font-size: clamp(30px, 4vw, 44px); line-height: 1; letter-spacing: -.04em; }
+    .report-shell .metric-note { color: var(--text-soft); font-size: 12px; }
+
+    .report-shell .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; margin: 18px 0; }
+    .report-shell .surface {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, var(--panel), rgba(17,26,46,.7));
+    }
+    .report-shell .surface.light { color: var(--text-ink); border-color: var(--line-dark); background: var(--paper); }
+    .report-shell .surface h3 { margin-bottom: 12px; font-size: 25px; font-weight: 500; }
+    .report-shell .surface p:last-child { margin-bottom: 0; }
+    .report-shell .plain-list { margin: 18px 0 0; padding: 0; list-style: none; }
+    .report-shell .plain-list li { position: relative; margin: 11px 0; padding-left: 25px; }
+    .report-shell .plain-list li::before { content: ""; position: absolute; top: .72em; left: 0; width: 11px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+    .report-shell .status-row { display: grid; grid-template-columns: 110px 1fr; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--line); }
+    .report-shell .status-row:last-child { border-bottom: 0; }
+    .report-shell .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: start;
+      min-height: 29px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .report-shell .status.good { color: #b6ffe5; background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.25); }
+    .report-shell .status.watch { color: #ffe8a3; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .report-shell .status.action { color: #ffd0d2; background: rgba(229,72,77,.1); border: 1px solid rgba(229,72,77,.25); }
+    .report-shell .status-copy strong { display: block; margin-bottom: 3px; }
+    .report-shell .status-copy span { color: var(--text-soft); font-size: 14px; }
+
+    .report-shell details { margin-top: 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
+    .report-shell summary { position: relative; padding: 17px 48px 17px 19px; font-weight: 650; cursor: pointer; list-style: none; }
+    .report-shell summary::-webkit-details-marker { display: none; }
+    .report-shell summary::after { content: "+"; position: absolute; top: 50%; right: 19px; transform: translateY(-50%) rotate(0deg); color: var(--cyan); font-size: 22px; transition: transform .18s ease; }
+    .report-shell details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+    .report-shell .details-body { padding: 0 19px 19px; color: var(--text-soft); }
+    .report-shell .details-body p:first-child { margin-top: 0; }
+
+    .report-shell .rank-table,
+    .report-shell .data-table { width: 100%; border-collapse: collapse; }
+    .report-shell .rank-table th,
+    .report-shell .rank-table td,
+    .report-shell .data-table th,
+    .report-shell .data-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+    .report-shell .rank-table th,
+    .report-shell .data-table th { color: var(--text-soft); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+    .report-shell .position { font-family: Georgia, Cambria, serif; font-size: 25px; }
+    .report-shell .position.top { color: var(--cyan); }
+
+    .report-shell .intent-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .report-shell .intent-card { min-height: 180px; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); }
+    .report-shell .intent-label { color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+    .report-shell .intent-card h3 { margin: 14px 0 8px; font-size: 22px; }
+    .report-shell .intent-card p { margin: 0; color: var(--text-soft); font-size: 14px; }
+
+    .report-shell .page-roadmap { margin: 28px 0; }
+    .report-shell .page-step { display: grid; grid-template-columns: 72px 1fr auto; gap: 18px; align-items: center; padding: 17px 0; border-bottom: 1px solid var(--line); }
+    .report-shell .page-step:last-child { border-bottom: 0; }
+    .report-shell .page-priority { color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .report-shell .page-step strong { display: block; }
+    .report-shell .page-step span { color: var(--text-soft); font-size: 13px; }
+    .report-shell .page-state { padding: 4px 9px; border-radius: 999px; color: var(--text); background: rgba(255,255,255,.06); font-size: 11px !important; }
+
+    .report-shell .chart-card { margin-top: 18px; padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
+    .report-shell .chart-head { display: flex; justify-content: space-between; gap: 20px; align-items: start; margin-bottom: 18px; }
+    .report-shell .chart-head h3 { margin-bottom: 5px; font-size: 24px; }
+    .report-shell .chart-head p { margin: 0; color: var(--text-soft); font-size: 13px; }
+    .report-shell .chart-badge { flex: 0 0 auto; padding: 5px 9px; border: 1px solid rgba(34,211,238,.25); border-radius: 999px; color: var(--cyan); background: rgba(34,211,238,.07); font-size: 11px; }
+    .report-shell .line-chart { display: block; width: 100%; height: auto; min-height: 260px; overflow: visible; }
+    .report-shell .grid-line { stroke: rgba(255,255,255,.09); stroke-width: 1; }
+    .report-shell .axis-label { fill: var(--text-soft); font-family: Inter, "Segoe UI", sans-serif; font-size: 12px; }
+    .report-shell .chart-line { fill: none; stroke: url(#traffic-line-gradient); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .report-shell .chart-area { fill: url(#traffic-area-gradient); }
+    .report-shell .chart-dot { fill: var(--panel); stroke: var(--cyan); stroke-width: 3; }
+    .report-shell .chart-dot.peak { fill: var(--red); stroke: #ffd7d9; stroke-width: 4; }
+    .report-shell .peak-label { fill: #fff; font-size: 13px; font-weight: 700; }
+    .report-shell.js .chart-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .report-shell.js .chart-live .chart-line { stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1); }
+
+    .report-shell .bars { display: grid; gap: 16px; margin-top: 22px; }
+    .report-shell .bar-row { display: grid; grid-template-columns: minmax(110px, 170px) 1fr 70px; gap: 13px; align-items: center; }
+    .report-shell .bar-label { font-size: 13px; }
+    .report-shell .bar-track { height: 12px; border-radius: 999px; background: rgba(255,255,255,.065); overflow: hidden; }
+    .report-shell .bar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform-origin: left; }
+    .report-shell .bar-value { color: var(--text-soft); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; text-align: right; }
+
+    .report-shell .device-strip { display: flex; height: 24px; margin: 25px 0 17px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.06); }
+    .report-shell .device-strip span:nth-child(1) { width: 68.24%; background: linear-gradient(90deg, var(--blue), #4d83ef); }
+    .report-shell .device-strip span:nth-child(2) { width: 30.54%; background: linear-gradient(90deg, #4d83ef, var(--cyan)); }
+    .report-shell .device-strip span:nth-child(3) { width: 1.22%; min-width: 4px; background: var(--amber); }
+    .report-shell .legend { display: flex; flex-wrap: wrap; gap: 15px 22px; }
+    .report-shell .legend-item { display: flex; align-items: center; gap: 8px; color: var(--text-soft); font-size: 12px; }
+    .report-shell .legend-swatch { width: 9px; height: 9px; border-radius: 50%; }
+
+    .report-shell .timeline { position: relative; display: grid; gap: 0; margin-top: 28px; }
+    .report-shell .timeline::before { content: ""; position: absolute; top: 18px; bottom: 18px; left: 22px; width: 2px; background: linear-gradient(var(--blue), var(--cyan) 70%, var(--red)); }
+    .report-shell .timeline-item { position: relative; display: grid; grid-template-columns: 46px 130px 1fr; gap: 18px; padding: 0 0 35px; }
+    .report-shell .timeline-item:last-child { padding-bottom: 0; }
+    .report-shell .timeline-dot { z-index: 1; width: 14px; height: 14px; margin: 12px 0 0 16px; border: 3px solid var(--ink); border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 3px rgba(34,211,238,.22); }
+    .report-shell .timeline-time { padding-top: 7px; color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .report-shell .timeline-copy { padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .report-shell .timeline-copy h3 { margin-bottom: 9px; font-size: 22px; }
+    .report-shell .timeline-copy ul { margin: 0; padding-left: 19px; color: var(--text-soft); }
+
+    .report-shell .president-box { position: relative; margin-top: 30px; padding: 30px; border: 1px solid rgba(34,211,238,.35); border-radius: 18px; background: linear-gradient(135deg, rgba(37,99,235,.18), rgba(34,211,238,.07)); overflow: hidden; }
+    .report-shell .president-box::after { content: ""; position: absolute; inset: auto -50px -80px auto; width: 220px; height: 220px; border: 1px solid rgba(255,255,255,.09); border-radius: 50%; box-shadow: 0 0 0 24px rgba(255,255,255,.02), 0 0 0 48px rgba(255,255,255,.015); }
+    .report-shell .president-box h3 { font-size: 29px; }
+    .report-shell .checklist { counter-reset: item; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .report-shell .checklist li { counter-increment: item; position: relative; padding: 10px 10px 10px 42px; color: var(--text-soft); }
+    .report-shell .checklist li::before { content: counter(item); position: absolute; top: 8px; left: 0; display: grid; place-items: center; width: 27px; height: 27px; border: 1px solid rgba(34,211,238,.4); border-radius: 9px; color: var(--cyan); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; }
+
+    .report-shell .canva-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+    .report-shell .canva-card { min-height: 130px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.035); }
+    .report-shell .canva-card strong { display: block; margin-bottom: 8px; }
+    .report-shell .canva-card span { color: var(--text-soft); font-size: 13px; }
+
+    .report-shell .report-footer { padding: 36px 0 55px; border-top: 1px solid var(--line); color: var(--text-soft); font-size: 12px; }
+    .report-shell .footer-grid { display: flex; justify-content: space-between; gap: 22px; }
+    .report-shell .source-links { display: flex; flex-wrap: wrap; gap: 10px 17px; }
+    .report-shell .source-links a { color: var(--blue-soft); text-underline-offset: 3px; }
+    .report-shell .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .report-shell .reveal { opacity: 0; transform: translateY(10px); }
+    .report-shell.ready .reveal { opacity: 1; transform: translateY(0); transition: opacity .45s ease, transform .45s ease; }
+    .report-shell.ready .reveal:nth-child(2) { transition-delay: .08s; }
+    .report-shell.ready .reveal:nth-child(3) { transition-delay: .16s; }
+
+    @media (max-width: 900px) {
+      .report-shell .decision-grid,
+      .report-shell .metric-grid { grid-template-columns: repeat(2, 1fr); }
+      .report-shell .decision-card:last-child { grid-column: 1 / -1; }
+      .report-shell .split,
+      .report-shell .section-head { grid-template-columns: 1fr; }
+      .report-shell .section-head { gap: 13px; }
+      .report-shell .canva-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      .report-shell .container { width: min(100% - 24px, 1180px); }
+      .report-shell .hero { padding-top: 30px; }
+      .report-shell .masthead { align-items: flex-start; margin-bottom: 38px; }
+      .report-shell .mast-meta { text-align: right; }
+      .report-shell h1 { font-size: clamp(40px, 13vw, 58px); }
+      .report-shell .decision-grid,
+      .report-shell .metric-grid,
+      .report-shell .intent-grid,
+      .report-shell .checklist,
+      .report-shell .canva-row { grid-template-columns: 1fr; }
+      .report-shell .decision-card:last-child { grid-column: auto; }
+      .report-shell .tab-dock { top: 4px; margin: 0 -12px; }
+      .report-shell .tabbar { width: 100%; border-radius: 12px; }
+      .report-shell .tab { padding-inline: 13px; }
+      .report-shell .surface,
+      .report-shell .chart-card { padding: 20px; }
+      .report-shell .status-row { grid-template-columns: 1fr; gap: 8px; }
+      .report-shell .status { justify-self: start; }
+      .report-shell .page-step { grid-template-columns: 56px 1fr; }
+      .report-shell .page-state { grid-column: 2; justify-self: start; }
+      .report-shell .chart-head { display: block; }
+      .report-shell .chart-badge { display: inline-block; margin-top: 10px; }
+      .report-shell .line-chart { min-height: 190px; }
+      .report-shell .bar-row { grid-template-columns: 92px 1fr 52px; gap: 8px; }
+      .report-shell .timeline-item { grid-template-columns: 46px 1fr; gap: 10px; }
+      .report-shell .timeline-time { grid-column: 2; }
+      .report-shell .timeline-copy { grid-column: 2; padding: 20px; }
+      .report-shell .footer-grid { display: block; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #jkd-president-report *, #jkd-president-report *::before, #jkd-president-report *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .report-shell .reveal { opacity: 1; transform: none; }
+      .report-shell.js .chart-line { stroke-dashoffset: 0; }
+    }
+
+    @media print {
+      #jkd-president-report { color: #172033; background: #fff; font-size: 10.5pt; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .report-shell .container { width: 100%; }
+      .report-shell .hero { padding: 28px 0 22px; color: #172033; }
+      .report-shell .hero::before { display: none; }
+      .report-shell .hero-accent { color: #245fdb; background: none; }
+      .report-shell .hero-lead,
+      .report-shell .mast-meta,
+      .report-shell .decision-card p,
+      .report-shell .section-head p,
+      .report-shell .metric-label,
+      .report-shell .metric-note,
+      .report-shell .status-copy span,
+      .report-shell .details-body,
+      .report-shell .intent-card p,
+      .report-shell .page-step span,
+      .report-shell .chart-head p,
+      .report-shell .legend-item,
+      .report-shell .timeline-copy ul,
+      .report-shell .checklist li,
+      .report-shell .canva-card span,
+      .report-shell .report-footer { color: #526077; }
+      .report-shell .action-button,
+      .report-shell .tab-dock { display: none !important; }
+      .report-shell .decision-grid { margin-top: 28px; }
+      .report-shell .decision-card,
+      .report-shell .metric,
+      .report-shell .surface,
+      .report-shell .intent-card,
+      .report-shell .chart-card,
+      .report-shell .timeline-copy,
+      .report-shell .canva-card { color: #172033; border-color: #dce3ee; background: #fff; box-shadow: none; break-inside: avoid; }
+      .report-shell .tab-panel,
+      .report-shell.js .tab-panel:not(.is-active) { display: block !important; animation: none; break-before: page; }
+      .report-shell .tab-panel:first-child { break-before: auto; }
+      .report-shell .report-body { padding-bottom: 20px; }
+      .report-shell details { border-color: #dce3ee; background: #fff; break-inside: avoid; }
+      .report-shell details:not([open]) > :not(summary) { display: block !important; }
+      .report-shell .grid-line { stroke: #dce3ee; }
+      .report-shell .axis-label { fill: #526077; }
+      .report-shell .chart-dot { fill: #fff; }
+      .report-shell .bar-track { background: #edf1f6; }
+      .report-shell .president-box { color: #172033; border-color: #94b7ff; background: #eef5ff; break-inside: avoid; }
+      .report-shell .report-footer { border-color: #dce3ee; }
+      .report-shell .source-links a { color: #245fdb; }
+      .report-shell .reveal { opacity: 1; transform: none; }
+      @page { size: A4; margin: 13mm; }
+    }
+  </style>
+
+  <header class="hero">
+    <div class="container">
+      <div class="masthead reveal">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">JKD</span><span>JKD Self Defense 31</span></div>
+        <div class="mast-meta">Rapport au bureau<br>14 juillet 2026</div>
+      </div>
+
+      <p class="eyebrow reveal">Audit SEO · acquisition locale · fréquentation</p>
+      <h1 class="reveal">Faire du site un véritable <span class="hero-accent">outil de recrutement.</span></h1>
+      <p class="hero-lead reveal">Le club est déjà très visible sur sa spécialité. Le prochain enjeu est simple : mieux répondre aux futurs adhérents, mesurer leurs demandes et préparer la rentrée avant le pic de septembre.</p>
+      <div class="hero-actions reveal">
+        <button class="action-button primary" type="button" data-go-tab="action">Voir le plan d'action <span aria-hidden="true">→</span></button>
+        <button class="action-button" type="button" data-print>Imprimer ou enregistrer en PDF</button>
+      </div>
+
+      <div class="decision-grid" aria-label="Trois décisions principales">
+        <article class="decision-card reveal"><span class="decision-no">DÉCISION 01</span><h2>Conserver Vercel</h2><p>Les outils déjà en place couvrent la fréquentation, les performances et les futures conversions. GA4 n'est pas nécessaire aujourd'hui.</p></article>
+        <article class="decision-card reveal"><span class="decision-no">DÉCISION 02</span><h2>Préparer septembre</h2><p>La rentrée concentre le plus fort intérêt. Les pages, campagnes et accès Google doivent être prêts avant la mi-août.</p></article>
+        <article class="decision-card reveal"><span class="decision-no">DÉCISION 03</span><h2>Parler aux débutants</h2><p>Le site raconte bien le JKD. Il doit désormais expliquer l'essai, les niveaux, les horaires et les bénéfices concrets.</p></article>
+      </div>
+    </div>
+  </header>
+
+  <div class="tab-dock container">
+    <nav class="tabbar" role="tablist" aria-label="Sections du rapport">
+      <button class="tab" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" tabindex="0" data-tab="overview">L'essentiel</button>
+      <button class="tab" id="tab-visibility" role="tab" aria-selected="false" aria-controls="panel-visibility" tabindex="-1" data-tab="visibility">Visibilité</button>
+      <button class="tab" id="tab-traffic" role="tab" aria-selected="false" aria-controls="panel-traffic" tabindex="-1" data-tab="traffic">Fréquentation</button>
+      <button class="tab" id="tab-action" role="tab" aria-selected="false" aria-controls="panel-action" tabindex="-1" data-tab="action">Plan d'action</button>
+    </nav>
+  </div>
+
+  <div class="report-body container">
+    <section class="tab-panel is-active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" data-panel="overview">
+      <div class="section-head"><div><p class="eyebrow">Vue d'ensemble</p><h2>Une base solide, quelques freins très concrets.</h2></div><p>Il ne faut pas refaire tout le site. Les meilleurs gains viendront de corrections ciblées, d'un parcours d'essai plus clair et d'une présence Google cohérente.</p></div>
+      <div class="progress-line"></div>
+
+      <div class="metric-grid" aria-label="Chiffres clés">
+        <article class="metric"><span class="metric-label">Pages vues sur 365 jours</span><strong class="metric-value" data-count="6123">6 123</strong><span class="metric-note">mesurées par Vercel</span></article>
+        <article class="metric"><span class="metric-label">Visiteurs uniques</span><strong class="metric-value" data-count="1719">1 719</strong><span class="metric-note">dédupliqués sur la période</span></article>
+        <article class="metric"><span class="metric-label">Position « Jeet Kune Do Muret »</span><strong class="metric-value">1<sup>er</sup></strong><span class="metric-note">relevé ponctuel du 14 juillet</span></article>
+        <article class="metric"><span class="metric-label">Part des appareils mobiles</span><strong class="metric-value" data-count="68" data-suffix=" %">68 %</strong><span class="metric-note">priorité à l'expérience mobile</span></article>
+      </div>
+
+      <div class="split">
+        <article class="surface">
+          <h3>Ce qui fonctionne déjà</h3>
+          <div class="status-row"><span class="status good">Fort</span><div class="status-copy"><strong>Une vraie autorité sur le Jeet Kune Do</strong><span>Le club arrive premier sur la recherche la plus spécifique observée.</span></div></div>
+          <div class="status-row"><span class="status good">Fort</span><div class="status-copy"><strong>Un contenu authentique</strong><span>Histoire du club, instructeurs, affiliation et photos réelles créent de la confiance.</span></div></div>
+          <div class="status-row"><span class="status good">Fort</span><div class="status-copy"><strong>De bonnes performances réelles</strong><span>Le site est rapide et stable, notamment sur les interactions et la mise en page.</span></div></div>
+        </article>
+
+        <article class="surface light">
+          <h3>Ce qui freine les adhésions</h3>
+          <ul class="plain-list">
+            <li>Le cours d'essai n'est pas assez visible ni expliqué.</li>
+            <li>L'accueil parle plus de l'histoire du JKD que du futur pratiquant.</li>
+            <li>Google reçoit un sitemap avec l'ancien domaine en <code>.com</code>.</li>
+            <li>Les titres animés sont mal compris par les moteurs et lecteurs d'écran.</li>
+            <li>Les demandes utiles ne sont pas encore mesurées.</li>
+          </ul>
+        </article>
+      </div>
+
+      <details>
+        <summary>Pourquoi rester uniquement sur Vercel Analytics ?</summary>
+        <div class="details-body"><p>Vercel mesure déjà les vues, visiteurs, sources, pages, appareils et performances sans cookie Analytics. Le plan Pro permet aussi de compter les clics vers un essai, les appels et les formulaires réussis. Ajouter GA4 créerait plus de complexité et de contraintes de consentement sans répondre aujourd'hui à un besoin supplémentaire.</p><p>Le formulaire reste soumis au RGPD : la page légale sera complétée, les durées précisées et aucune donnée personnelle ne sera envoyée dans Analytics.</p></div>
+      </details>
+      <details>
+        <summary>Quelques termes techniques expliqués simplement</summary>
+        <div class="details-body"><p><strong>Sitemap :</strong> la liste des pages que nous souhaitons faire découvrir à Google. <strong>Canonical :</strong> l'adresse que Google doit considérer comme l'originale. <strong>Conversion :</strong> une action utile comme demander un essai, appeler ou envoyer le formulaire. <strong>SEO :</strong> l'ensemble des actions qui facilitent la compréhension et la visibilité du site dans les moteurs de recherche.</p></div>
+      </details>
+    </section>
+
+    <section class="tab-panel" id="panel-visibility" role="tabpanel" aria-labelledby="tab-visibility" data-panel="visibility">
+      <div class="section-head"><div><p class="eyebrow">Visibilité locale</p><h2>Protéger la spécialité, élargir vers les besoins.</h2></div><p>Le club domine sa niche exacte. Pour recruter plus largement, il doit aussi répondre aux personnes qui cherchent une solution de self-défense sans connaître le JKD.</p></div>
+      <div class="progress-line"></div>
+
+      <div class="split">
+        <article class="surface">
+          <h3>Positions Google observées</h3>
+          <div style="overflow-x:auto">
+            <table class="rank-table">
+              <thead><tr><th>Recherche</th><th>Position</th><th>Lecture</th></tr></thead>
+              <tbody>
+                <tr><td>Jeet Kune Do Muret</td><td class="position top">1</td><td>Position à défendre</td></tr>
+                <tr><td>self défense Muret</td><td class="position top">2</td><td>Meilleure opportunité</td></tr>
+                <tr><td>arts martiaux Muret</td><td class="position">7</td><td>Contenu trop étroit</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="color:var(--text-soft);font-size:12px;margin:15px 0 0">Relevé Google non personnalisé du 14 juillet 2026. Une position varie selon le lieu, l'appareil et l'historique.</p>
+        </article>
+
+        <article class="surface light">
+          <h3>Le bon changement de perspective</h3>
+          <p>Le site répond aujourd'hui à « Qui est Bruce Lee et qu'est-ce que le JKD ? ». Il doit aussi répondre à « Est-ce fait pour moi ? », « Puis-je essayer ? », « Quelle tenue ? », « Quand et combien ? ».</p>
+          <ul class="plain-list"><li>Rassurer les débutants.</li><li>Expliquer la différence avec la compétition.</li><li>Montrer une séance réelle.</li><li>Donner une prochaine action évidente.</li></ul>
+        </article>
+      </div>
+
+      <h3 style="margin:38px 0 16px;font-size:29px">Quatre familles de recherches à couvrir</h3>
+      <div class="intent-grid">
+        <article class="intent-card"><span class="intent-label">Spécialité</span><h3>Jeet Kune Do, Kali, Eskrima</h3><p>Pour les personnes qui connaissent déjà la discipline et veulent trouver un club proche.</p></article>
+        <article class="intent-card"><span class="intent-label">Besoin</span><h3>Self-défense à Muret</h3><p>Pour celles et ceux qui cherchent confiance, pratique concrète et condition physique.</p></article>
+        <article class="intent-card"><span class="intent-label">Public</span><h3>Femmes, adolescents, débutants</h3><p>Pour expliquer un cadre adapté sans promesse irréaliste ni marketing de la peur.</p></article>
+        <article class="intent-card"><span class="intent-label">Décision</span><h3>Essai, tarifs et horaires</h3><p>Pour lever les dernières hésitations et faciliter une prise de contact immédiate.</p></article>
+      </div>
+
+      <article class="surface page-roadmap">
+        <h3>Les pages à traiter dans l'ordre</h3>
+        <div class="page-step"><span class="page-priority">P0</span><div><strong>Accueil — Jeet Kune Do à Muret</strong><span>Conserver la position actuelle, mais parler d'abord au futur adhérent.</span></div><span class="page-state">améliorer</span></div>
+        <div class="page-step"><span class="page-priority">P0</span><div><strong>Self-défense à Muret</strong><span>Créer la page qui répond à la plus forte opportunité générique.</span></div><span class="page-state">créer</span></div>
+        <div class="page-step"><span class="page-priority">P0</span><div><strong>Votre premier cours</strong><span>Tenue, déroulement, niveau, réservation et accès.</span></div><span class="page-state">créer</span></div>
+        <div class="page-step"><span class="page-priority">P0</span><div><strong>Tarifs et horaires</strong><span>Rendre la deuxième page du site plus claire et plus persuasive.</span></div><span class="page-state">améliorer</span></div>
+        <div class="page-step"><span class="page-priority">P1</span><div><strong>Femmes, adolescents et Kali</strong><span>Créer uniquement des contenus distincts, relus et conformes à l'offre réelle.</span></div><span class="page-state">ensuite</span></div>
+      </article>
+
+      <details>
+        <summary>Pourquoi ne pas créer une nouvelle page « Jeet Kune Do Muret » ?</summary>
+        <div class="details-body"><p>L'accueil est déjà premier sur cette recherche. Une nouvelle page très proche pourrait entrer en concurrence avec lui. Nous conservons donc l'accueil comme référence JKD et utilisons les nouvelles pages pour des intentions différentes : self-défense, essai, femmes, adolescents ou Kali.</p></div>
+      </details>
+    </section>
+
+    <section class="tab-panel" id="panel-traffic" role="tabpanel" aria-labelledby="tab-traffic" data-panel="traffic">
+      <div class="section-head"><div><p class="eyebrow">Fréquentation</p><h2>La rentrée est notre moment décisif.</h2></div><p>Le trafic n'est pas régulier : septembre concentre presque un tiers des vues annuelles. Les actions d'acquisition doivent être prêtes avant ce pic, pas pendant.</p></div>
+      <div class="progress-line"></div>
+
+      <article class="chart-card" data-traffic-chart>
+        <div class="chart-head"><div><h3>Pages vues par mois</h3><p>Mois complets, août 2025 à juin 2026</p></div><span class="chart-badge">Septembre : 1 778 vues · 439 visiteurs</span></div>
+        <svg class="line-chart" viewBox="0 0 960 350" role="img" aria-labelledby="traffic-title traffic-desc">
+          <title id="traffic-title">Évolution mensuelle des pages vues</title>
+          <desc id="traffic-desc">772 vues en août, pic à 1778 en septembre, puis entre 239 et 509 vues par mois jusqu'à juin.</desc>
+          <defs>
+            <linearGradient id="traffic-line-gradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+            <linearGradient id="traffic-area-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563eb" stop-opacity=".42"/><stop offset=".65" stop-color="#22d3ee" stop-opacity=".08"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+          </defs>
+          <line class="grid-line" x1="65" y1="50" x2="914" y2="50"/><line class="grid-line" x1="65" y1="130" x2="914" y2="130"/><line class="grid-line" x1="65" y1="210" x2="914" y2="210"/><line class="grid-line" x1="65" y1="290" x2="914" y2="290"/>
+          <text class="axis-label" x="8" y="54">1 800</text><text class="axis-label" x="20" y="134">1 200</text><text class="axis-label" x="31" y="214">600</text><text class="axis-label" x="43" y="294">0</text>
+          <path class="chart-area" d="M74 186 L154 50 L234 221 L314 243 L394 255 L474 238 L554 248 L634 231 L714 258 L794 251 L874 235 L874 290 L74 290 Z"/>
+          <path class="chart-line" pathLength="1" d="M74 186 L154 50 L234 221 L314 243 L394 255 L474 238 L554 248 L634 231 L714 258 L794 251 L874 235"/>
+          <circle class="chart-dot" cx="74" cy="186" r="5"/><circle class="chart-dot peak" cx="154" cy="50" r="8"/><circle class="chart-dot" cx="234" cy="221" r="5"/><circle class="chart-dot" cx="314" cy="243" r="5"/><circle class="chart-dot" cx="394" cy="255" r="5"/><circle class="chart-dot" cx="474" cy="238" r="5"/><circle class="chart-dot" cx="554" cy="248" r="5"/><circle class="chart-dot" cx="634" cy="231" r="5"/><circle class="chart-dot" cx="714" cy="258" r="5"/><circle class="chart-dot" cx="794" cy="251" r="5"/><circle class="chart-dot" cx="874" cy="235" r="5"/>
+          <text class="peak-label" x="174" y="39">1 778 vues</text>
+          <text class="axis-label" x="60" y="320">Août</text><text class="axis-label" x="135" y="320">Sept.</text><text class="axis-label" x="220" y="320">Oct.</text><text class="axis-label" x="300" y="320">Nov.</text><text class="axis-label" x="377" y="320">Déc.</text><text class="axis-label" x="459" y="320">Janv.</text><text class="axis-label" x="539" y="320">Févr.</text><text class="axis-label" x="620" y="320">Mars</text><text class="axis-label" x="702" y="320">Avr.</text><text class="axis-label" x="784" y="320">Mai</text><text class="axis-label" x="862" y="320">Juin</text>
+        </svg>
+        <div class="sr-only"><table><caption>Pages vues mensuelles</caption><tbody><tr><th>Août 2025</th><td>772</td></tr><tr><th>Septembre 2025</th><td>1 778</td></tr><tr><th>Octobre 2025</th><td>509</td></tr><tr><th>Novembre 2025</th><td>346</td></tr><tr><th>Décembre 2025</th><td>260</td></tr><tr><th>Janvier 2026</th><td>387</td></tr><tr><th>Février 2026</th><td>309</td></tr><tr><th>Mars 2026</th><td>436</td></tr><tr><th>Avril 2026</th><td>239</td></tr><tr><th>Mai 2026</th><td>288</td></tr><tr><th>Juin 2026</th><td>411</td></tr></tbody></table></div>
+      </article>
+
+      <div class="split">
+        <article class="chart-card">
+          <div class="chart-head"><div><h3>Pages les plus consultées</h3><p>Sur 365 jours</p></div></div>
+          <div class="bars" role="img" aria-label="Accueil 2720 vues, tarifs 1222, association 1147, événements 580, contact 328">
+            <div class="bar-row"><span class="bar-label">Accueil</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-value">2 720</span></div>
+            <div class="bar-row"><span class="bar-label">Tarifs</span><span class="bar-track"><span class="bar-fill" style="width:45%"></span></span><span class="bar-value">1 222</span></div>
+            <div class="bar-row"><span class="bar-label">Association</span><span class="bar-track"><span class="bar-fill" style="width:42.2%"></span></span><span class="bar-value">1 147</span></div>
+            <div class="bar-row"><span class="bar-label">Événements</span><span class="bar-track"><span class="bar-fill" style="width:21.3%"></span></span><span class="bar-value">580</span></div>
+            <div class="bar-row"><span class="bar-label">Contact</span><span class="bar-track"><span class="bar-fill" style="width:12.1%"></span></span><span class="bar-value">328</span></div>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-head"><div><h3>Appareils utilisés</h3><p>Visiteurs uniques par type d'appareil</p></div><span class="chart-badge">Mobile d'abord</span></div>
+          <div class="device-strip" role="img" aria-label="68,2 pour cent mobile, 30,5 pour cent ordinateur, 1,2 pour cent tablette ou non classé"><span></span><span></span><span></span></div>
+          <div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#3571e8"></span>Mobile · 1 173</span><span class="legend-item"><span class="legend-swatch" style="background:#22d3ee"></span>Ordinateur · 525</span><span class="legend-item"><span class="legend-swatch" style="background:#fbbf24"></span>Tablette/autre · 21</span></div>
+          <p style="margin:25px 0 0;color:var(--text-soft);font-size:13px">Les boutons, tableaux, formulaires et images doivent d'abord être pensés pour un écran de téléphone.</p>
+        </article>
+      </div>
+
+      <article class="chart-card">
+        <div class="chart-head"><div><h3>D'où viennent les visites ?</h3><p>Pages vues par référent identifiable</p></div><span class="chart-badge">Google : 1re source identifiable · 22 % des vues</span></div>
+        <div class="bars" role="img" aria-label="Direct ou non attribué 4501, Google 1363, Facebook 120, autres sources 139">
+          <div class="bar-row"><span class="bar-label">Direct / non attribué</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-value">4 501</span></div>
+          <div class="bar-row"><span class="bar-label">Google</span><span class="bar-track"><span class="bar-fill" style="width:30.3%"></span></span><span class="bar-value">1 363</span></div>
+          <div class="bar-row"><span class="bar-label">Facebook</span><span class="bar-track"><span class="bar-fill" style="width:2.7%"></span></span><span class="bar-value">120</span></div>
+          <div class="bar-row"><span class="bar-label">Autres</span><span class="bar-track"><span class="bar-fill" style="width:3.1%"></span></span><span class="bar-value">139</span></div>
+        </div>
+      </article>
+
+      <details>
+        <summary>Que signifie « direct ou non attribué » ?</summary>
+        <div class="details-body"><p>Cette catégorie regroupe les personnes qui saisissent l'adresse, utilisent un favori, ouvrent un lien depuis une messagerie ou arrivent par un partage qui ne transmet pas sa source. Elle ne signifie pas que 73 % des visiteurs connaissaient déjà le club. Les futurs liens Facebook, Instagram, Google Business et email porteront des marqueurs UTM pour mieux attribuer les campagnes.</p></div>
+      </details>
+      <details>
+        <summary>Méthode et limites des chiffres</summary>
+      <div class="details-body"><p>Les données proviennent directement du projet Vercel Pro et ont été relevées le 14 juillet 2026 sur une fenêtre de 365 jours. La comparaison avec l'année précédente n'est pas disponible au-delà de la fenêtre de conservation. Les visiteurs mensuels ne s'additionnent pas, car une même personne peut revenir plusieurs mois. Search Console sera nécessaire pour connaître les mots recherchés dans Google.</p></div>
+      </details>
+    </section>
+
+    <section class="tab-panel" id="panel-action" role="tabpanel" aria-labelledby="tab-action" data-panel="action">
+      <div class="section-head"><div><p class="eyebrow">Feuille de route</p><h2>Agir dans le bon ordre, mesurer ensuite.</h2></div><p>La priorité est de fiabiliser Google et les contacts avant de produire davantage. Les contenus de rentrée viennent juste après, puis les données guident les ajustements.</p></div>
+      <div class="progress-line"></div>
+
+      <div class="timeline">
+        <article class="timeline-item"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-time">0 à 14 jours</span><div class="timeline-copy"><h3>Rendre les fondations fiables</h3><ul><li>Corriger sitemap, titres, adresses canoniques et accès robots.</li><li>Mesurer les demandes d'essai, appels, emails et formulaires.</li><li>Compléter la page légale et protéger la vidéo YouTube.</li><li>Revendiquer la fiche Google existante et obtenir Search Console.</li></ul></div></article>
+        <article class="timeline-item"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-time">15 à 45 jours</span><div class="timeline-copy"><h3>Préparer la prochaine rentrée</h3><ul><li>Recomposer l'accueil sans perdre sa cible Jeet Kune Do.</li><li>Publier « self-défense à Muret » et « votre premier cours ».</li><li>Clarifier tarifs, horaires, tenue, niveau et FAQ.</li><li>Lancer les contenus Canva avec des liens UTM.</li></ul></div></article>
+        <article class="timeline-item"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-time">45 à 90 jours</span><div class="timeline-copy"><h3>Apprendre des résultats</h3><ul><li>Comparer visites, clics d'essai et formulaires réussis.</li><li>Créer les pages femmes, adolescents ou Kali selon la demande réelle.</li><li>Publier régulièrement sur Google Business et demander des avis authentiques.</li><li>Ajuster les contenus selon Search Console, sans ajouter GA4.</li></ul></div></article>
+      </div>
+
+      <aside class="president-box">
+        <p class="eyebrow">Décisions du bureau</p>
+        <h3>Ce dont nous avons besoin de votre part</h3>
+        <ol class="checklist">
+          <li>Confirmer le nom public exact à utiliser partout.</li>
+          <li>Récupérer ou revendiquer la fiche Google existante.</li>
+          <li>Ajouter le développeur avec le rôle Gestionnaire.</li>
+          <li>Valider lieu, adresse administrative, horaires, téléphone et email.</li>
+          <li>Valider les informations RGPD et la durée proposée de 12 mois.</li>
+          <li>Organiser les autorisations d'image, surtout pour les mineurs.</li>
+        </ol>
+      </aside>
+
+      <article class="surface" style="margin-top:30px">
+        <p class="eyebrow">Canva Pro</p>
+        <h3>Transformer un outil déjà disponible en système de communication</h3>
+        <p style="color:var(--text-soft)">Canva aidera à produire une présence cohérente sans alourdir le site. Le texte essentiel restera toutefois en HTML pour Google et l'accessibilité.</p>
+        <div class="canva-row">
+          <div class="canva-card"><strong>Kit de marque</strong><span>Logo, couleurs, polices et règles partagées.</span></div>
+          <div class="canva-card"><strong>Formats réutilisables</strong><span>Publication, story, Reel et Google Business.</span></div>
+          <div class="canva-card"><strong>Calendrier de rentrée</strong><span>Huit semaines de contenus préparés à l'avance.</span></div>
+          <div class="canva-card"><strong>Exports web légers</strong><span>WebP optimisés et droits d'image documentés.</span></div>
+        </div>
+      </article>
+
+      <details>
+        <summary>Comment la fiche Google doit-elle être renommée ?</summary>
+        <div class="details-body"><p>« Association Ji Dao » correspond à l'ancien nom. La fiche doit reprendre le nom réellement utilisé sur le site, les documents et la signalétique — probablement « JKD Self Defense 31 », à confirmer par la présidente. Il ne faut pas ajouter artificiellement une suite de mots-clés dans le nom, au risque de voir Google refuser la modification ou suspendre la fiche.</p></div>
+      </details>
+      <details>
+        <summary>Comment saurons-nous que le chantier fonctionne ?</summary>
+        <div class="details-body"><p>Nous suivrons chaque mois les visiteurs, les pages d'entrée, les sources, les clics vers un essai et les formulaires réussis. Search Console indiquera les requêtes et positions. L'objectif n'est pas seulement « plus de trafic », mais davantage de demandes qualifiées et une meilleure transformation des visiteurs en pratiquants.</p></div>
+      </details>
+    </section>
+  </div>
+
+  <footer class="report-footer">
+    <div class="container footer-grid">
+      <div><strong>JKD Self Defense 31</strong><br>Audit réalisé le 14 juillet 2026 · Muret</div>
+      <div class="source-links" aria-label="Sources principales"><a href="https://www.jkd-selfdefense31.fr/">Site du club</a><a href="https://vercel.com/docs/analytics">Vercel Analytics</a><a href="https://cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience">CNIL</a><a href="https://support.google.com/business/answer/3403100?hl=fr">Rôles Google Business</a></div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const root = document.getElementById('jkd-president-report');
+      if (!root) return;
+      root.classList.add('js');
+
+      const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function activateTab(name, moveFocus = false) {
+        tabs.forEach((tab) => {
+          const active = tab.dataset.tab === name;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          if (active && moveFocus) tab.focus();
+        });
+        panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.panel === name));
+        if (name === 'traffic') {
+          const chart = root.querySelector('[data-traffic-chart]');
+          if (chart) requestAnimationFrame(() => chart.classList.add('chart-live'));
+        }
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+        tab.addEventListener('keydown', (event) => {
+          let nextIndex = index;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') nextIndex = 0;
+          else if (event.key === 'End') nextIndex = tabs.length - 1;
+          else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activateTab(tab.dataset.tab); return; }
+          else return;
+          event.preventDefault();
+          activateTab(tabs[nextIndex].dataset.tab, true);
+        });
+      });
+
+      root.querySelectorAll('[data-go-tab]').forEach((button) => button.addEventListener('click', () => {
+        activateTab(button.dataset.goTab);
+        root.querySelector('.tab-dock').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      }));
+      root.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+
+      const counters = Array.from(root.querySelectorAll('[data-count]'));
+      function runCounter(element) {
+        if (element.dataset.ran) return;
+        element.dataset.ran = 'true';
+        const target = Number(element.dataset.count);
+        const suffix = element.dataset.suffix || '';
+        if (reducedMotion) { element.textContent = target.toLocaleString('fr-FR') + suffix; return; }
+        const start = performance.now();
+        const duration = 650;
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          element.textContent = Math.round(target * eased).toLocaleString('fr-FR') + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) { runCounter(entry.target); observer.unobserve(entry.target); }
+        }), { threshold: .4 });
+        counters.forEach((counter) => observer.observe(counter));
+      } else counters.forEach(runCounter);
+
+      requestAnimationFrame(() => root.classList.add('ready'));
+    })();
+  </script>
+</main>
+
+</body>
+</html>
