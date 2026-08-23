@@ -46,7 +46,9 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({
     const [period, setPeriod] = useState<EventPeriod>(defaultPeriod);
     const [originFilter, setOriginFilter] = useState<EventOriginFilter>('all');
     const [isLoading, setIsLoading] = useState(false);
-    const isFirstRender = useRef(true);
+    const loadingTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+        undefined
+    );
 
     // Liste dérivée de l'état, donc disponible dès le rendu serveur
     const filteredEvents = useMemo(
@@ -54,16 +56,23 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({
         [events, period, originFilter]
     );
 
-    // Skeleton uniquement lors d'un changement de filtre, pas au chargement initial
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
+    // Skeleton bref lors d'un changement de filtre, déclenché depuis les handlers
+    // (pas depuis un effet) pour éviter un rendu supplémentaire au montage.
+    const flashSkeleton = () => {
+        clearTimeout(loadingTimer.current);
         setIsLoading(true);
-        const timer = setTimeout(() => setIsLoading(false), 100);
-        return () => clearTimeout(timer);
-    }, [period, originFilter]);
+        loadingTimer.current = setTimeout(() => setIsLoading(false), 100);
+    };
+    useEffect(() => () => clearTimeout(loadingTimer.current), []);
+
+    const handlePeriodChange = (value: string) => {
+        setPeriod(value as EventPeriod);
+        flashSkeleton();
+    };
+    const handleOriginChange = (value: string) => {
+        setOriginFilter(value as EventOriginFilter);
+        flashSkeleton();
+    };
 
     return (
         <FadeInWrapper delay={0.2}>
@@ -72,12 +81,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({
                     {SECTION_TITLE[period]}
                 </h2>
                 <div className='flex justify-center px-6 w-full gap-3'>
-                    <Select
-                        value={period}
-                        onValueChange={(value) =>
-                            setPeriod(value as EventPeriod)
-                        }
-                    >
+                    <Select value={period} onValueChange={handlePeriodChange}>
                         <SelectTrigger className='w-full md:w-fit space-x-2'>
                             <SelectValue placeholder='Sélectionner les événements' />
                         </SelectTrigger>
@@ -96,9 +100,7 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({
 
                     <Select
                         value={originFilter}
-                        onValueChange={(value) =>
-                            setOriginFilter(value as EventOriginFilter)
-                        }
+                        onValueChange={handleOriginChange}
                     >
                         <SelectTrigger className='w-full md:w-fit space-x-2'>
                             <SelectValue placeholder="Origine de l'événement" />

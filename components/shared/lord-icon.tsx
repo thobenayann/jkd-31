@@ -36,7 +36,7 @@ const LordIcon: React.FC<LordIconProps> = ({
                     if (colors) lordIcon.setAttribute('colors', colors);
                     if (style) {
                         Object.entries(style).forEach(([key, value]) => {
-                            // @ts-ignore
+                            // @ts-expect-error -- indexation dynamique de CSSStyleDeclaration
                             lordIcon.style[key] = value;
                         });
                     }
