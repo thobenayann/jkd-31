@@ -1,8 +1,14 @@
 import { NavigationEvents } from '@/components/navigation-event';
+import { JsonLd } from '@/components/seo/json-ld';
 import Footer from '@/components/shared/footer';
 import Nav from '@/components/shared/menu';
 import { ThemeProvider } from '@/components/theme-provider';
-import { associationConfig } from '@/constant/config';
+import { SITE } from '@/constant/site';
+import {
+    buildOrganizationJsonLd,
+    buildSportsLocationJsonLd,
+    buildWebSiteJsonLd,
+} from '@/lib/structured-data';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -43,11 +49,9 @@ const cinzelDecorative = FontCinzelDecorative({
     variable: '--font-cinzel-decorative',
 });
 
-const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'http://localhost:3000';
-
 export const metadata: Metadata = {
+    metadataBase: new URL(SITE.url),
+    alternates: { canonical: '/' },
     title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
     description:
         "Découvrez le Jeet Kune Do à Muret avec l'association JKD Self Defense 31. Cours d'arts martiaux, de self-défense et de développement physique pour tous les niveaux.",
@@ -65,7 +69,8 @@ export const metadata: Metadata = {
         title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
         description:
             'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
-        url: baseUrl,
+        url: SITE.url,
+        locale: SITE.locale,
         siteName: 'JKD Self Defense 31 - Arts Martiaux et Self-Défense',
         images: [
             {
@@ -83,7 +88,6 @@ export const metadata: Metadata = {
             'Découvrez le Jeet Kune Do avec JKD Self Defense 31 à Toulouse.',
         images: ['/opengraph-image.png'],
     },
-    metadataBase: new URL(baseUrl),
 };
 
 export default function RootLayout({
@@ -91,37 +95,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const sameAs = [
-        associationConfig.socialMedia.facebook,
-        associationConfig.socialMedia.instagram,
-    ];
-    // JSON-LD Organization: relie le site aux profils sociaux et aux infos de contact
-    const orgJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: associationConfig.name,
-        url: baseUrl,
-        sameAs,
-        contactPoint: [
-            {
-                '@type': 'ContactPoint',
-                contactType: 'customer support',
-                email: associationConfig.email,
-                telephone: associationConfig.phoneNumber,
-                areaServed: 'FR',
-                availableLanguage: ['fr'],
-            },
-        ],
-    };
-
-    // JSON-LD WebSite: expose l'entité "site" et réplique les profils sociaux
-    const websiteJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: associationConfig.name,
-        url: baseUrl,
-        sameAs,
-    };
     return (
         <html
             lang='fr'
@@ -137,21 +110,10 @@ export default function RootLayout({
                     cinzelDecorative.variable
                 )}
             >
-                {/* JSON-LD en balises natives : next/script les injecterait côté client,
-                    hors du HTML initial lu par les crawlers */}
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(orgJsonLd),
-                    }}
-                />
-                {/* WebSite JSON-LD global (sans SearchAction car pas de recherche interne) */}
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(websiteJsonLd),
-                    }}
-                />
+                {/* Données structurées globales : l'association, le site, le lieu d'entraînement */}
+                <JsonLd data={buildOrganizationJsonLd()} />
+                <JsonLd data={buildWebSiteJsonLd()} />
+                <JsonLd data={buildSportsLocationJsonLd()} />
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='dark'

@@ -1,9 +1,21 @@
+import { associationConfig } from '@/constant/config';
 import { defineType, Rule, type ValidationContext } from 'sanity';
 
 export default defineType({
     name: 'evenement',
     title: 'Événement',
     type: 'document',
+    // Un nouvel événement est interne et se tient à la salle du club par défaut.
+    // Pour un événement externe, l'éditeur remplace le lieu.
+    initialValue: {
+        origin: 'internal',
+        location: {
+            name: associationConfig.venue.name,
+            streetAddress: associationConfig.venue.streetAddress,
+            postalCode: associationConfig.venue.postalCode,
+            city: associationConfig.venue.city,
+        },
+    },
     fields: [
         {
             name: 'title',
@@ -40,7 +52,6 @@ export default defineType({
                 ],
                 layout: 'radio',
             },
-            initialValue: 'internal',
             validation: (rule: Rule) => rule.required(),
         },
         {
@@ -61,6 +72,37 @@ export default defineType({
                             ? 'URL requise pour un événement externe'
                             : true;
                     }),
+        },
+        {
+            name: 'location',
+            title: 'Lieu',
+            description:
+                "Utilisé pour les données structurées (Google). Laisser vide si le lieu n'est pas connu.",
+            type: 'object',
+            fields: [
+                {
+                    name: 'name',
+                    title: 'Nom du lieu',
+                    type: 'string',
+                    validation: (rule: Rule) => rule.required(),
+                },
+                {
+                    name: 'streetAddress',
+                    title: 'Adresse',
+                    type: 'string',
+                },
+                {
+                    name: 'postalCode',
+                    title: 'Code postal',
+                    type: 'string',
+                },
+                {
+                    name: 'city',
+                    title: 'Ville',
+                    type: 'string',
+                    validation: (rule: Rule) => rule.required(),
+                },
+            ],
         },
         {
             name: 'mainImage',

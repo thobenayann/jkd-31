@@ -31,6 +31,12 @@ export type Evenement = {
   description?: string;
   origin?: "internal" | "external";
   externalUrl?: string;
+  location?: {
+    name?: string;
+    streetAddress?: string;
+    postalCode?: string;
+    city?: string;
+  };
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -210,6 +216,12 @@ export type EVENTS_QUERY_RESULT = Array<{
   description?: string;
   origin?: "external" | "internal";
   externalUrl?: string;
+  location?: {
+    name?: string;
+    streetAddress?: string;
+    postalCode?: string;
+    city?: string;
+  };
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -247,6 +259,12 @@ export type EVENT_QUERY_RESULT = {
   description?: string;
   origin?: "external" | "internal";
   externalUrl?: string;
+  location?: {
+    name?: string;
+    streetAddress?: string;
+    postalCode?: string;
+    city?: string;
+  };
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;

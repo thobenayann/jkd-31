@@ -1,13 +1,14 @@
+import { SITE, absoluteUrl } from '@/constant/site';
 import { Evenement } from '@/sanity.types';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { EVENT_QUERY } from '@/sanity/lib/queries';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import EventDetail from '../_components/event-detail';
 
 type Props = {
     params: Promise<{ eventId: string }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 async function getEvent(eventId: string): Promise<Evenement | null> {
@@ -17,63 +18,59 @@ async function getEvent(eventId: string): Promise<Evenement | null> {
     });
 }
 
-export async function generateMetadata(
-    props: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
     const event = await getEvent(params.eventId);
 
     if (!event) {
         return {
             title: 'Événement non trouvé',
+            robots: { index: false, follow: false },
         };
     }
 
     const imageUrl = event.mainImage?.asset?._ref
         ? urlFor(event.mainImage.asset._ref).width(1200).height(630).url()
-        : '';
+        : undefined;
     const isExternal = event.origin === 'external';
     const externalUrl = event.externalUrl;
+    // Un événement externe est une republication : la page d'origine fait référence
+    const canonical =
+        isExternal && externalUrl
+            ? externalUrl
+            : absoluteUrl(`/events/${event._id}`);
+    const images = imageUrl
+        ? [{ url: imageUrl, width: 1200, height: 630, alt: event.title }]
+        : undefined;
 
     return {
         title: event.title,
         description: event.description,
-        alternates:
-            isExternal && externalUrl ? { canonical: externalUrl } : undefined,
+        alternates: { canonical },
         openGraph: {
             title: event.title,
             description: event.description,
-            url: isExternal && externalUrl ? externalUrl : undefined,
-            images: [
-                {
-                    url: imageUrl,
-                    width: 1200,
-                    height: 630,
-                    alt: event.title,
-                },
-            ],
+            url: canonical,
+            images,
             type: 'website',
-            locale: 'fr_FR',
-            siteName: 'JKD Self Defense 31',
+            locale: SITE.locale,
+            siteName: SITE.name,
         },
         twitter: {
             card: 'summary_large_image',
             title: event.title,
             description: event.description,
-            images: [imageUrl],
+            images: imageUrl ? [imageUrl] : undefined,
         },
     };
 }
 
-export default async function EventPage(props: {
-    params: Promise<{ eventId: string }>;
-}) {
+export default async function EventPage(props: Props) {
     const params = await props.params;
     const event = await getEvent(params.eventId);
 
     if (!event) {
-        return <div>Événement non trouvé</div>;
+        notFound();
     }
 
     return <EventDetail event={event} />;

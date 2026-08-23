@@ -1,8 +1,20 @@
-import { StaffRoles } from '@/types/specific-types';
+import type { StaffRoles } from '@/types/specific-types';
 
 export const associationConfig = {
     name: 'JKD Self Defense 31',
     address: '6 Rue Pierre Bauduc, 31600 Muret, France',
+    /**
+     * Lieu d'entraînement, au format structuré pour schema.org (PostalAddress)
+     * et pour pré-remplir le lieu des événements internes dans Sanity.
+     * À garder identique à la fiche Google Business Profile.
+     */
+    venue: {
+        name: 'Salle Albert Camus',
+        streetAddress: '6 Rue Pierre Bauduc',
+        postalCode: '31600',
+        city: 'Muret',
+        country: 'FR',
+    },
     phoneNumber: '+33 6 84 05 93 26',
     email: 'president@jeetkunedo31.com',
     socialMedia: {
