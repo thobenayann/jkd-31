@@ -13,7 +13,6 @@ import {
     Inter as FontSans,
     Merriweather as FontSerif,
 } from 'next/font/google';
-import Script from 'next/script';
 import { Suspense } from 'react';
 import '../globals.css';
 
@@ -138,20 +137,17 @@ export default function RootLayout({
                     cinzelDecorative.variable
                 )}
             >
-                {/* Organization JSON-LD global */}
-                <Script
-                    id='org-jsonld'
+                {/* JSON-LD en balises natives : next/script les injecterait côté client,
+                    hors du HTML initial lu par les crawlers */}
+                <script
                     type='application/ld+json'
-                    strategy='afterInteractive'
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(orgJsonLd),
                     }}
                 />
                 {/* WebSite JSON-LD global (sans SearchAction car pas de recherche interne) */}
-                <Script
-                    id='website-jsonld'
+                <script
                     type='application/ld+json'
-                    strategy='afterInteractive'
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(websiteJsonLd),
                     }}
