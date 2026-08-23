@@ -1,3 +1,4 @@
+import { absoluteUrl } from '@/constant/site';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -7,13 +8,12 @@ export const metadata: Metadata = {
         "Mentions légales du site de l'association JKD Self Defense 31 à Muret.",
     keywords:
         'mentions légales Jeet Kune Do, prix cours arts martiaux, self-défense Toulouse Muret',
+    alternates: { canonical: '/legal' },
     openGraph: {
         title: 'Mentions légales - JKD Self Defense 31',
         description:
             "Mentions légales du site de l'association JKD Self Defense 31 à Muret.",
-        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/legal`
-            : 'http://localhost:3000/legal',
+        url: absoluteUrl('/legal'),
     },
     twitter: {
         card: 'summary_large_image',

@@ -1,3 +1,4 @@
+import { absoluteUrl } from '@/constant/site';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -7,13 +8,12 @@ export const metadata: Metadata = {
         'Les 27 Styles qui ont influencés Bruce Lee pour le Jeet Kune Do - JKD Self Defense 31 à Muret.',
     keywords:
         '27 Styles arts martiaux Jeet Kune Do, self-défense Toulouse Muret',
+    alternates: { canonical: '/27-styles' },
     openGraph: {
         title: "27 styles d'arts martiaux - JKD Self Defense 31",
         description:
             'Les 27 Styles qui ont influencés Bruce Lee pour le Jeet Kune Do - JKD Self Defense 31 à Muret.',
-        url: process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/27-styles`
-            : 'http://localhost:3000/27-styles',
+        url: absoluteUrl('/27-styles'),
     },
     twitter: {
         card: 'summary_large_image',

@@ -25,17 +25,19 @@ Les charges excluent la rédaction des nouvelles pages métier, la récupératio
 
 ### Task 1: Centraliser le domaine canonique
 
+> **Réalisé le 23 août 2026** (PR [#23](https://github.com/thobenayann/jkd-31/pull/23)). Détail et écarts : [`../../reviews/2026-08-23-revue-qualite.md`](../../reviews/2026-08-23-revue-qualite.md). Écart : le test vit dans `lib/sitemap-entries.test.ts`, pas dans `tests/seo/`.
+
 **Files:**
 - Create: `constant/site.ts`
 - Modify: `app/(client)/layout.tsx`
 - Modify: `app/sitemap.ts`
 - Test: `tests/seo/site-config.test.ts`
 
-- [ ] Installer un runner de tests léger : `pnpm add -D vitest`.
-- [ ] Ajouter les scripts `test` et `test:run` dans `package.json`.
-- [ ] Écrire un test qui exige `https://www.jkd-selfdefense31.fr`, sans slash final, et interdit toute URL `.com`.
+- [x] Installer un runner de tests léger : `pnpm add -D vitest`.
+- [x] Ajouter les scripts `test` et `test:run` dans `package.json`.
+- [x] Écrire un test qui exige `https://www.jkd-selfdefense31.fr`, sans slash final, et interdit toute URL `.com`.
 - [ ] Lancer `pnpm test:run tests/seo/site-config.test.ts` et constater l'échec.
-- [ ] Créer une constante indépendante de `VERCEL_PROJECT_PRODUCTION_URL` :
+- [x] Créer une constante indépendante de `VERCEL_PROJECT_PRODUCTION_URL` :
 
 ```ts
 export const SITE = {
@@ -45,13 +47,15 @@ export const SITE = {
 } as const;
 ```
 
-- [ ] Utiliser `new URL(SITE.url)` pour `metadataBase` dans le layout.
-- [ ] Remplacer toutes les bases d'URL de `app/sitemap.ts` par `SITE.url`.
-- [ ] Exécuter `rg -n "jkd-selfdefense31\.com|VERCEL_PROJECT_PRODUCTION_URL" app constant` ; aucun résultat ne doit alimenter les URLs SEO publiques.
-- [ ] Exécuter le test puis `pnpm exec tsc --noEmit`.
+- [x] Utiliser `new URL(SITE.url)` pour `metadataBase` dans le layout.
+- [x] Remplacer toutes les bases d'URL de `app/sitemap.ts` par `SITE.url`.
+- [x] Exécuter `rg -n "jkd-selfdefense31\.com|VERCEL_PROJECT_PRODUCTION_URL" app constant` ; aucun résultat ne doit alimenter les URLs SEO publiques.
+- [x] Exécuter le test puis `pnpm exec tsc --noEmit`.
 - [ ] Commit proposé : `fix(seo): centralize canonical site URL`.
 
 ### Task 2: Produire robots, sitemap et canonicals valides
+
+> **Réalisé le 23 août 2026** (PR [#23](https://github.com/thobenayann/jkd-31/pull/23)). Détail et écarts : [`../../reviews/2026-08-23-revue-qualite.md`](../../reviews/2026-08-23-revue-qualite.md). Reste la soumission Search Console (action manuelle). Ajout non prévu : redirection 308 des hôtes `.com` et `vercel.app` dans `next.config.mjs`.
 
 **Files:**
 - Create: `app/robots.ts`
@@ -66,13 +70,13 @@ export const SITE = {
 - Modify: `app/(admin)/studio/[[...tool]]/metadata.ts`
 - Test: `tests/seo/metadata.test.ts`
 
-- [ ] Tester que toutes les routes publiques ont une canonical `.fr` et que `/studio` porte `noindex, nofollow`.
-- [ ] Créer `app/robots.ts` avec `host`, `sitemap`, autorisation générale et désautorisation de `/studio/`.
-- [ ] Ajouter `alternates.canonical` dans les métadonnées de chaque route.
-- [ ] Remplacer les dates figées du sitemap par de vraies dates ou les omettre.
-- [ ] Ajouter les fiches événements publiées au sitemap depuis Sanity ; ne pas inclure les événements expirés sans utilité durable.
-- [ ] Vérifier après build : `pnpm build`, puis contrôler `/robots.txt` et `/sitemap.xml` sur un serveur de production local.
-- [ ] Vérifier qu'aucune URL `.com`, preview Vercel ou `/studio` ne figure dans le sitemap.
+- [x] Tester que toutes les routes publiques ont une canonical `.fr` et que `/studio` porte `noindex, nofollow`.
+- [x] Créer `app/robots.ts` avec `host`, `sitemap`, autorisation générale et désautorisation de `/studio/`.
+- [x] Ajouter `alternates.canonical` dans les métadonnées de chaque route.
+- [x] Remplacer les dates figées du sitemap par de vraies dates ou les omettre.
+- [x] Ajouter les fiches événements publiées au sitemap depuis Sanity ; ne pas inclure les événements expirés sans utilité durable.
+- [x] Vérifier après build : `pnpm build`, puis contrôler `/robots.txt` et `/sitemap.xml` sur un serveur de production local.
+- [x] Vérifier qu'aucune URL `.com`, preview Vercel ou `/studio` ne figure dans le sitemap.
 - [ ] Après déploiement, soumettre `https://www.jkd-selfdefense31.fr/sitemap.xml` dans Search Console.
 - [ ] Commit proposé : `fix(seo): publish canonical metadata and crawl directives`.
 
@@ -199,6 +203,8 @@ export const SITE = {
 
 ### Task 8: Ajouter les données structurées locales vérifiables
 
+> **Réalisé le 23 août 2026** (PR [#23](https://github.com/thobenayann/jkd-31/pull/23)). Détail et écarts : [`../../reviews/2026-08-23-revue-qualite.md`](../../reviews/2026-08-23-revue-qualite.md). Écarts : `Event` généré depuis Sanity (fait) mais `BreadcrumbList` non fait ; validation Rich Results Test à faire après déploiement.
+
 **Files:**
 - Create: `components/seo/json-ld.tsx`
 - Create: `lib/structured-data.ts`
@@ -207,16 +213,18 @@ export const SITE = {
 - Modify: pages profondes concernées
 - Test: `tests/seo/structured-data.test.ts`
 
-- [ ] Générer un `SportsActivityLocation` avec le lieu d'entraînement : 6 rue Pierre Bauduc, 31600 Muret.
-- [ ] Distinguer ce lieu de l'adresse administrative SIRENE à Longages ; ne pas mélanger les deux usages.
-- [ ] Inclure uniquement téléphone, email, horaires, coordonnées et profils sociaux validés par l'association.
-- [ ] Conserver `Organization` et `WebSite` sans dupliquer des entités contradictoires.
+- [x] Générer un `SportsActivityLocation` avec le lieu d'entraînement : 6 rue Pierre Bauduc, 31600 Muret.
+- [x] Distinguer ce lieu de l'adresse administrative SIRENE à Longages ; ne pas mélanger les deux usages.
+- [x] Inclure uniquement téléphone, email, horaires, coordonnées et profils sociaux validés par l'association.
+- [x] Conserver `Organization` et `WebSite` sans dupliquer des entités contradictoires.
 - [ ] Générer `Event` depuis Sanity et `BreadcrumbList` sur les pages profondes.
-- [ ] Sérialiser le JSON-LD en neutralisant `<` pour éviter une injection via le contenu CMS.
+- [x] Sérialiser le JSON-LD en neutralisant `<` pour éviter une injection via le contenu CMS.
 - [ ] Valider les pages déployées avec Rich Results Test et Schema Markup Validator.
 - [ ] Commit proposé : `feat(seo): add local sports and event structured data`.
 
 ### Task 9: Réparer la chaîne qualité et l'hygiène du dépôt
+
+> **Réalisé le 23 août 2026** (PR [#23](https://github.com/thobenayann/jkd-31/pull/23)). Détail et écarts : [`../../reviews/2026-08-23-revue-qualite.md`](../../reviews/2026-08-23-revue-qualite.md). Fait via la PR [#22](https://github.com/thobenayann/jkd-31/pull/22) (`5771874`). Reste : `package-lock.json`, artefacts ignorés, script `quality` et CI.
 
 **Files:**
 - Create: `eslint.config.mjs`
@@ -226,10 +234,10 @@ export const SITE = {
 - Delete or ignore after confirmation: `analyze/`
 - Test: GitHub Actions workflow existant ou Create: `.github/workflows/quality.yml`
 
-- [ ] Migrer `.eslintrc.json` vers la configuration plate compatible ESLint 9 et Next 16.
-- [ ] Remplacer `next lint`, supprimé/inadapté, par `eslint .`.
+- [x] Migrer `.eslintrc.json` vers la configuration plate compatible ESLint 9 et Next 16.
+- [x] Remplacer `next lint`, supprimé/inadapté, par `eslint .`.
 - [ ] Choisir pnpm comme gestionnaire unique ; supprimer `package-lock.json` seulement après validation de l'équipe.
-- [ ] Ajouter `packageManager` dans `package.json` et figer la version pnpm utilisée en CI.
+- [x] Ajouter `packageManager` dans `package.json` et figer la version pnpm utilisée en CI.
 - [ ] Ignorer les rapports bundle, `*.tsbuildinfo`, rapports Lighthouse et autres artefacts reproductibles non destinés au dépôt.
 - [ ] Ajouter `quality`: `pnpm lint && pnpm exec tsc --noEmit && pnpm test:run && pnpm build`.
 - [ ] Faire exécuter cette commande sur chaque pull request.

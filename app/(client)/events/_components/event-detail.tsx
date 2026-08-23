@@ -1,9 +1,11 @@
+import { JsonLd } from '@/components/seo/json-ld';
 import AvatarPersonality from '@/components/shared/avatar-personality';
 import ClockBadge from '@/components/shared/clock-badge';
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
 import { FormattedText } from '@/components/shared/formatted-text';
 import { Button } from '@/components/ui/button';
 import { formatEventDates } from '@/lib/formatEventDate';
+import { buildEventJsonLd } from '@/lib/structured-data';
 import { Evenement } from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/imageUrl';
 import { ArrowRight } from 'lucide-react';
@@ -18,7 +20,7 @@ interface EventDetailProps {
 export default function EventDetail({ event }: EventDetailProps) {
     const imageUrl = event.mainImage?.asset?._ref
         ? urlFor(event.mainImage.asset._ref).url()
-        : '';
+        : undefined;
     const personalityPhotoUrl = event.personality?.photo?.asset?._ref
         ? urlFor(event.personality.photo.asset._ref).url()
         : '';
@@ -26,48 +28,26 @@ export default function EventDetail({ event }: EventDetailProps) {
     const isExternal = event.origin === 'external';
     const externalUrl = event.externalUrl;
 
-    const jsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Event',
-        name: event.title,
-        description: event.description,
-        image: imageUrl,
-        startDate: event.eventDates?.[0],
-        endDate: event.eventDates?.[event.eventDates.length - 1],
-        url: isExternal && externalUrl ? externalUrl : undefined,
-        location: {
-            '@type': 'Place',
-            name: "Lieu de l'événement", // Ajoutez le lieu réel si disponible
-            address: "Adresse de l'événement", // Ajoutez l'adresse réelle si disponible
-        },
-        performer: {
-            '@type': 'Person',
-            name: `${event.personality?.firstName} ${event.personality?.lastName}`,
-        },
-    };
-
     return (
         <>
-            {/* Balise native (pas next/script) pour que le JSON-LD soit dans le HTML servi aux crawlers */}
-            <script
-                type='application/ld+json'
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <JsonLd data={buildEventJsonLd(event, { imageUrl })} />
             <article className='container flex flex-col items-center justify-center p-4 max-w-4xl'>
-                <FadeInWrapper delay={0.2} className='relative md:pt-20'>
-                    <Image
-                        src={imageUrl}
-                        alt={event.title || "Image de l'événement"}
-                        width={1200}
-                        height={600}
-                        className='w-full max-h-[600px] mb-8 rounded-lg shadow-lg'
-                        style={{
-                            width: 'auto',
-                            height: 'auto',
-                        }}
-                        priority
-                    />
-                </FadeInWrapper>
+                {imageUrl && (
+                    <FadeInWrapper delay={0.2} className='relative md:pt-20'>
+                        <Image
+                            src={imageUrl}
+                            alt={event.title || "Image de l'événement"}
+                            width={1200}
+                            height={600}
+                            className='w-full max-h-[600px] mb-8 rounded-lg shadow-lg'
+                            style={{
+                                width: 'auto',
+                                height: 'auto',
+                            }}
+                            priority
+                        />
+                    </FadeInWrapper>
+                )}
                 <FadeInWrapper delay={0.4}>
                     <h1 className='text-2xl md:text-4xl font-bold mb-2 text-center'>
                         {event.title || 'Événement sans titre'}

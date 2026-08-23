@@ -11,6 +11,7 @@ Ce dossier est la source de vérité pour le référencement, l'acquisition loca
 | Définir les pages, mots-clés et contenus | [`strategy/content-and-keywords.md`](strategy/content-and-keywords.md) |
 | Appliquer les choix Analytics et RGPD | [`governance/analytics-and-rgpd.md`](governance/analytics-and-rgpd.md) |
 | Implémenter les corrections | [`technical/implementation-plan.md`](technical/implementation-plan.md) |
+| Savoir ce qui a déjà été corrigé, quand et pourquoi | [`../reviews/`](../reviews/) (notes datées, dernière : [`2026-08-23-revue-qualite.md`](../reviews/2026-08-23-revue-qualite.md)) |
 | Comprendre la conception du rapport | [`specs/2026-07-14-president-report-design.md`](specs/2026-07-14-president-report-design.md) |
 | Rejouer le chantier documentaire | [`plans/2026-07-14-seo-documentation-president-report.md`](plans/2026-07-14-seo-documentation-president-report.md) |
 | Présenter la situation au bureau | [`deliverables/rapport-presidente-2026-07-14.html`](deliverables/rapport-presidente-2026-07-14.html) |
@@ -21,8 +22,9 @@ Ce dossier est la source de vérité pour le référencement, l'acquisition loca
 2. Lire `governance/analytics-and-rgpd.md` avant tout changement de tracking, formulaire, vidéo ou page légale.
 3. Lire `strategy/content-and-keywords.md` avant de créer ou restructurer une page publique.
 4. Utiliser `technical/implementation-plan.md` comme backlog d'exécution et critères d'acceptation.
-5. Consulter l'audit daté pour le contexte et les chiffres de référence.
-6. Utiliser les preuves brutes uniquement pour confirmer un diagnostic ou comparer une nouvelle mesure.
+5. Lire la dernière note de `../reviews/` pour ne pas refaire ce qui est fait ni contredire une décision datée.
+6. Consulter l'audit daté pour le contexte et les chiffres de référence.
+7. Utiliser les preuves brutes uniquement pour confirmer un diagnostic ou comparer une nouvelle mesure.
 
 ## Décisions non négociables au 14 juillet 2026
 
