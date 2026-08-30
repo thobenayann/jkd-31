@@ -36,3 +36,16 @@ yarn-error.log*
 next-env.d.ts
 .env*
 !.env.example
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.design-sync/build/
+build/
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/.playwright/

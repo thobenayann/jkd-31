@@ -7,6 +7,7 @@ export default function LegalHeader() {
     return (
         <header className='flex flex-col items-center justify-center'>
             <GradualSpacing
+                as='h1'
                 className='max-md:text-center font-cinzel text-white text-3xl md:text-4xl'
                 text='Mentions Légales'
             />

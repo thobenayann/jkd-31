@@ -3,23 +3,23 @@ import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-    title: 'Contactez-nous - JKD Self Defense 31',
+    title: 'Contacter le club à Muret',
     description:
-        "N'hésitez pas à nous contacter pour toute question sur nos cours de Jeet Kune Do ou pour rejoindre l'association JKD Self Defense 31 à Muret.",
+        "Une question avant de venir essayer le Jeet Kune Do ou la self-défense à Muret ? Écrivez au club ou appelez le 06 84 05 93 26. Débutants bienvenus.",
     keywords:
         'contact Jeet Kune Do, prix cours arts martiaux, self-défense Toulouse Muret',
     alternates: { canonical: '/contact' },
     openGraph: {
-        title: 'Contactez-nous - JKD Self Defense 31',
+        title: 'Contacter le club à Muret | JKD Self Defense 31',
         description:
-            "N'hésitez pas à nous contacter pour toute question sur nos cours de Jeet Kune Do ou pour rejoindre l'association JKD Self Defense 31 à Muret.",
+            "Une question avant de venir essayer le Jeet Kune Do ou la self-défense à Muret ? Écrivez au club ou appelez le 06 84 05 93 26.",
         url: absoluteUrl('/contact'),
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Contactez-nous - JKD Self Defense 31',
+        title: 'Contacter le club à Muret | JKD Self Defense 31',
         description:
-            "N'hésitez pas à nous contacter pour toute question sur nos cours de Jeet Kune Do ou pour rejoindre l'association JKD Self Defense 31 à Muret.",
+            "Une question avant de venir essayer le Jeet Kune Do ou la self-défense à Muret ? Écrivez au club ou appelez le 06 84 05 93 26.",
     },
 };
 

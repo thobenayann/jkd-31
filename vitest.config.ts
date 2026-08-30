@@ -7,7 +7,9 @@ export default defineConfig({
         alias: { '@': fileURLToPath(new URL('.', import.meta.url)) },
     },
     test: {
-        include: ['lib/**/*.test.ts'],
+        // Les tests de composants rendent du HTML serveur (`renderToStaticMarkup`),
+        // ce qui teste exactement ce que voient les robots. Pas besoin de jsdom.
+        include: ['lib/**/*.test.ts', 'components/**/*.test.tsx'],
         environment: 'node',
     },
 });

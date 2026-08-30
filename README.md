@@ -29,7 +29,7 @@ Ce projet est le site web officiel de l'association **JKD Self Defense 31**, sit
 - **Nom** : JKD Self Defense 31
 - **Adresse** : 6 Rue Pierre Bauduc, 31600 Muret, France
 - **Téléphone** : +33 6 84 05 93 26
-- **Email** : president@jeetkunedo31.com
+- **Email** : contact@jkd-selfdefense31.fr
 - **Présidente** : Fanny GABORIT
 
 ### Disciplines enseignées

@@ -16,7 +16,13 @@ export const associationConfig = {
         country: 'FR',
     },
     phoneNumber: '+33 6 84 05 93 26',
-    email: 'president@jeetkunedo31.com',
+    /**
+     * Adresse publique unique de l'association. Elle alimente le JSON-LD
+     * `Organization`, la page contact, les mentions légales et les supports
+     * imprimés. Elle doit rester identique à celle de l'affiche et de la fiche
+     * Google Business.
+     */
+    email: 'contact@jkd-selfdefense31.fr',
     socialMedia: {
         facebook: 'https://www.facebook.com/jkd.jidao',
         instagram: 'https://www.instagram.com/jeetkunedo_muret/',

@@ -28,6 +28,7 @@ export default async function Events() {
             <section className='w-full max-md:pb-28'>
                 <header className='flex flex-col items-center align-center space-y-2 pb-10'>
                     <GradualSpacing
+                        as='h1'
                         text='Événements'
                         className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
                     />
@@ -79,6 +80,7 @@ export default async function Events() {
             <section className='w-full max-md:pb-28'>
                 <header className='flex flex-col items-center align-center space-y-2 pb-10'>
                     <GradualSpacing
+                        as='h1'
                         text='Événements'
                         className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
                     />
@@ -131,6 +133,7 @@ export default async function Events() {
         <section className='w-full max-md:pb-28'>
             <header className='flex flex-col items-center align-center space-y-2 pb-10'>
                 <GradualSpacing
+                    as='h1'
                     text='Événements'
                     className='text-center text-3xl pt-10 md:pt-32 uppercase font-bold'
                 />

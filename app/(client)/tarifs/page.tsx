@@ -1,4 +1,5 @@
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import SeasonAnnouncement from '@/components/shared/season-announcement';
 import SportSvg from '@/components/svg/sport-svg';
 import GradualSpacing from '@/components/ui/gradual-spacing';
 import coursesData from '@/data/courses.json';
@@ -7,6 +8,12 @@ import { CourseData } from '@/types/specific-types';
 import CoursesTable from './_components/courses-table';
 import FindUs from './_components/find-us';
 import PriceShow from './_components/price-show';
+
+/**
+ * Comme l'accueil, cette page porte l'annonce de rentrée : sa fenêtre
+ * d'affichage a besoin d'une revalidation pour ne pas rester figée au build.
+ */
+export const revalidate = 3600;
 
 export default function Prices() {
     const courseData: CourseData = coursesData;
@@ -21,8 +28,14 @@ export default function Prices() {
             {/* Les cours */}
             <header className='flex flex-col items-center gap-2 pb-10 pt-10 md:pt-28'>
                 <GradualSpacing
+                    as='h1'
                     className='text-5xl max-md:text-center md:text-6xl font-bold leading-none md:max-w-xl'
                     text='Les cours'
+                />
+                <SeasonAnnouncement
+                    ctaLabel='Nous poser une question'
+                    ctaHref='/contact'
+                    className='mt-6'
                 />
             </header>
             <article className='flex flex-col-reverse md:flex-col md:gap-8 max-md:border-b-2 max-md:pb-8 max-md:border-dashed'>
@@ -45,6 +58,7 @@ export default function Prices() {
             {/* Détails des tarifs réduits */}
             <article className='flex flex-col items-center justify-center max-md:gap-4'>
                 <GradualSpacing
+                    as='h2'
                     text='Détails des tarifs réduits'
                     className='text-center text-2xl md:text-3xl font-bold leading-none md:max-w-xl'
                 />
@@ -54,6 +68,7 @@ export default function Prices() {
             {/* Nous trouver */}
             <article className='flex flex-col items-center justify-center gap-4 md:gap-12 bg-gray-900 pt-12 md:pt-24 pb-16 md:pb-24 h-full'>
                 <GradualSpacing
+                    as='h2'
                     text='Nous trouver'
                     className='text-center text-2xl md:text-3xl font-bold leading-none md:max-w-xl'
                 />

@@ -19,20 +19,20 @@ export async function generateMetadata(): Promise<Metadata> {
     const nextEvent = await getNextEvent();
     // Visuel du prochain événement, sinon l'image Open Graph du site
     const imageUrl = nextEvent?.mainImage?.asset?._ref
-        ? urlFor(nextEvent.mainImage.asset._ref).width(1200).height(630).url()
+        ? urlFor(nextEvent.mainImage).width(1200).height(630).url()
         : absoluteUrl('/opengraph-image.png');
 
     return {
-        title: 'Événements - JKD Self Defense 31',
+        title: 'Stages et événements du club à Muret',
         description:
-            "Restez informé des prochains événements, stages et démonstrations organisés par l'association JKD Self Defense 31 à Muret.",
+            "Stages, démonstrations et rendez-vous de l'association JKD Self Defense 31 à Muret. Dates, horaires, lieux et intervenants de la saison.",
         keywords:
             'événements Jeet Kune Do, stages arts martiaux et self defense, JKD Self Defense 31 Toulouse',
         alternates: { canonical: '/events' },
     openGraph: {
-            title: 'Événements - JKD Self Defense 31',
+            title: 'Stages et événements du club à Muret | JKD Self Defense 31',
             description:
-                "Restez informé des prochains événements, stages et démonstrations organisés par l'association JKD Self Defense 31 à Muret.",
+                "Stages, démonstrations et rendez-vous de l'association JKD Self Defense 31 à Muret. Dates, horaires, lieux et intervenants de la saison.",
             url: absoluteUrl('/events'),
             images: [
                 {
@@ -45,9 +45,9 @@ export async function generateMetadata(): Promise<Metadata> {
         },
         twitter: {
             card: 'summary_large_image',
-            title: 'Événements - JKD Self Defense 31',
+            title: 'Stages et événements du club à Muret | JKD Self Defense 31',
             description:
-                "Restez informé des prochains événements, stages et démonstrations organisés par l'association JKD Self Defense 31 à Muret.",
+                "Stages, démonstrations et rendez-vous de l'association JKD Self Defense 31 à Muret. Dates, horaires, lieux et intervenants de la saison.",
             images: [imageUrl],
         },
     };

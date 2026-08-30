@@ -52,9 +52,15 @@ const cinzelDecorative = FontCinzelDecorative({
 export const metadata: Metadata = {
     metadataBase: new URL(SITE.url),
     alternates: { canonical: '/' },
-    title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
+    title: {
+        // `default` est le titre de l'accueil et le repli des routes sans titre.
+        // `template` est hérité par toutes les routes filles, y compris les
+        // fiches événement de Sanity, qui n'affichaient pas le nom du club.
+        default: 'Jeet Kune Do et self-défense à Muret | JKD Self Defense 31',
+        template: '%s | JKD Self Defense 31',
+    },
     description:
-        "Découvrez le Jeet Kune Do à Muret avec l'association JKD Self Defense 31. Cours d'arts martiaux, de self-défense et de développement physique pour tous les niveaux.",
+        'Club de Jeet Kune Do, Kali, Silat et self-défense à Muret, au sud de Toulouse. Cours adultes, ados et self-défense féminine, tous niveaux, sans compétition.',
     keywords: [
         'Jeet Kune Do',
         'arts martiaux',
@@ -66,9 +72,9 @@ export const metadata: Metadata = {
         'JKD Self Defense 31',
     ],
     openGraph: {
-        title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
+        title: 'Jeet Kune Do et self-défense à Muret | JKD Self Defense 31',
         description:
-            'Apprenez le Jeet Kune Do avec JKD Self Defense 31 à Muret. Cours adaptés à tous les niveaux.',
+            'Club de Jeet Kune Do, Kali, Silat et self-défense à Muret. Cours adultes, ados et self-défense féminine, tous niveaux.',
         url: SITE.url,
         locale: SITE.locale,
         siteName: 'JKD Self Defense 31 - Arts Martiaux et Self-Défense',
@@ -83,9 +89,9 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Jeet Kune Do Toulouse - Arts Martiaux et Self-Défense',
+        title: 'Jeet Kune Do et self-défense à Muret | JKD Self Defense 31',
         description:
-            'Découvrez le Jeet Kune Do avec JKD Self Defense 31 à Toulouse.',
+            'Club de Jeet Kune Do, Kali, Silat et self-défense à Muret, au sud de Toulouse.',
         images: ['/opengraph-image.png'],
     },
 };
@@ -114,10 +120,18 @@ export default function RootLayout({
                 <JsonLd data={buildOrganizationJsonLd()} />
                 <JsonLd data={buildWebSiteJsonLd()} />
                 <JsonLd data={buildSportsLocationJsonLd()} />
+                {/*
+                    `forcedTheme` et non `defaultTheme` : le site est conçu en
+                    sombre uniquement, et `components/ui/mode-toggle.tsx` n'est
+                    rendu nulle part. Avec `enableSystem`, une clé `theme`
+                    laissée dans `localStorage` par une visite précédente, ou par
+                    un autre projet servi sur `localhost:3000`, suffisait à
+                    basculer tout le site en clair. Vérifié dans
+                    `e2e/rendu.spec.ts`.
+                */}
                 <ThemeProvider
                     attribute='class'
-                    defaultTheme='dark'
-                    enableSystem
+                    forcedTheme='dark'
                     disableTransitionOnChange
                     enableColorScheme={false}
                 >

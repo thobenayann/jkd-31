@@ -45,11 +45,11 @@ function NextEventCard({
                 >
                     {events.map((event) => {
                         const mainImageUrl = event.mainImage?.asset?._ref
-                            ? urlFor(event.mainImage.asset._ref).url()
+                            ? urlFor(event.mainImage).url()
                             : '';
                         const personalityPhotoUrl = event.personality?.photo
                             ?.asset?._ref
-                            ? urlFor(event.personality.photo.asset._ref).url()
+                            ? urlFor(event.personality.photo).url()
                             : '';
 
                         const isSingle = events.length === 1;

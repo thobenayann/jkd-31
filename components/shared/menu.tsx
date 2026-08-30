@@ -23,7 +23,7 @@ export const navData = [
         mobileName: 'Accueil',
         path: '/',
         icon: <House />,
-        ariaLabel: 'Aller à la page d’accueil',
+        hint: 'page d’accueil',
     },
     {
         id: 2,
@@ -31,7 +31,7 @@ export const navData = [
         mobileName: "L'Asso",
         path: '/association',
         icon: <Ribbon />,
-        ariaLabel: 'Découvrir l’association',
+        hint: 'découvrir l’association',
     },
     {
         id: 3,
@@ -39,7 +39,7 @@ export const navData = [
         mobileName: 'Tarifs',
         path: '/tarifs',
         icon: <GraduationCap />,
-        ariaLabel: 'Tarifs des cours',
+        hint: 'tarifs et horaires des cours',
     },
     {
         id: 4,
@@ -47,7 +47,7 @@ export const navData = [
         mobileName: 'Events',
         path: '/events',
         icon: <CalendarSearch />,
-        ariaLabel: 'Aller à la page des événements',
+        hint: 'stages et actualités du club',
     },
     {
         id: 5,
@@ -55,7 +55,7 @@ export const navData = [
         mobileName: 'Contact',
         path: '/contact',
         icon: <Phone />,
-        ariaLabel: 'Aller à la section contact',
+        hint: 'nous écrire ou nous appeler',
     },
 ];
 
@@ -123,7 +123,7 @@ const Nav = ({ hash }: NavProps) => {
                         </TransitionLink> */}
                         <TransitionLink
                             href='/'
-                            aria-label='accueil'
+                            aria-label='Accueil, Jeet Kune Do, Kali, Silat, Self-défense'
                             className='group'
                         >
                             <GradualSpacing
@@ -137,7 +137,7 @@ const Nav = ({ hash }: NavProps) => {
                                     className={getLinkClassName(link.path)}
                                     href={link.path}
                                     key={link.id}
-                                    aria-label={link.ariaLabel}
+                                    aria-label={`${link.name}, ${link.hint}`}
                                     aria-current={
                                         hash === link.path ? 'page' : undefined
                                     }
@@ -157,12 +157,12 @@ const Nav = ({ hash }: NavProps) => {
                         return (
                             <TransitionLink
                                 className={cn(
-                                    'flex flex-col w-12',
+                                    'flex flex-col justify-center w-12 min-h-11',
                                     getLinkClassName(link.path)
                                 )}
                                 href={link.path}
                                 key={link.id}
-                                aria-label={link.ariaLabel}
+                                aria-label={`${link.mobileName}, ${link.hint}`}
                                 aria-current={
                                     hash === link.path ? 'page' : undefined
                                 }
