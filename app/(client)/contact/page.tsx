@@ -18,6 +18,7 @@ export default function Contact() {
                     className='max-md:hidden md:absolute inset-0 z-0 object-contain md:object-cover object-center lg:object-top brightness-50'
                 />
                 <GradualSpacing
+                    as='h1'
                     className='max-md:text-center font-cinzel text-white text-3xl'
                     text='Contactez nous'
                 />
