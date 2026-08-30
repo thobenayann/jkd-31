@@ -19,10 +19,10 @@ interface EventDetailProps {
 
 export default function EventDetail({ event }: EventDetailProps) {
     const imageUrl = event.mainImage?.asset?._ref
-        ? urlFor(event.mainImage.asset._ref).url()
+        ? urlFor(event.mainImage).url()
         : undefined;
     const personalityPhotoUrl = event.personality?.photo?.asset?._ref
-        ? urlFor(event.personality.photo.asset._ref).url()
+        ? urlFor(event.personality.photo).url()
         : '';
     const formattedEventDates = formatEventDates(event.eventDates);
     const isExternal = event.origin === 'external';

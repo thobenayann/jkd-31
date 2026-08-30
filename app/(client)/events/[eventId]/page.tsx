@@ -30,7 +30,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     }
 
     const imageUrl = event.mainImage?.asset?._ref
-        ? urlFor(event.mainImage.asset._ref).width(1200).height(630).url()
+        ? urlFor(event.mainImage).width(1200).height(630).url()
         : undefined;
     const isExternal = event.origin === 'external';
     const externalUrl = event.externalUrl;
