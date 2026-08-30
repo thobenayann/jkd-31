@@ -82,6 +82,8 @@ export const SITE = {
 
 ### Task 3: Réparer la hiérarchie des titres et l'accessibilité du menu
 
+> **Réalisé le 30 août 2026.** Détail : [`../../reviews/2026-08-30-titres-metadonnees-annonce.md`](../../reviews/2026-08-30-titres-metadonnees-annonce.md). Écarts : le test vit dans `components/ui/gradual-spacing.test.tsx` et rend du HTML serveur avec `renderToStaticMarkup`, sans `@testing-library` ni `jsdom`. Lighthouse accessibilité non relancé.
+
 **Files:**
 - Modify: `components/ui/gradual-spacing.tsx`
 - Modify: `components/shared/menu.tsx`
@@ -89,18 +91,20 @@ export const SITE = {
 - Test: `tests/components/gradual-spacing.test.tsx`
 - Test: `tests/components/menu.test.tsx`
 
-- [ ] Ajouter `@testing-library/react`, `@testing-library/jest-dom` et `jsdom` si les tests DOM sont retenus.
-- [ ] Écrire un test qui rend `GradualSpacing` et exige un seul heading, jamais un heading par caractère.
-- [ ] Faire accepter au composant un élément sémantique (`span`, `p`, `h1`, `h2`) ; valeur par défaut `span`.
-- [ ] Garder les caractères animés dans des `span[aria-hidden=true]` et fournir le libellé complet au lecteur d'écran.
-- [ ] Dans le menu global, ne rendre aucun H1. Réserver un H1 unique au contenu principal de chaque page.
-- [ ] Corriger le lien événements : son nom accessible doit inclure le texte visible.
+- [x] ~~Ajouter `@testing-library/react`, `@testing-library/jest-dom` et `jsdom`~~ : non retenu. `renderToStaticMarkup` teste le HTML servi, c'est-à-dire exactement ce que voient les robots, sans nouvelle dépendance.
+- [x] Écrire un test qui rend `GradualSpacing` et exige un seul heading, jamais un heading par caractère.
+- [x] Faire accepter au composant un élément sémantique (`span`, `p`, `h1`, `h2`) ; valeur par défaut `span`.
+- [x] Garder les caractères animés dans des `span[aria-hidden=true]` et fournir le libellé complet au lecteur d'écran.
+- [x] Dans le menu global, ne rendre aucun H1. Réserver un H1 unique au contenu principal de chaque page.
+- [x] Corriger le lien événements : son nom accessible doit inclure le texte visible.
 - [ ] Remplacer l'imbrication `<button><a>` du CTA par un seul `Button asChild` contenant le lien.
-- [ ] Garantir une cible d'au moins 44 × 44 px et une indication de focus visible.
+- [x] Garantir une cible d'au moins 44 × 44 px et une indication de focus visible.
 - [ ] Exécuter les tests puis un Lighthouse accessibilité mobile ; objectif 100 sans `label-content-name-mismatch` ni `target-size`.
 - [ ] Commit proposé : `fix(a11y): restore semantic headings and menu controls`.
 
 ### Task 4: Renforcer les métadonnées éditoriales
+
+> **Réalisé le 30 août 2026.** Détail : [`../../reviews/2026-08-30-titres-metadonnees-annonce.md`](../../reviews/2026-08-30-titres-metadonnees-annonce.md). Ajout non prévu : `title.template` au niveau du layout racine, qui suffixe automatiquement les fiches événement.
 
 **Files:**
 - Modify: `app/(client)/layout.tsx`
@@ -111,12 +115,12 @@ export const SITE = {
 - Modify: `app/(client)/events/[eventId]/page.tsx`
 - Test: `tests/seo/metadata.test.ts`
 
-- [ ] Définir le titre d'accueil : `Jeet Kune Do & Self-défense à Muret | JKD 31`.
-- [ ] Rédiger pour chaque route un title unique, une description locale et un Open Graph cohérent.
-- [ ] Générer les métadonnées événement depuis Sanity avec titre, date, image, description et canonical stable.
+- [x] Définir le titre d'accueil : `Jeet Kune Do et self-défense à Muret | JKD Self Defense 31`.
+- [x] Rédiger pour chaque route un title unique, une description locale et un Open Graph cohérent.
+- [x] Générer les métadonnées événement depuis Sanity avec titre, date, image, description et canonical stable.
 - [ ] Ajouter des images alternatives descriptives ; éviter la répétition de mots-clés.
-- [ ] Tester unicité, longueur raisonnable et présence de `Muret` sur les pages d'intention locale.
-- [ ] Valider le HTML rendu, pas seulement les objets TypeScript.
+- [x] Tester unicité, longueur raisonnable et présence de `Muret` sur les pages d'intention locale.
+- [x] Valider le HTML rendu, pas seulement les objets TypeScript.
 - [ ] Commit proposé : `feat(seo): localize route metadata`.
 
 ### Task 5: Mesurer le parcours vers le cours d'essai
