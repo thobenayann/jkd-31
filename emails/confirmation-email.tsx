@@ -10,15 +10,18 @@ import {
     Tailwind,
     Text,
 } from '@react-email/components';
+import { associationConfig } from '@/constant/config';
 
 type ConfirmationEmailProps = {
     firstName: string;
     lastName: string;
 };
 
-const PRESIDENT_NAME = 'Fanny GABORIT';
-const PRESIDENT_EMAIL = 'president@jeetkunedo31.com';
-const PRESIDENT_PHONE = '+33 6 84 05 93 26';
+// Source unique : ces coordonnées sont aussi celles du site, du JSON-LD et des
+// supports imprimés. Les dupliquer ici avait fait diverger l'adresse de contact.
+const PRESIDENT_NAME = associationConfig.legal.director;
+const PRESIDENT_EMAIL = associationConfig.email;
+const PRESIDENT_PHONE = associationConfig.phoneNumber;
 
 export function ConfirmationEmail({
     firstName,
