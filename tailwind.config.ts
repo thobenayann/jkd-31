@@ -26,6 +26,19 @@ const config = {
         extend: {
             colors: {
                 jkdBlue: '#006599',
+                /**
+                 * Variante éclaircie de `jkdBlue`, pour le petit texte sur fond
+                 * sombre. `#006599` sur noir tombe à 2,4:1, sous le minimum de
+                 * 4,5:1 exigé par le WCAG pour du texte de moins de 18 px.
+                 */
+                jkdBlueLight: '#4DA6D9',
+                /** Rouge du logo, déjà utilisé par le badge des événements internes. */
+                jkdRed: '#E20614',
+                /**
+                 * Variante éclaircie de `jkdRed` pour le petit texte sur fond
+                 * sombre : `#E20614` plafonne à 3,4:1, sous le minimum de 4,5:1.
+                 */
+                jkdRedLight: '#FF4D57',
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',
