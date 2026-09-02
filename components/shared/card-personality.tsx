@@ -84,7 +84,7 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                             <div className='relative w-6 h-6'>
                                 <Image
                                     src={flagUrl}
-                                    alt='flag'
+                                    alt=""
                                     fill
                                     sizes='24px'
                                     className='object-contain'
@@ -102,16 +102,14 @@ const CardPersonality: React.FC<CardPersonalityProps> = ({
                     )}
                     {withMoreInfo && (
                         <div className='pt-4'>
-                            <a
-                                href='#'
+                            <button
+                                type='button'
+                                aria-label={`En savoir plus sur ${firstName} ${lastName}`}
                                 className='text-jkdBlue font-semibold hover:text-jkdBlue/85 text-sm'
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    onMoreInfoClick?.();
-                                }}
+                                onClick={() => onMoreInfoClick?.()}
                             >
                                 En savoir plus -&gt;
-                            </a>
+                            </button>
                         </div>
                     )}
                 </CardContent>
