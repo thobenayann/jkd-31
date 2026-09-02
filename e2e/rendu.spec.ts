@@ -126,6 +126,50 @@ test.describe('le thème sombre ne dépend de rien d’extérieur', () => {
     }
 });
 
+test.describe('suites de l’audit SEO du 1er septembre 2026', () => {
+    for (const path of PAGES) {
+        test(`${path} : aucun lien vers href="#"`, async ({ page }) => {
+            await page.goto(path);
+            await settle(page);
+            // Les cartes personnalités utilisaient `<a href="#">` avec un
+            // preventDefault : un bouton déguisé en lien, visible des robots.
+            await expect(page.locator('a[href="#"]')).toHaveCount(0);
+        });
+    }
+
+    test('le pied de page porte l’année courante', async ({ page }) => {
+        await page.goto('/');
+        await settle(page);
+        const footer = await page.locator('footer').innerText();
+        expect(footer).toContain(String(new Date().getFullYear()));
+    });
+
+    test('les horaires figurent dans les données structurées du lieu', async ({
+        page,
+    }) => {
+        await page.goto('/');
+        await settle(page);
+
+        const hours = await page.evaluate(() => {
+            const blocks = Array.from(
+                document.querySelectorAll('script[type="application/ld+json"]')
+            ).map((script) => JSON.parse(script.textContent ?? '{}'));
+            const place = blocks.find(
+                (block) => block['@type'] === 'SportsActivityLocation'
+            );
+            return place?.openingHoursSpecification ?? null;
+        });
+
+        expect(hours, 'openingHoursSpecification présent').not.toBeNull();
+        expect(hours).toHaveLength(3);
+        expect(hours[0]).toMatchObject({
+            dayOfWeek: 'Tuesday',
+            opens: '18:30',
+            closes: '22:00',
+        });
+    });
+});
+
 test.describe('événements sans intervenant', () => {
     /**
      * `AvatarPersonality` affichait « N/A N/A » et « Unknown Title » sur les
