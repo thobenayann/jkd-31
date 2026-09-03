@@ -6,7 +6,9 @@
  */
 import { associationConfig } from '@/constant/config';
 import { SITE, absoluteUrl } from '@/constant/site';
+import coursesData from '@/data/courses.json';
 import type { Evenement } from '@/sanity.types';
+import { buildOpeningHours } from './opening-hours';
 
 /** Sous-ensemble d'un `Evenement` Sanity utilisé par le JSON-LD. */
 export type EventForJsonLd = Pick<
@@ -145,16 +147,25 @@ export const buildOrganizationJsonLd = () => ({
 });
 
 /** Lieu d'entraînement : ce que Google rapproche de la fiche Business Profile. */
-export const buildSportsLocationJsonLd = () => ({
-    '@context': 'https://schema.org',
-    '@type': 'SportsActivityLocation',
-    name: SITE.name,
-    url: SITE.url,
-    telephone: associationConfig.phoneNumber,
-    email: associationConfig.email,
-    address: venueAddress,
-    sameAs: socialProfiles,
-});
+export const buildSportsLocationJsonLd = () => {
+    const openingHours = buildOpeningHours(coursesData);
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'SportsActivityLocation',
+        name: SITE.name,
+        url: SITE.url,
+        telephone: associationConfig.phoneNumber,
+        email: associationConfig.email,
+        address: venueAddress,
+        sameAs: socialProfiles,
+        // Omis plutôt que vide si le planning devient illisible : une donnée
+        // structurée fausse est pire que son absence.
+        ...(openingHours.length > 0 && {
+            openingHoursSpecification: openingHours,
+        }),
+    };
+};
 
 export const buildWebSiteJsonLd = () => ({
     '@context': 'https://schema.org',
