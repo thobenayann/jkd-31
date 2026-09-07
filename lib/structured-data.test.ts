@@ -107,6 +107,11 @@ describe('global structured data', () => {
         expect(ld.url).toBe('https://www.jkd-selfdefense31.fr');
         expect(ld.sameAs.some((u) => u.includes('facebook.com'))).toBe(true);
         expect(ld.sameAs.some((u) => u.includes('instagram.com'))).toBe(true);
+        expect(ld.memberOf).toEqual({
+            '@type': 'Organization',
+            name: 'ACDAM',
+            url: 'https://www.ecole-delannoy.fr/',
+        });
     });
 
     it('describes the training venue as a SportsActivityLocation with a postal address', () => {

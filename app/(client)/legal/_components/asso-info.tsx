@@ -22,6 +22,11 @@ export default function AssoInfo() {
                 Email :{' '}
                 <strong dangerouslySetInnerHTML={{ __html: obfuscatedEmail }} />
             </p>
+            <p className='text-gray-300 mb-4'>
+                Affiliation :{' '}
+                <strong>{associationConfig.affiliation.acronym}</strong> (
+                {associationConfig.affiliation.school})
+            </p>
         </div>
     );
 }

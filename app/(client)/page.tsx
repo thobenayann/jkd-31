@@ -1,5 +1,6 @@
 import SeasonAnnouncement from '@/components/shared/season-announcement';
 import HomeTitle from './(home)/_components/home-title';
+import PriceSummary from './(home)/_components/price-summary';
 import HomeContent from './(home)/home-content';
 
 /**
@@ -44,6 +45,7 @@ export default function Home() {
                 </div>
             </header>
             <HomeContent />
+            <PriceSummary />
         </div>
     );
 }
