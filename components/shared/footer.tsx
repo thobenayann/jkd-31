@@ -3,12 +3,31 @@ import { Facebook, Instagram } from 'lucide-react';
 import { TransitionLink } from './transition-link';
 
 const Footer = () => {
+    const { affiliation } = associationConfig;
+
     return (
         <footer className='flex flex-col p-4 pb-28 md:pb-4 w-full font-serif'>
             <p className='text-center text-gray-400 text-sm font-normal'>
                 ©{new Date().getFullYear()} - Association JKD Self Defense 31 à
-                Muret (31600) - {associationConfig.venue.name} - Tous droits
-                réservés
+                Muret (31600) -{' '}
+                <TransitionLink
+                    href='/tarifs#nous-trouver'
+                    className='underline underline-offset-2 hover:text-white'
+                >
+                    {associationConfig.venue.name}
+                </TransitionLink>{' '}
+                - Tous droits réservés
+            </p>
+            <p className='text-center text-gray-400 text-sm font-normal'>
+                Club affilié à l&apos;{affiliation.acronym},{' '}
+                <a
+                    href={affiliation.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='underline underline-offset-2 hover:text-white'
+                >
+                    {affiliation.school}
+                </a>
             </p>
             <div className='grid w-full grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center'>
                 {/* Colonne gauche (vide en desktop pour centrer le bloc central) */}

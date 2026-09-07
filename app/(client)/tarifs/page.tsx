@@ -1,4 +1,5 @@
 import FadeInWrapper from '@/components/shared/fade-in-wrapper';
+import ScrollToHash from '@/components/shared/scroll-to-hash';
 import SeasonAnnouncement from '@/components/shared/season-announcement';
 import SportSvg from '@/components/svg/sport-svg';
 import GradualSpacing from '@/components/ui/gradual-spacing';
@@ -25,6 +26,7 @@ export default function Prices() {
     });
     return (
         <section className='w-full flex flex-col gap-12 md:gap-20 max-md:pb-10'>
+            <ScrollToHash />
             {/* Les cours */}
             <header className='flex flex-col items-center gap-2 pb-10 pt-10 md:pt-28'>
                 <GradualSpacing
@@ -66,7 +68,10 @@ export default function Prices() {
             </article>
 
             {/* Nous trouver */}
-            <article className='flex flex-col items-center justify-center gap-4 md:gap-12 bg-gray-900 pt-12 md:pt-24 pb-16 md:pb-24 h-full'>
+            <article
+                id='nous-trouver'
+                className='flex flex-col items-center justify-center gap-4 md:gap-12 bg-gray-900 pt-12 md:pt-24 pb-16 md:pb-24 h-full scroll-mt-20'
+            >
                 <GradualSpacing
                     as='h2'
                     text='Nous trouver'

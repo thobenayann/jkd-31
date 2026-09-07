@@ -134,6 +134,11 @@ export const buildOrganizationJsonLd = () => ({
     name: SITE.name,
     url: SITE.url,
     sameAs: socialProfiles,
+    memberOf: {
+        '@type': 'Organization',
+        name: associationConfig.affiliation.acronym,
+        url: associationConfig.affiliation.url,
+    },
     contactPoint: [
         {
             '@type': 'ContactPoint',
