@@ -1,6 +1,7 @@
 [
     {
         "title": "Cours ado",
+        "subtitle": "13 - 15 ans",
         "price": {
             "inscription": 225,
             "reduced": null,
@@ -9,7 +10,7 @@
         "features": [
             "Cours techniques",
             "Physique adapté",
-            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Stages (~2) avec David DELANNOY compris",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription"
@@ -68,7 +69,7 @@
             "fifth_year": 287
         },
         "features": [
-            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Stages (~2) avec David DELANNOY compris",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription",
@@ -89,7 +90,7 @@
             "fifth_year": null
         },
         "features": [
-            "Stages (2) avec David DELANNOY: tarif réduit participation stage",
+            "Stages (~2) avec David DELANNOY compris",
             "Licence",
             "Adhésion à la fédération",
             "T-shirt officiel à la première inscription"
