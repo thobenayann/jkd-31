@@ -87,19 +87,33 @@ const config = {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' },
                 },
-                aurora: {
-                    from: {
-                        backgroundPosition: '50% 50%, 50% 50%',
-                    },
-                    to: {
-                        backgroundPosition: '350% 50%, 350% 50%',
-                    },
+                /**
+                 * Dérive lente du fond « aurora ». On anime `transform` et non
+                 * `background-position` : le compositeur GPU se contente de
+                 * déplacer une couche déjà peinte, sans repeindre image par
+                 * image. La couche fait 200 % de large, translater de -50 %
+                 * ramène un motif identique, la boucle est sans couture.
+                 */
+                'aurora-drift': {
+                    from: { transform: 'translate3d(0, 0, 0)' },
+                    to: { transform: 'translate3d(-50%, 0, 0)' },
+                },
+                /**
+                 * Défilement vertical du nuage de mots. Reprend à l'identique
+                 * l'animation framer-motion d'origine (y de -100 % à 100 %,
+                 * linéaire, en boucle), mais en CSS pur : le compositeur la
+                 * gère seul, sans boucle JavaScript sur le thread principal.
+                 */
+                'word-scroll': {
+                    from: { transform: 'translateY(-100%)' },
+                    to: { transform: 'translateY(100%)' },
                 },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                aurora: 'aurora 60s linear infinite',
+                'aurora-drift': 'aurora-drift 60s linear infinite',
+                'word-scroll': 'word-scroll 180s linear infinite',
             },
             fontFamily: {
                 sans: ['var(--font-sans)', ...fontFamily.sans],

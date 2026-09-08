@@ -27,7 +27,8 @@ export const SEASON_ANNOUNCEMENT: Announcement = {
     // Date confirmée par Yann le 30 août 2026.
     message:
         'Reprise des cours le mardi 8 septembre à 20h au Gymnase Albert Camus, à Muret.',
-    detail: 'Venez nous rencontrer au Forum des associations, dimanche 6 septembre de 10h à 17h à la Salle Horizon Pyrénées.',
+    detail:
+        'Nous vous accueillons pour un cours d’essai si vous le souhaitez, n’hésitez pas à nous contacter. Pas disponible à la rentrée ? Vous pouvez nous rejoindre en cours d’année également.',
     visibleFrom: '2026-08-25',
     visibleUntil: '2026-10-04',
 };
