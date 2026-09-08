@@ -87,19 +87,22 @@ const config = {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' },
                 },
-                aurora: {
-                    from: {
-                        backgroundPosition: '50% 50%, 50% 50%',
-                    },
-                    to: {
-                        backgroundPosition: '350% 50%, 350% 50%',
-                    },
+                /**
+                 * Dérive lente du fond « aurora ». On anime `transform` et non
+                 * `background-position` : le compositeur GPU se contente de
+                 * déplacer une couche déjà peinte, sans repeindre image par
+                 * image. La couche fait 200 % de large, translater de -50 %
+                 * ramène un motif identique, la boucle est sans couture.
+                 */
+                'aurora-drift': {
+                    from: { transform: 'translate3d(0, 0, 0)' },
+                    to: { transform: 'translate3d(-50%, 0, 0)' },
                 },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                aurora: 'aurora 60s linear infinite',
+                'aurora-drift': 'aurora-drift 60s linear infinite',
             },
             fontFamily: {
                 sans: ['var(--font-sans)', ...fontFamily.sans],
