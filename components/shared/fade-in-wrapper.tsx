@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
 const fadeInVariants = {
     hidden: (direction: string) => {
@@ -34,17 +34,24 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
     className = '',
     direction = 'up',
 }) => {
-    const controls = useAnimation();
     const ref = useRef<HTMLDivElement>(null);
+    // Apparition pilotée par un état déclaratif plutôt que par `useAnimation()`
+    // impératif : `controls.start()` appelé sur des controls dont l'élément
+    // vient d'être démonté (double montage de React en dev) levait l'erreur
+    // « controls.start() should only be called after a component has mounted ».
+    const [isVisible, setIsVisible] = useState(false);
 
-    // L'effet ne s'exécute que côté client, après montage : pas besoin d'un flag isMounted
+    // L'effet ne s'exécute que côté client, après montage.
     useEffect(() => {
         const element = ref.current;
+        if (!element) return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    controls.start('visible');
+                    setIsVisible(true);
+                    // L'apparition ne joue qu'une fois : on cesse d'observer.
+                    observer.disconnect();
                 }
             },
             {
@@ -53,22 +60,16 @@ const FadeInWrapper: React.FC<FadeInWrapperProps> = ({
             }
         );
 
-        if (element) {
-            observer.observe(element);
-        }
+        observer.observe(element);
 
-        return () => {
-            if (element) {
-                observer.unobserve(element);
-            }
-        };
-    }, [controls]);
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <motion.div
             ref={ref}
             initial='hidden'
-            animate={controls}
+            animate={isVisible ? 'visible' : 'hidden'}
             exit='hidden'
             variants={fadeInVariants}
             custom={direction}

@@ -8,7 +8,7 @@ import {
     findPersonalitiesByLastNames,
     PersonalityType,
 } from '@/lib/findPersonalityByLastName';
-import { motion, useAnimation, useScroll } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import WordCloud from './word-cloud';
@@ -40,7 +40,6 @@ export default function HomeContentStatic({
     );
 
     // Détecter le scroll et afficher le bouton fixe en bas
-    const controls = useAnimation(); // Animation control from Framer Motion
     const { scrollYProgress } = useScroll(); // Hook to track the scroll progress
     const [showButton, setShowButton] = useState(false);
 
@@ -58,15 +57,6 @@ export default function HomeContentStatic({
         return () => unsubscribe();
     }, [scrollYProgress]);
 
-    useEffect(() => {
-        // Handle animation once the button's visibility changes
-        if (showButton) {
-            controls.start({ opacity: 1, y: 0 });
-        } else {
-            controls.start({ opacity: 0, y: 50 });
-        }
-    }, [showButton, controls]);
-
     return (
         <div className='pt-10 pb-10 md:mb-36 relative'>
             <div className='absolute inset-0 top-52 flex justify-center items-center -z-10'>
@@ -77,7 +67,6 @@ export default function HomeContentStatic({
                         width={1280}
                         height={1000}
                         style={{ objectFit: 'contain' }}
-                        quality={100}
                         className='opacity-50'
                     />
                 ) : (
@@ -86,7 +75,6 @@ export default function HomeContentStatic({
                         alt='Background Image'
                         fill
                         style={{ objectFit: 'cover' }}
-                        quality={100}
                         className='opacity-50'
                     />
                 )}
