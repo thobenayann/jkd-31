@@ -98,11 +98,22 @@ const config = {
                     from: { transform: 'translate3d(0, 0, 0)' },
                     to: { transform: 'translate3d(-50%, 0, 0)' },
                 },
+                /**
+                 * Défilement vertical du nuage de mots. Reprend à l'identique
+                 * l'animation framer-motion d'origine (y de -100 % à 100 %,
+                 * linéaire, en boucle), mais en CSS pur : le compositeur la
+                 * gère seul, sans boucle JavaScript sur le thread principal.
+                 */
+                'word-scroll': {
+                    from: { transform: 'translateY(-100%)' },
+                    to: { transform: 'translateY(100%)' },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
                 'aurora-drift': 'aurora-drift 60s linear infinite',
+                'word-scroll': 'word-scroll 180s linear infinite',
             },
             fontFamily: {
                 sans: ['var(--font-sans)', ...fontFamily.sans],

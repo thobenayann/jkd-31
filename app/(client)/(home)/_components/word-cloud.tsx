@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 const words = [
@@ -84,11 +83,8 @@ const WordCloud = () => {
     }, []);
 
     return (
-        <motion.div
-            className='overflow-hidden h-full relative z-0'
-            ref={containerRef}
-        >
-            <motion.div
+        <div className='overflow-hidden h-full relative z-0' ref={containerRef}>
+            <div
                 className='absolute inset-0'
                 style={{
                     background:
@@ -96,22 +92,24 @@ const WordCloud = () => {
                     zIndex: 1,
                 }}
             />
-            <motion.div
-                className='flex flex-col items-center space-y-2 font-cinzelDecorative'
-                initial={{ y: '-100%' }}
-                animate={{ y: '100%' }}
-                transition={{ duration: 180, ease: 'linear', repeat: Infinity }} // Adjust the duration for slower scroll
-            >
+            {/*
+                Défilement en CSS pur (`animate-word-scroll`, défini dans
+                tailwind.config). Reprend l'animation d'origine à l'identique
+                (y de -100 % à 100 %, linéaire, 180 s, en boucle) sans la boucle
+                JavaScript de framer-motion, qui tournait en continu sur le
+                thread principal même hors écran.
+            */}
+            <div className='flex flex-col items-center space-y-2 font-cinzelDecorative animate-word-scroll'>
                 {styledWords.map((styledWord, index) => (
-                    <motion.span
+                    <span
                         key={index}
                         className={`font-serif ${styledWord.size} ${styledWord.color}`}
                     >
                         {styledWord.word.toUpperCase()}
-                    </motion.span>
+                    </span>
                 ))}
-            </motion.div>
-        </motion.div>
+            </div>
+        </div>
     );
 };
 
