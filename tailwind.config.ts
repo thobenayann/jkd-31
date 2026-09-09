@@ -99,20 +99,28 @@ const config = {
                     to: { transform: 'translate3d(-50%, 0, 0)' },
                 },
                 /**
-                 * Défilement vertical du nuage de mots. Reprend à l'identique
-                 * l'animation framer-motion d'origine (y de -100 % à 100 %,
-                 * linéaire, en boucle), mais en CSS pur : le compositeur la
-                 * gère seul, sans boucle JavaScript sur le thread principal.
+                 * Défilement vertical du nuage de mots, de haut en bas comme
+                 * l'original : le bloc est rendu deux fois, on part d'un bloc
+                 * au dessus et on descend jusqu'à la position de repos, puis on
+                 * boucle sans saut visible. La durée est calée par le composant
+                 * pour conserver la vitesse d'origine.
                  */
                 'word-scroll': {
-                    from: { transform: 'translateY(-100%)' },
-                    to: { transform: 'translateY(100%)' },
+                    from: { transform: 'translate3d(0, -50%, 0)' },
+                    to: { transform: 'translate3d(0, 0, 0)' },
                 },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'aurora-drift': 'aurora-drift 60s linear infinite',
+                /**
+                 * `steps(1440)` : 24 pas par seconde au lieu d'une image par
+                 * rafraîchissement d'écran (60 à 160 par seconde). Le compositeur
+                 * ne redessine que quand la valeur change, soit un saut de 1 à
+                 * 2 px sur un dégradé flouté à 10 px : invisible, et 6 fois
+                 * moins de travail GPU.
+                 */
+                'aurora-drift': 'aurora-drift 60s steps(1440) infinite',
                 'word-scroll': 'word-scroll 180s linear infinite',
             },
             fontFamily: {
