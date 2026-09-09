@@ -1,7 +1,12 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { motion, useAnimation, useScroll } from 'framer-motion';
+import {
+    motion,
+    useAnimation,
+    useMotionValueEvent,
+    useScroll,
+} from 'framer-motion';
 import {
     CalendarSearch,
     GraduationCap,
@@ -10,7 +15,7 @@ import {
     Ribbon,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
 import GradualSpacing from '../ui/gradual-spacing';
 import { TransitionLink } from './transition-link';
@@ -66,9 +71,12 @@ interface NavProps {
 const Nav = ({ hash }: NavProps) => {
     const currentPath = usePathname();
 
-    const [lastYPos, setLastYPos] = useState(0);
     const controls = useAnimation();
     const { scrollY } = useScroll();
+    // Position et état de la barre gardés dans des refs : le défilement ne doit
+    // pas re-rendre la barre (aurora, GradualSpacing) à chaque image.
+    const lastYPos = useRef(0);
+    const isHidden = useRef(false);
 
     // Fonction pour déterminer le style du lien
     const getLinkClassName = (linkPath: string) => {
@@ -84,24 +92,19 @@ const Nav = ({ hash }: NavProps) => {
         return `${baseStyle} ${specificStyle}`;
     };
 
-    useEffect(() => {
-        const updateMenuVisibility = () => {
-            if (scrollY.get() > lastYPos && scrollY.get() > 100) {
-                // Scroll Down
-                controls.start({ y: '-100%', transition: { duration: 0.2 } });
-            } else {
-                // Scroll Up
-                controls.start({ y: '0%', transition: { duration: 0.2 } });
-            }
-            setLastYPos(scrollY.get());
-        };
-
-        scrollY.on('change', updateMenuVisibility);
-
-        return () => {
-            scrollY.clearListeners();
-        };
-    }, [lastYPos, scrollY, controls]);
+    // Abonnement géré par framer-motion (désabonnement propre au démontage,
+    // sans purger les autres abonnés du MotionValue partagé). L'animation n'est
+    // relancée que lorsque la barre change d'état, pas à chaque image.
+    useMotionValueEvent(scrollY, 'change', (latest) => {
+        const shouldHide = latest > lastYPos.current && latest > 100;
+        lastYPos.current = latest;
+        if (shouldHide === isHidden.current) return;
+        isHidden.current = shouldHide;
+        controls.start({
+            y: shouldHide ? '-100%' : '0%',
+            transition: { duration: 0.2 },
+        });
+    });
 
     return (
         <>
@@ -110,8 +113,13 @@ const Nav = ({ hash }: NavProps) => {
                 className='fixed z-50 right-0 w-full shadow-md shadow-zinc-500'
                 animate={controls}
             >
-                <AuroraBackground className='w-full h-full'>
-                    <div className='hidden h-14 md:flex w-full items-center justify-between px-4 py-2 bg-transparent backdrop-blur-sm text-lg text-white'>
+                {/* max-md:hidden : sous md la barre de bureau est masquée, inutile
+                    de faire tourner l'aurora dans une bande vide. Pas de
+                    backdrop-blur sur le contenu : le fond est déjà flouté à 10 px,
+                    et un backdrop-filter au dessus d'un calque animé serait
+                    recalculé à chaque image. */}
+                <AuroraBackground className='w-full h-full max-md:hidden'>
+                    <div className='hidden h-14 md:flex w-full items-center justify-between px-4 py-2 bg-transparent text-lg text-white'>
                         {/* <TransitionLink href='/' aria-label='accueil'>
                             <Image
                                 src='/images/logo/logo-jkd-sd-31.webp'
