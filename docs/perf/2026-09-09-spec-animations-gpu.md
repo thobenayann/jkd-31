@@ -231,6 +231,48 @@ Point aveugle assumé : toutes les mesures sont faites sous Chrome. Firefox
 gère peut-être différemment `steps()` ; une mesure Firefox avant et après par
 le membre qui a signalé le problème est demandée.
 
+## Complément 2 : retrouver le drapeau qui flotte
+
+Retour de Yann après mise en production : la barre ne « flotte » plus comme
+un drapeau, des formes carrées apparaissent. Comparaison à instants égaux
+(15 s et 40 s de boucle) entre trois versions : production (canvas), version
+d'Opus 4.8 (`5dc71fe`) et version d'origine (`e21783c^`).
+
+Constat : la version canvas reproduisait au pixel près celle d'Opus 4.8, mais
+c'est le commit `e21783c` qui avait changé le rendu. L'original appliquait
+**un seul** `blur(10px)` (et `invert` en clair) sur l'élément entier, donc
+**après** la fusion `mix-blend-difference`, avec des bandes mobiles deux fois
+plus larges et trois fois plus rapides. Opus 4.8 avait posé le flou **par
+couche, avant** la fusion. Or la différence de deux images floues garde des
+arêtes nettes là où elle change de signe : ce sont les cellules rectangulaires.
+
+Correction : retour aux dégradés CSS et à la mécanique d'origine (flou après
+fusion, bandes à 200 % de la largeur de barre, 96 px/s), en gardant le
+déplacement par `transform`, la cadence `steps()` et la pause à l'attention.
+Plus aucun canvas : le composant redevient purement déclaratif.
+
+Deux pièges mesurés au passage, par retrait de propriétés dans une trace :
+
+| Variante (flou après fusion, animation active) | Total |
+|---|---|
+| Groupe filtré sans découpe, `steps(1440)` | 11,7 % |
+| Groupe filtré avec `overflow: hidden`, `steps(1440)` (36 img/s) | 5,9 % |
+| Idem, `steps(960)` (24 img/s) | 4,1 % |
+| Idem, `steps(600)` (15 img/s) | 3,9 % |
+| Idem, `linear` | 8,3 % |
+
+1. Sans `overflow: hidden` sur l'élément filtré, le compositeur floute une
+   surface qui englobe tout le calque mobile (400 % de large) avant de la
+   découper : trois fois plus de pixels que la barre.
+2. La cadence retenue est 24 images par seconde (`steps(960)` sur 40 s, 4 px
+   par pas). Mesures propres sur le build final, nuage de mots compris : de
+   4,1 % (fenêtre de 4 s) à 6,2 % (fenêtre de 8 s après rechargement), contre
+   3,0 % pour la version canvas. C'est le prix du rendu d'origine, assumé.
+
+Piège de mesure : après 60 s sans interaction, la pause à l'attention rend
+toute mesure « animation active » fausse. Chaque phase consigne désormais
+`playState` et relance l'attention par un `pointermove` synthétique.
+
 ## Hors périmètre
 
 `will-change` jamais libéré dans `fade-in-wrapper.tsx`, transition de page en
