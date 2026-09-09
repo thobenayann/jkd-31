@@ -188,6 +188,49 @@ transparent la couleur de la bande.
 production : 56 tests passent. `pnpm lint` : les 2 erreurs signalées
 (`3d-card.tsx`, `use-media-query.ts`) préexistent sur `develop`.
 
+## Complément : animer seulement quand quelqu'un regarde
+
+Retour d'un membre après mise en production : le résidu de 3 % « sans rien
+faire » devrait être nul, une animation ne doit tourner que quand elle sert.
+Le principe est juste. Sur desktop la barre est visible en permanence, le
+critère « hors écran » ne suffit donc pas ; le critère retenu est
+**l'attention** :
+
+- **Fenêtre sans focus ou onglet caché** (`focus`, `blur`,
+  `visibilitychange`) : pause immédiate, reprise au retour. C'est le cas de
+  la mesure au gestionnaire de tâches.
+- **Inactivité** : aucun mouvement de souris, touche, molette, défilement ni
+  toucher pendant 60 s : pause, reprise au premier geste.
+- **Barre masquée par le défilement vers le bas** : l'aurora est en pause tant
+  que la barre est hors écran.
+
+Implémentation : logique pure dans `lib/attention.ts` (testée en node), hook
+`hooks/use-user-attention.ts` qui la branche sur les événements DOM. Coût au
+repos nul : les événements d'entrée ne font que dater la dernière interaction,
+un seul minuteur programme le passage en inactif, l'état React ne change que
+quand la valeur bascule. `AuroraBackground` reçoit une prop `paused`, et le
+nuage de mots combine visibilité et attention.
+
+Mesures (même protocole) :
+
+| État | Total toutes threads |
+|---|---|
+| Visiteur actif, animations en cours | 3,0 % |
+| 60 s sans interaction, animations en pause | 0,2 % |
+| Onglet `about:blank`, référence de l'instrument | 0,2 % |
+
+Le résidu de 0,2 % est donc celui du profileur lui-même et de l'entretien du
+navigateur, pas du site. Vérifié dans le navigateur : pause à 65 s
+d'inactivité, reprise sur un `pointermove`, pause pendant le masquage de la
+barre au défilement et reprise à la remontée. La perte de focus n'a pas pu
+être reproduite dans le navigateur piloté par DevTools (les onglets y restent
+« visibles ») ; ce chemin s'appuie sur les événements standard et est vérifié
+par lecture.
+
+Point aveugle assumé : toutes les mesures sont faites sous Chrome. Firefox
+gère peut-être différemment `steps()` ; une mesure Firefox avant et après par
+le membre qui a signalé le problème est demandée.
+
 ## Hors périmètre
 
 `will-change` jamais libéré dans `fade-in-wrapper.tsx`, transition de page en

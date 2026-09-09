@@ -1,10 +1,13 @@
 'use client';
+import { useUserAttention } from '@/hooks/use-user-attention';
 import { cn } from '@/lib/utils';
 import React, { ReactNode, useEffect, useRef } from 'react';
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
     children: ReactNode;
     showRadialGradient?: boolean;
+    /** Met la dérive en pause (par exemple quand la barre est hors écran). */
+    paused?: boolean;
 }
 
 /**
@@ -40,6 +43,11 @@ interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
  *
  * `motion-safe` : les bandes ne défilent que si l'utilisateur n'a pas demandé
  * de réduire les animations.
+ *
+ * Pause : la dérive ne tourne que si quelqu'un regarde (fenêtre au premier
+ * plan et interaction récente, voir `useUserAttention`) et si le parent ne
+ * demande pas la pause (barre masquée par le défilement). Au repos, le coût
+ * est nul.
  */
 
 const BLUR_PX = 10;
@@ -218,8 +226,11 @@ export const AuroraBackground = ({
     className,
     children,
     showRadialGradient = true,
+    paused = false,
     ...props
 }: AuroraBackgroundProps) => {
+    const attentive = useUserAttention();
+    const running = attentive && !paused;
     const areaRef = useRef<HTMLDivElement>(null);
     const baseRef = useRef<HTMLCanvasElement>(null);
     const flagRef = useRef<HTMLCanvasElement>(null);
@@ -343,6 +354,9 @@ export const AuroraBackground = ({
                     <canvas
                         ref={stripesRef}
                         className='absolute inset-y-0 left-0 h-full w-[200%] will-change-transform motion-safe:animate-aurora-drift'
+                        style={{
+                            animationPlayState: running ? 'running' : 'paused',
+                        }}
                     />
                 </div>
             </div>

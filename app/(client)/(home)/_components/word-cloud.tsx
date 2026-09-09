@@ -1,5 +1,6 @@
 'use client';
 
+import { useUserAttention } from '@/hooks/use-user-attention';
 import { useEffect, useRef, useState, type Ref } from 'react';
 
 const words = [
@@ -80,7 +81,9 @@ const generateWords = (baseWords: string[], count: number): StyledWord[] => {
  * le calque animé fait deux hauteurs de conteneur, au lieu d'une liste six fois
  * plus haute qui traversait le cadre.
  * L'animation est mise en pause quand la colonne n'est pas visible
- * (IntersectionObserver) et respecte `prefers-reduced-motion` (`motion-safe`).
+ * (IntersectionObserver), quand personne ne regarde (`useUserAttention` :
+ * fenêtre sans focus ou inactivité), et respecte `prefers-reduced-motion`
+ * (`motion-safe`).
  *
  * Écart visuel assumé par rapport à l'original : plus de conteneur vide en début
  * et en fin de cycle.
@@ -90,6 +93,7 @@ const WordCloud = () => {
     const [durationS, setDurationS] = useState(ORIGINAL_DURATION_S);
     const [stepCount, setStepCount] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
+    const attentive = useUserAttention();
     const containerRef = useRef<HTMLDivElement>(null);
     const blockRef = useRef<HTMLDivElement>(null);
 
@@ -184,7 +188,8 @@ const WordCloud = () => {
                     animationDuration: `${durationS}s`,
                     animationTimingFunction:
                         stepCount > 0 ? `steps(${stepCount})` : 'linear',
-                    animationPlayState: isVisible ? 'running' : 'paused',
+                    animationPlayState:
+                        isVisible && attentive ? 'running' : 'paused',
                 }}
             >
                 {renderBlock('a', blockRef)}
