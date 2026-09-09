@@ -99,14 +99,15 @@ const config = {
                     to: { transform: 'translate3d(-50%, 0, 0)' },
                 },
                 /**
-                 * Défilement vertical du nuage de mots : le bloc est rendu deux
-                 * fois, on remonte d'un bloc puis on boucle, sans couture. La
-                 * durée est calée par le composant pour conserver la vitesse
-                 * d'origine.
+                 * Défilement vertical du nuage de mots, de haut en bas comme
+                 * l'original : le bloc est rendu deux fois, on part d'un bloc
+                 * au dessus et on descend jusqu'à la position de repos, puis on
+                 * boucle sans saut visible. La durée est calée par le composant
+                 * pour conserver la vitesse d'origine.
                  */
                 'word-scroll': {
-                    from: { transform: 'translate3d(0, 0, 0)' },
-                    to: { transform: 'translate3d(0, -50%, 0)' },
+                    from: { transform: 'translate3d(0, -50%, 0)' },
+                    to: { transform: 'translate3d(0, 0, 0)' },
                 },
             },
             animation: {

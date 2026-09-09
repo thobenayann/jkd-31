@@ -24,9 +24,9 @@ const words = [
 const WORD_HEIGHT = 40;
 
 /**
- * L'animation d'origine faisait défiler une liste de `ceil(h / 40) * 6` mots de
- * `translateY(-100 %)` à `translateY(100 %)` en 180 s, soit deux fois la hauteur
- * de la liste. On conserve cette vitesse à l'identique.
+ * L'animation d'origine faisait descendre une liste de `ceil(h / 40) * 6` mots
+ * de `translateY(-100 %)` à `translateY(100 %)` en 180 s, soit deux fois la
+ * hauteur de la liste. On conserve cette vitesse et ce sens à l'identique.
  */
 const ORIGINAL_WORDS_PER_ROW = 6;
 const ORIGINAL_DURATION_S = 180;
@@ -75,9 +75,10 @@ const generateWords = (baseWords: string[], count: number): StyledWord[] => {
  * Nuage de mots qui défile verticalement.
  *
  * Performance. Un seul bloc de mots, à peine plus haut que le conteneur, est
- * rendu deux fois de suite et animé de `translateY(0)` à `translateY(-50 %)` :
- * la boucle est sans couture et le calque animé fait deux hauteurs de
- * conteneur, au lieu d'une liste six fois plus haute qui traversait le cadre.
+ * rendu deux fois de suite et animé de `translateY(-50 %)` à `translateY(0)`,
+ * donc de haut en bas comme l'original : la boucle repart sans saut visible et
+ * le calque animé fait deux hauteurs de conteneur, au lieu d'une liste six fois
+ * plus haute qui traversait le cadre.
  * L'animation est mise en pause quand la colonne n'est pas visible
  * (IntersectionObserver) et respecte `prefers-reduced-motion` (`motion-safe`).
  *
