@@ -91,8 +91,9 @@ const config = {
                  * Dérive lente du fond « aurora ». On anime `transform` et non
                  * `background-position` : le compositeur GPU se contente de
                  * déplacer une couche déjà peinte, sans repeindre image par
-                 * image. La couche fait 200 % de large, translater de -50 %
-                 * ramène un motif identique, la boucle est sans couture.
+                 * image. La couche fait 400 % de large avec une tuile de 50 %,
+                 * translater de -50 % ramène un motif identique, la boucle est
+                 * sans couture.
                  */
                 'aurora-drift': {
                     from: { transform: 'translate3d(0, 0, 0)' },
@@ -114,13 +115,15 @@ const config = {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
                 /**
-                 * `steps(1440)` : 24 pas par seconde au lieu d'une image par
-                 * rafraîchissement d'écran (60 à 160 par seconde). Le compositeur
-                 * ne redessine que quand la valeur change, soit un saut de 1 à
-                 * 2 px sur un dégradé flouté à 10 px : invisible, et 6 fois
-                 * moins de travail GPU.
+                 * 40 s pour deux largeurs de barre : la vitesse d'origine
+                 * (trois largeurs en 60 s). `steps(960)` : 24 pas par seconde,
+                 * la cadence du cinéma, au lieu d'une image par
+                 * rafraîchissement d'écran (60 à 160 par seconde). Le
+                 * compositeur ne recalcule le flou que quand la position
+                 * change, soit un saut de 4 px sur un dégradé flouté à 10 px.
+                 * Mesuré : 4,1 % d'un cœur contre 8,3 % en linéaire.
                  */
-                'aurora-drift': 'aurora-drift 60s steps(1440) infinite',
+                'aurora-drift': 'aurora-drift 40s steps(960) infinite',
                 'word-scroll': 'word-scroll 180s linear infinite',
             },
             fontFamily: {
