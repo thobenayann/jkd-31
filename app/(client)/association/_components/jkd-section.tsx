@@ -5,7 +5,10 @@ import WordCloud from '../../(home)/_components/word-cloud';
 
 export default function JkdSection() {
     return (
-        <>
+        // `relative` : les colonnes de mots se calent sur cette section, pas sur
+        // la fenêtre. Sans lui, `h-full` valait un écran et les mots débordaient
+        // sur la section suivante dès que l'écran était plus haut que le texte.
+        <div className='relative'>
             <section className='relative lg:mx-20 2xl:mx-80 pb-10 md:pb-28'>
                 <header className='container flex max-md:flex-col max-md:space-y-14 max-md:items-center justify-between pb-6 w-full pt-10 md:pt-32'>
                     <FadeInWrapper>
@@ -80,12 +83,12 @@ export default function JkdSection() {
                     </FadeInWrapper>
                 </article>
             </section>
-            <div className='absolute left-0 top-32 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+            <div className='absolute left-0 top-32 bottom-0 w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
                 <WordCloud />
             </div>
-            <div className='absolute right-0 top-32 h-full w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
+            <div className='absolute right-0 top-32 bottom-0 w-1/6 flex justify-center items-center max-2xl:hidden overflow-hidden'>
                 <WordCloud />
             </div>
-        </>
+        </div>
     );
 }
