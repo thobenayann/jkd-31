@@ -15,7 +15,7 @@ import {
     Ribbon,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { AuroraBackground } from '../ui/aurora-background-french-flag';
 import GradualSpacing from '../ui/gradual-spacing';
 import { TransitionLink } from './transition-link';
@@ -77,6 +77,9 @@ const Nav = ({ hash }: NavProps) => {
     // pas re-rendre la barre (aurora, GradualSpacing) à chaque image.
     const lastYPos = useRef(0);
     const isHidden = useRef(false);
+    // Reflet en état React du masquage, pour mettre l'aurora en pause quand
+    // la barre est hors écran. Ne change qu'aux changements de direction.
+    const [navHidden, setNavHidden] = useState(false);
 
     // Fonction pour déterminer le style du lien
     const getLinkClassName = (linkPath: string) => {
@@ -100,6 +103,7 @@ const Nav = ({ hash }: NavProps) => {
         lastYPos.current = latest;
         if (shouldHide === isHidden.current) return;
         isHidden.current = shouldHide;
+        setNavHidden(shouldHide);
         controls.start({
             y: shouldHide ? '-100%' : '0%',
             transition: { duration: 0.2 },
@@ -118,7 +122,10 @@ const Nav = ({ hash }: NavProps) => {
                     backdrop-blur sur le contenu : le fond est déjà flouté à 10 px,
                     et un backdrop-filter au dessus d'un calque animé serait
                     recalculé à chaque image. */}
-                <AuroraBackground className='w-full h-full max-md:hidden'>
+                <AuroraBackground
+                    className='w-full h-full max-md:hidden'
+                    paused={navHidden}
+                >
                     <div className='hidden h-14 md:flex w-full items-center justify-between px-4 py-2 bg-transparent text-lg text-white'>
                         {/* <TransitionLink href='/' aria-label='accueil'>
                             <Image
