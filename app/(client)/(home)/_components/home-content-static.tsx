@@ -26,8 +26,11 @@ export default function HomeContentStatic({
         ['Lee'],
         personalities
     );
-    const danTakyJames: PersonalityType[] = findPersonalitiesByLastNames(
-        ['Inosanto', 'Kimura', 'Yimm lee'],
+    // Taky Kimura et James Yimm Lee restent dans personalities-data.json,
+    // mais sont volontairement retirés de l'affichage (demande des instructeurs).
+    // Pour les réafficher : réajouter 'Kimura' et 'Yimm lee' ci-dessous.
+    const danInosanto: PersonalityType[] = findPersonalitiesByLastNames(
+        ['Inosanto'],
         personalities
     );
     const delannoy: PersonalityType[] = findPersonalitiesByLastNames(
@@ -129,7 +132,7 @@ export default function HomeContentStatic({
             <div className='container flex flex-col max-md:space-y-14 space-y-4'>
                 <FadeInWrapper delay={0.4}>
                     <section className='container flex max-md:flex-col max-md:items-center max-md:space-y-14 md:space-x-8 max-md:border-b-2 max-md:border-dashed w-full'>
-                        {danTakyJames.map((personality, index) => (
+                        {danInosanto.map((personality, index) => (
                             <FadeInWrapper key={index} delay={0.2 * index}>
                                 <CardPersonality
                                     firstName={personality.firstName}
