@@ -93,7 +93,7 @@ déploiement.
 |---|---|
 | `lib/validation/contact.ts` | Schéma zod strict, normalisation, détection du champ piège. Renvoie `valid`, `spam` ou `invalid` avec un message par champ. |
 | `lib/validation/contact-limits.ts` | Limites de taille et nom du champ piège, partagés avec le client. |
-| `services/contact-rate-limit.ts` | IP du client, HMAC, appel à `checkRateLimit` avec délai de 1,5 s, laisse passer en cas de doute. |
+| `services/contact-rate-limit.ts` | Deux compteurs (IP et destinataire, voir section 5), HMAC, appel à `checkRateLimit` avec délai de 1,5 s, laisse passer en cas de doute. |
 | `services/send-email.ts` | Payload `unknown`, ordre honeypot, validation, limitation, envoi. Réponses `success`, `invalid`, `rate_limited`, `error`. Le détail SMTP part dans `console.error`. Pour l'échec de la confirmation, aucun détail n'est journalisé, car la réponse SMTP contient souvent l'adresse du visiteur. |
 | `services/email.types.ts` | `EmailFormData` devient l'alias du type validé. Nouveau `ContactFormResult`. |
 | `app/(client)/contact/_components/contact-form.tsx` | Champ piège, `maxLength` sur chaque champ, erreurs serveur affichées sous les champs via `setError`, un message par cas. Plus aucun texte d'erreur brut affiché. |
@@ -113,11 +113,11 @@ confirme que React Email échappait déjà.
 
 | Fichier | Tests | Couvre |
 |---|---:|---|
-| `lib/validation/contact.test.ts` | 57 | Adresses multiples, nom affiché, retour à la ligne, champs vides ou absents, longueurs, normalisation, noms avec lien, téléphone, honeypot, champ en trop, payload qui n'est pas un objet, mauvais types. |
-| `services/contact-rate-limit.test.ts` | 9 | Clé hachée sans l'IP en clair, stable par IP, dépendante du secret, `x-forwarded-for` en repli, pas d'appel hors Vercel ou sans secret ou sans IP, laisse passer en cas de panne ou de délai dépassé. |
+| `lib/validation/contact.test.ts` | 60 | Adresses multiples, nom affiché, retour à la ligne, champs vides ou absents, longueurs, normalisation, noms avec lien ou domaine, téléphone, honeypot, champ en trop, payload qui n'est pas un objet, mauvais types. |
+| `services/contact-rate-limit.test.ts` | 14 | Deux compteurs (IP et destinataire), clés hachées sans IP ni adresse en clair, IPv6 regroupées par /64, IPv4 notée en IPv6, destinataire sans casse ni `+étiquette`, `x-forwarded-for` en repli, pas d'appel hors Vercel ou sans secret, laisse passer en cas de panne ou de délai dépassé. |
 | `services/send-email.test.ts` | 11 | Nodemailer simulé : succès (admin puis confirmation au seul visiteur), valeurs normalisées, relais refusé sans envoi, champ inattendu, payload non objet, honeypot, limite atteinte, panne SMTP sans détail exposé, configuration absente, échec de la seule confirmation, échappement HTML. |
 
-Suite complète : 13 fichiers, 141 tests, tous verts.
+Suite complète : 13 fichiers, 149 tests, tous verts.
 
 **Contrôles statiques.** `pnpm exec tsc --noEmit` passe. `pnpm lint` ne signale
 rien dans les fichiers touchés. Restent les 2 erreurs déjà présentes sur
@@ -147,7 +147,22 @@ Vercel, une fois la règle WAF et le secret en place. Après ces deux étapes, l
 contrôler en preview : six envois valides en moins de 10 minutes depuis la même
 connexion, le sixième doit afficher « Trop d'envois depuis votre connexion ».
 
-## 5. Reste
+## 5. Revue de sécurité automatique (après ouverture de la PR)
+
+Une revue automatique du commit a relevé deux failles dans le correctif
+lui-même. Les deux étaient réelles. Elles sont corrigées avec des tests écrits
+et vus en échec avant le code.
+
+| Faille | Scénario | Correctif |
+|---|---|---|
+| Domaine dans le nom | « Allez sur casino.com » passait : lettres, espaces et points étaient permis. Gmail et Outlook en font un lien cliquable dans le mail de confirmation. | Un point ne peut plus être suivi d'une lettre. « J.-P. » et « J. P. » passent toujours. |
+| Contournement de la limite | En IPv6, un abonné dispose d'au moins un bloc /64 et peut changer d'adresse à chaque envoi. Et des milliers d'IP différentes pouvaient viser la même boîte. | IPv6 comptées par bloc /64, IPv4 notée en IPv6 ramenée à l'IPv4. Second compteur par destinataire (casse ignorée, `+étiquette` retirée), sous la même règle `contact-form` : une boîte ne reçoit pas plus de 5 confirmations par fenêtre de 10 minutes, quelle que soit l'origine. |
+
+Les deux compteurs partagent la règle WAF : rien ne change dans les étapes
+manuelles. Ils ne se mélangent pas, chaque clé étant le HMAC d'un sujet préfixé
+(`ip:` ou `to:`).
+
+## 6. Reste
 
 - Les deux étapes manuelles de la section 2 (règle WAF, `RATE_LIMIT_SECRET`).
 - Turnstile, reporté tant qu'aucun spam persistant n'est constaté.

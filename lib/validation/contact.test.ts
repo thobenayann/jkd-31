@@ -130,7 +130,7 @@ describe('parseContactSubmission', () => {
     });
 
     describe('prénom et nom', () => {
-        it.each(['José', 'Le Gall', 'J.-P.', 'N’Diaye', 'Zoë', 'Łukasz'])(
+        it.each(['José', 'Le Gall', 'J.-P.', 'J. P.', 'N’Diaye', 'Zoë', 'Łukasz'])(
             'accepte « %s »',
             (lastName) => {
                 expect(
@@ -142,6 +142,9 @@ describe('parseContactSubmission', () => {
         it.each([
             ['un lien', 'Gagnez sur https://spam.example'],
             ['un domaine', 'spam.example/promo'],
+            // Gmail et Outlook transforment « casino.com » en lien cliquable.
+            ['un domaine nu', 'casino.com'],
+            ['un domaine dans une phrase', 'Allez sur casino.com'],
             ['une adresse', 'a@b.fr'],
             ['des chiffres', 'Jean 2000'],
             ['un caractère de contrôle', 'Jean\u0000'],

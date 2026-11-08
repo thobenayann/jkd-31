@@ -28,7 +28,8 @@ Le système envoie automatiquement **deux emails** :
 #### Limitation de débit (Production et Preview)
 
 - `RATE_LIMIT_SECRET` : secret aléatoire d'au moins 32 octets (`openssl rand -hex 32`).
-  Sert de clé au HMAC de l'IP, et le SDK `@vercel/firewall` le lit aussi.
+  Sert de clé au HMAC des deux compteurs (IP, par bloc /64 en IPv6, et
+  destinataire), et le SDK `@vercel/firewall` le lit aussi.
 - Une règle du pare-feu Vercel : condition `@vercel/firewall` égale à `contact-form`,
   action Rate Limit, fenêtre fixe de 600 s, 5 requêtes, réponse 429.
 

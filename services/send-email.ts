@@ -43,7 +43,7 @@ export const sendEmail = async (
         return { status: 'invalid', fieldErrors: submission.fieldErrors };
     }
 
-    if (await isContactRateLimited(await headers())) {
+    if (await isContactRateLimited(await headers(), submission.data.email)) {
         return { status: 'rate_limited' };
     }
 

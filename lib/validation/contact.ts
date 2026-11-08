@@ -41,8 +41,11 @@ const normalizeMultiline = (value: string) =>
  * Commence par une lettre, puis lettres, accents, espaces, apostrophes, tirets
  * ou points. Prénom et nom sont repris dans le mail de confirmation : refuser
  * chiffres, `@`, `/` et `:` empêche d'y glisser un lien ou une adresse.
+ *
+ * Un point ne peut pas être suivi d'une lettre : « J.-P. » passe, mais pas
+ * « casino.com », que les messageries transforment en lien cliquable.
  */
-const PERSON_NAME = /^\p{L}[\p{L}\p{M} '’.-]*$/u;
+const PERSON_NAME = /^(?!.*\.[\p{L}\p{M}])\p{L}[\p{L}\p{M} '’.-]*$/u;
 
 const PHONE_CHARACTERS = /^\+?[0-9 .()-]+$/;
 const MIN_PHONE_DIGITS = 6;

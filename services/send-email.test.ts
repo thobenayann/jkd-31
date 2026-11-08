@@ -106,7 +106,7 @@ describe('sendEmail (server action du formulaire de contact)', () => {
         await expect(sendEmail(valid)).resolves.toEqual({
             status: 'rate_limited',
         });
-        expect(rateLimit).toHaveBeenCalledWith(REQUEST_HEADERS);
+        expect(rateLimit).toHaveBeenCalledWith(REQUEST_HEADERS, valid.email);
         expect(sendMail).not.toHaveBeenCalled();
     });
 
