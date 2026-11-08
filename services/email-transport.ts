@@ -1,5 +1,8 @@
 import nodemailer from 'nodemailer';
-import type { Attachment as NodemailerAttachment } from 'nodemailer/lib/mailer';
+import type {
+    Attachment as NodemailerAttachment,
+    SendMailOptions,
+} from 'nodemailer';
 import path from 'path';
 import { readFileSync } from 'fs';
 import type { EmailResult } from './email.types';
@@ -57,7 +60,7 @@ export const sendEmailWithNodemailer = async (
     try {
         const transporter = createNodemailerTransport();
         
-        const mailOptions: nodemailer.SendMailOptions = {
+        const mailOptions: SendMailOptions = {
             from: content.from,
             to: content.to,
             subject: content.subject,

@@ -66,38 +66,38 @@ Ce projet est le site web officiel de l'association **JKD Self Defense 31**, sit
 
 ### Framework & Bibliothèques principales
 
-- **Next.js** 16.1.3 - Framework React avec App Router
-- **React** 19.2.3 - Bibliothèque UI
+- **Next.js** 16.4.5 - Framework React avec App Router
+- **React** 19.3.1 - Bibliothèque UI
 - **TypeScript** 5.9.3 - Typage statique
-- **Tailwind CSS** 3.4.1 - Framework CSS utilitaire
+- **Tailwind CSS** 3.4.19 - Framework CSS utilitaire
 
 ### CMS & Backend
 
-- **Sanity** 5.4.0 - CMS headless pour la gestion de contenu
-- **next-sanity** 12.0.12 - Intégration Sanity avec Next.js
+- **Sanity** 5.31.2 - CMS headless pour la gestion de contenu
+- **next-sanity** 12.4.5 - Intégration Sanity avec Next.js
 
 ### UI & Composants
 
 - **Shadcn UI** - Composants UI accessibles
 - **Radix UI** - Primitives UI accessibles
-- **Framer Motion** 12.27.0 - Animations
+- **Framer Motion** 12.43.0 - Animations
 - **Lucide React** - Icônes
 
 ### Email & Communication
 
-- **React Email** 5.2.5 - Templates d'email
-- **Nodemailer** 7.0.12 - Envoi d'emails via SMTP
+- **React Email** 5.2.11 - Templates d'email
+- **Nodemailer** 10.4.0 - Envoi d'emails via SMTP
 
 ### Autres
 
 - **date-fns** 4.1.0 - Manipulation de dates
-- **react-hook-form** 7.71.1 - Gestion de formulaires
+- **react-hook-form** 7.91.0 - Gestion de formulaires
 - **next-themes** 0.4.6 - Gestion des thèmes
 - **@vercel/analytics** - Analytics
 
 ## Prérequis
 
-- **Node.js** 20+ (recommandé via nvm ou fnm)
+- **Node.js** 24 (épinglé dans `engines`, recommandé via nvm ou fnm)
 - **pnpm** 10.13.1+ (gestionnaire de paquets)
 - **Compte Sanity** (pour le CMS)
 - **Compte email SMTP** (Gandi Mail configuré)
