@@ -5,7 +5,7 @@ import { ConfirmationEmail } from '@/emails/confirmation-email';
 import { parseContactSubmission } from '@/lib/validation/contact';
 import { render } from '@react-email/components';
 import { headers } from 'next/headers';
-import { isContactRateLimited } from './contact-rate-limit';
+import { checkContactRateLimit } from './contact-rate-limit';
 import { emailConfig } from './email-config';
 import { sendEmailWithNodemailer } from './email-transport';
 import type { ContactFormResult, EmailFormData } from './email.types';
@@ -43,14 +43,22 @@ export const sendEmail = async (
         return { status: 'invalid', fieldErrors: submission.fieldErrors };
     }
 
-    if (await isContactRateLimited(await headers(), submission.data.email)) {
+    const rateLimit = await checkContactRateLimit(
+        await headers(),
+        submission.data.email
+    );
+    if (rateLimit === 'sender_limited') {
         return { status: 'rate_limited' };
     }
 
-    return deliver(submission.data);
+    // Destinataire saturé : le bureau reçoit la demande, la confirmation saute.
+    return deliver(submission.data, rateLimit !== 'recipient_limited');
 };
 
-const deliver = async (formData: EmailFormData): Promise<ContactFormResult> => {
+const deliver = async (
+    formData: EmailFormData,
+    sendConfirmation: boolean
+): Promise<ContactFormResult> => {
     const environment = emailConfig.getEnvironment();
     const config = emailConfig.getConfig(environment);
 
@@ -84,6 +92,13 @@ const deliver = async (formData: EmailFormData): Promise<ContactFormResult> => {
         logDebug('Email admin envoyé avec succès', {
             messageId: adminResult.messageId,
         });
+
+        if (!sendConfirmation) {
+            console.warn(
+                '[contact] Destinataire saturé : confirmation non envoyée.'
+            );
+            return { status: 'success' };
+        }
 
         // 2. Confirmation au visiteur, une seule adresse validée
         const confirmationResult = await sendEmailWithNodemailer({

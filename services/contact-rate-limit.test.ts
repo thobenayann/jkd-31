@@ -2,7 +2,7 @@ import { checkRateLimit } from '@vercel/firewall';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
     CONTACT_RATE_LIMIT_ID,
-    isContactRateLimited,
+    checkContactRateLimit,
 } from './contact-rate-limit';
 
 vi.mock('@vercel/firewall', () => ({ checkRateLimit: vi.fn() }));
@@ -17,14 +17,20 @@ const headersFor = (ip: string) =>
 /** Lance un contrôle et renvoie les clés transmises au SDK pendant cet appel. */
 const keysFor = async (requestHeaders: Headers, recipient = RECIPIENT) => {
     sdk.mockClear();
-    await isContactRateLimited(requestHeaders, recipient);
+    await checkContactRateLimit(requestHeaders, recipient);
     return sdk.mock.calls.map(([, options]) => options?.rateLimitKey);
 };
 const ipKeyOf = async (ip: string) => (await keysFor(headersFor(ip)))[0];
 const recipientKeyOf = async (recipient: string) =>
     (await keysFor(headersFor(IP), recipient))[1];
 
-describe('isContactRateLimited', () => {
+/** Le SDK répond « limité » pour les seules clés données. */
+const limitKeys = (...limited: (string | undefined)[]) =>
+    sdk.mockImplementation(async (_, options) => ({
+        rateLimited: limited.includes(options?.rateLimitKey),
+    }));
+
+describe('checkContactRateLimit', () => {
     beforeEach(() => {
         vi.stubEnv('VERCEL', '1');
         vi.stubEnv('RATE_LIMIT_SECRET', 'secret-de-test');
@@ -38,15 +44,33 @@ describe('isContactRateLimited', () => {
         vi.restoreAllMocks();
     });
 
-    it('relaie la décision de la règle Vercel', async () => {
-        sdk.mockResolvedValue({ rateLimited: true });
+    it('laisse passer quand aucun compteur n’est plein', async () => {
         await expect(
-            isContactRateLimited(headersFor(IP), RECIPIENT)
-        ).resolves.toBe(true);
+            checkContactRateLimit(headersFor(IP), RECIPIENT)
+        ).resolves.toBe('ok');
         expect(sdk).toHaveBeenCalledWith(
             CONTACT_RATE_LIMIT_ID,
             expect.objectContaining({ timeout: 1500 })
         );
+    });
+
+    it('bloque l’expéditeur dont l’IP a trop envoyé', async () => {
+        limitKeys(await ipKeyOf(IP));
+        await expect(
+            checkContactRateLimit(headersFor(IP), RECIPIENT)
+        ).resolves.toBe('sender_limited');
+    });
+
+    it('ne consomme pas le compteur du destinataire quand l’IP est bloquée', async () => {
+        limitKeys(await ipKeyOf(IP));
+        expect(await keysFor(headersFor(IP))).toHaveLength(1);
+    });
+
+    it('signale un destinataire saturé, quelle que soit l’IP', async () => {
+        limitKeys(await recipientKeyOf(RECIPIENT));
+        await expect(
+            checkContactRateLimit(headersFor('198.51.100.7'), RECIPIENT)
+        ).resolves.toBe('recipient_limited');
     });
 
     it('compte séparément l’IP et le destinataire', async () => {
@@ -61,16 +85,6 @@ describe('isContactRateLimited', () => {
             expect(key).not.toContain(IP);
             expect(key).not.toContain(RECIPIENT);
         }
-    });
-
-    it('limite dès que le destinataire a trop reçu, quelle que soit l’IP', async () => {
-        const victimKey = await recipientKeyOf(RECIPIENT);
-        sdk.mockImplementation(async (_, options) => ({
-            rateLimited: options?.rateLimitKey === victimKey,
-        }));
-        await expect(
-            isContactRateLimited(headersFor('198.51.100.7'), RECIPIENT)
-        ).resolves.toBe(true);
     });
 
     describe('clé de l’IP', () => {
@@ -117,6 +131,20 @@ describe('isContactRateLimited', () => {
             );
             expect(await recipientKeyOf('autre@exemple.fr')).not.toBe(first);
         });
+
+        it('garde les points hors Gmail, où ils distinguent deux boîtes', async () => {
+            expect(await recipientKeyOf('jeandupont@exemple.fr')).not.toBe(
+                await recipientKeyOf(RECIPIENT)
+            );
+        });
+
+        it('suit Gmail, qui ignore les points et le domaine googlemail.com', async () => {
+            const first = await recipientKeyOf('jeandupont@gmail.com');
+            expect(await recipientKeyOf('j.ean.dupont@gmail.com')).toBe(first);
+            expect(await recipientKeyOf('Jean.Dupont+x@GoogleMail.com')).toBe(
+                first
+            );
+        });
     });
 
     it.each([
@@ -125,8 +153,8 @@ describe('isContactRateLimited', () => {
     ])('laisse passer sans appeler Vercel %s', async (_, setup) => {
         setup();
         await expect(
-            isContactRateLimited(headersFor(IP), RECIPIENT)
-        ).resolves.toBe(false);
+            checkContactRateLimit(headersFor(IP), RECIPIENT)
+        ).resolves.toBe('ok');
         expect(sdk).not.toHaveBeenCalled();
     });
 
@@ -140,8 +168,8 @@ describe('isContactRateLimited', () => {
         timeout.name = 'TimeoutError';
         sdk.mockRejectedValue(timeout);
         await expect(
-            isContactRateLimited(headersFor(IP), RECIPIENT)
-        ).resolves.toBe(false);
+            checkContactRateLimit(headersFor(IP), RECIPIENT)
+        ).resolves.toBe('ok');
         expect(console.warn).toHaveBeenCalled();
     });
 });

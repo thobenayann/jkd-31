@@ -93,7 +93,7 @@ déploiement.
 |---|---|
 | `lib/validation/contact.ts` | Schéma zod strict, normalisation, détection du champ piège. Renvoie `valid`, `spam` ou `invalid` avec un message par champ. |
 | `lib/validation/contact-limits.ts` | Limites de taille et nom du champ piège, partagés avec le client. |
-| `services/contact-rate-limit.ts` | Deux compteurs (IP et destinataire, voir section 5), HMAC, appel à `checkRateLimit` avec délai de 1,5 s, laisse passer en cas de doute. |
+| `services/contact-rate-limit.ts` | Deux compteurs (IP puis destinataire, voir section 5), HMAC, appel à `checkRateLimit` avec délai de 1,5 s, laisse passer en cas de doute. Répond `ok`, `sender_limited` ou `recipient_limited`. |
 | `services/send-email.ts` | Payload `unknown`, ordre honeypot, validation, limitation, envoi. Réponses `success`, `invalid`, `rate_limited`, `error`. Le détail SMTP part dans `console.error`. Pour l'échec de la confirmation, aucun détail n'est journalisé, car la réponse SMTP contient souvent l'adresse du visiteur. |
 | `services/email.types.ts` | `EmailFormData` devient l'alias du type validé. Nouveau `ContactFormResult`. |
 | `app/(client)/contact/_components/contact-form.tsx` | Champ piège, `maxLength` sur chaque champ, erreurs serveur affichées sous les champs via `setError`, un message par cas. Plus aucun texte d'erreur brut affiché. |
@@ -114,10 +114,10 @@ confirme que React Email échappait déjà.
 | Fichier | Tests | Couvre |
 |---|---:|---|
 | `lib/validation/contact.test.ts` | 60 | Adresses multiples, nom affiché, retour à la ligne, champs vides ou absents, longueurs, normalisation, noms avec lien ou domaine, téléphone, honeypot, champ en trop, payload qui n'est pas un objet, mauvais types. |
-| `services/contact-rate-limit.test.ts` | 14 | Deux compteurs (IP et destinataire), clés hachées sans IP ni adresse en clair, IPv6 regroupées par /64, IPv4 notée en IPv6, destinataire sans casse ni `+étiquette`, `x-forwarded-for` en repli, pas d'appel hors Vercel ou sans secret, laisse passer en cas de panne ou de délai dépassé. |
-| `services/send-email.test.ts` | 11 | Nodemailer simulé : succès (admin puis confirmation au seul visiteur), valeurs normalisées, relais refusé sans envoi, champ inattendu, payload non objet, honeypot, limite atteinte, panne SMTP sans détail exposé, configuration absente, échec de la seule confirmation, échappement HTML. |
+| `services/contact-rate-limit.test.ts` | 18 | Deux compteurs vérifiés dans l'ordre (IP puis destinataire, le second non consommé si l'IP est bloquée), clés hachées sans IP ni adresse en clair, IPv6 regroupées par /64, IPv4 notée en IPv6, destinataire sans casse ni `+étiquette`, règles Gmail, `x-forwarded-for` en repli, pas d'appel hors Vercel ou sans secret, laisse passer en cas de panne ou de délai dépassé. |
+| `services/send-email.test.ts` | 12 | Nodemailer simulé : succès (admin puis confirmation au seul visiteur), valeurs normalisées, relais refusé sans envoi, champ inattendu, payload non objet, honeypot, expéditeur limité, destinataire saturé (bureau prévenu, confirmation supprimée), panne SMTP sans détail exposé, configuration absente, échec de la seule confirmation, échappement HTML. |
 
-Suite complète : 13 fichiers, 149 tests, tous verts.
+Suite complète : 13 fichiers, 154 tests, tous verts.
 
 **Contrôles statiques.** `pnpm exec tsc --noEmit` passe. `pnpm lint` ne signale
 rien dans les fichiers touchés. Restent les 2 erreurs déjà présentes sur
@@ -157,6 +157,14 @@ et vus en échec avant le code.
 |---|---|---|
 | Domaine dans le nom | « Allez sur casino.com » passait : lettres, espaces et points étaient permis. Gmail et Outlook en font un lien cliquable dans le mail de confirmation. | Un point ne peut plus être suivi d'une lettre. « J.-P. » et « J. P. » passent toujours. |
 | Contournement de la limite | En IPv6, un abonné dispose d'au moins un bloc /64 et peut changer d'adresse à chaque envoi. Et des milliers d'IP différentes pouvaient viser la même boîte. | IPv6 comptées par bloc /64, IPv4 notée en IPv6 ramenée à l'IPv4. Second compteur par destinataire (casse ignorée, `+étiquette` retirée), sous la même règle `contact-form` : une boîte ne reçoit pas plus de 5 confirmations par fenêtre de 10 minutes, quelle que soit l'origine. |
+
+Un second passage de la revue, sur ce correctif, a relevé deux suites. Elles
+aussi étaient réelles et sont corrigées de la même façon (test d'abord) :
+
+| Faille | Scénario | Correctif |
+|---|---|---|
+| Contournement par Gmail | Gmail ignore les points de la partie locale et traite `googlemail.com` comme `gmail.com`. `j.dupont@gmail.com` et `jd.upont@gmail.com` atteignaient la même boîte avec deux compteurs distincts. | Pour ces deux domaines seulement, points retirés et domaine ramené à `gmail.com` avant hachage. Ailleurs, les points distinguent deux boîtes et sont gardés. |
+| Blocage ciblé | Cinq envois au nom de l'adresse de quelqu'un saturaient son compteur, et cette personne ne pouvait plus joindre le club pendant 10 minutes. | Les compteurs sont vérifiés l'un après l'autre. L'IP d'abord : pleine, elle bloque l'envoi sans consommer le compteur du destinataire. Le destinataire ensuite : plein, il ne supprime que le mail de confirmation, le bureau reçoit toujours la demande. |
 
 Les deux compteurs partagent la règle WAF : rien ne change dans les étapes
 manuelles. Ils ne se mélangent pas, chaque clé étant le HMAC d'un sujet préfixé

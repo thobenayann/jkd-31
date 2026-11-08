@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { HONEYPOT_FIELD } from '@/lib/validation/contact';
-import { isContactRateLimited } from './contact-rate-limit';
+import { checkContactRateLimit } from './contact-rate-limit';
 import { sendEmail } from './send-email';
 
 // Nodemailer est simulé : aucun mail ne part, on inspecte ce qui aurait été envoyé.
@@ -15,8 +15,8 @@ const REQUEST_HEADERS = new Headers({
 });
 vi.mock('next/headers', () => ({ headers: vi.fn(async () => REQUEST_HEADERS) }));
 
-vi.mock('./contact-rate-limit', () => ({ isContactRateLimited: vi.fn() }));
-const rateLimit = vi.mocked(isContactRateLimited);
+vi.mock('./contact-rate-limit', () => ({ checkContactRateLimit: vi.fn() }));
+const rateLimit = vi.mocked(checkContactRateLimit);
 
 const ADMIN = 'bureau@jkd-selfdefense31.fr';
 
@@ -42,7 +42,7 @@ describe('sendEmail (server action du formulaire de contact)', () => {
         sendMail.mockReset();
         sendMail.mockResolvedValue({ messageId: '<id@gandi>' });
         rateLimit.mockReset();
-        rateLimit.mockResolvedValue(false);
+        rateLimit.mockResolvedValue('ok');
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -101,13 +101,21 @@ describe('sendEmail (server action du formulaire de contact)', () => {
         expect(rateLimit).not.toHaveBeenCalled();
     });
 
-    it('n’envoie rien quand la limite de débit est atteinte', async () => {
-        rateLimit.mockResolvedValue(true);
+    it('n’envoie rien quand l’expéditeur dépasse la limite', async () => {
+        rateLimit.mockResolvedValue('sender_limited');
         await expect(sendEmail(valid)).resolves.toEqual({
             status: 'rate_limited',
         });
         expect(rateLimit).toHaveBeenCalledWith(REQUEST_HEADERS, valid.email);
         expect(sendMail).not.toHaveBeenCalled();
+    });
+
+    it('prévient le bureau mais épargne un destinataire saturé', async () => {
+        // Un tiers qui sature l'adresse de quelqu'un ne doit pas l'empêcher
+        // de joindre le club : seule la confirmation saute.
+        rateLimit.mockResolvedValue('recipient_limited');
+        await expect(sendEmail(valid)).resolves.toEqual({ status: 'success' });
+        expect(sent().map((mail) => mail.to)).toEqual([ADMIN]);
     });
 
     it('renvoie une erreur générique quand le SMTP échoue, sans en exposer le détail', async () => {

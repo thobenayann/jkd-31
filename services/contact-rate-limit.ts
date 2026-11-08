@@ -9,10 +9,13 @@ import { isIP } from 'node:net';
  * `@vercel/firewall` = `contact-form` fixe la fenêtre et le nombre d'envois.
  * Sans cette règle, le SDK répond « non limité ».
  *
- * Deux compteurs, sous la même règle :
- * - par IP (par bloc /64 en IPv6), contre un robot qui insiste ;
+ * Deux compteurs, sous la même règle, vérifiés dans cet ordre :
+ * - par IP (par bloc /64 en IPv6), contre un robot qui insiste. Plein, il
+ *   bloque l'envoi et le compteur du destinataire n'est pas consommé ;
  * - par destinataire, pour qu'une même boîte ne reçoive pas plus de N mails de
- *   confirmation par fenêtre, même envoyés depuis des milliers d'IP.
+ *   confirmation par fenêtre, même envoyés depuis des milliers d'IP. Plein, il
+ *   ne supprime que la confirmation : un tiers qui sature l'adresse de
+ *   quelqu'un ne doit pas empêcher cette personne de joindre le club.
  *
  * Le SDK recopie la clé reçue en clair. On lui passe donc un HMAC, jamais l'IP
  * ni l'adresse. Sans le secret, retrouver l'IP depuis la clé demanderait de
@@ -24,6 +27,8 @@ import { isIP } from 'node:net';
  */
 
 export const CONTACT_RATE_LIMIT_ID = 'contact-form';
+
+export type ContactRateLimit = 'ok' | 'sender_limited' | 'recipient_limited';
 
 const TIMEOUT_MS = 1500;
 
@@ -83,55 +88,69 @@ const ipSubject = (rawIp: string) => {
     return `${groups.slice(0, 4).join(':')}::/64`;
 };
 
-/** Une même boîte : casse ignorée, suffixe « +étiquette » retiré. */
+/** Gmail ignore les points de la partie locale et traite googlemail.com comme gmail.com. */
+const GMAIL_DOMAINS = new Set(['gmail.com', 'googlemail.com']);
+
+/** Une même boîte : casse ignorée, suffixe « +étiquette » retiré, règles Gmail. */
 const recipientSubject = (email: string) => {
     const address = email.toLowerCase();
     const at = address.lastIndexOf('@');
-    const local = address.slice(0, at).split('+')[0];
-    return `${local}${address.slice(at)}`;
+    let local = address.slice(0, at).split('+')[0];
+    let domain = address.slice(at + 1);
+    if (GMAIL_DOMAINS.has(domain)) {
+        local = local.replace(/\./g, '');
+        domain = 'gmail.com';
+    }
+    return `${local}@${domain}`;
 };
 
 const hashKey = (subject: string, secret: string) =>
     createHmac('sha256', secret).update(subject).digest('hex');
 
-export async function isContactRateLimited(
-    requestHeaders: Headers,
-    recipient: string
-): Promise<boolean> {
-    // En local, `next start` tourne en NODE_ENV=production : le SDK tenterait
-    // alors d'appeler https://localhost. On ne compte que sur Vercel.
-    if (process.env.VERCEL !== '1') return false;
-
-    const secret = process.env.RATE_LIMIT_SECRET;
-    if (!secret) {
-        console.warn('[contact] RATE_LIMIT_SECRET absent : limitation désactivée.');
-        return false;
-    }
-
-    // Préfixes distincts : une IP et une adresse ne partagent jamais un compteur.
-    const subjects: string[] = [];
-    const ip = getClientIp(requestHeaders);
-    if (ip) {
-        subjects.push(`ip:${ipSubject(ip)}`);
-    } else {
-        console.warn('[contact] IP du client inconnue : seul le destinataire est compté.');
-    }
-    subjects.push(`to:${recipientSubject(recipient)}`);
-
+/** Un compteur. Une panne ou un délai dépassé compte comme « non limité ». */
+const isOverLimit = async (
+    subject: string,
+    secret: string,
+    requestHeaders: Headers
+) => {
     try {
-        const results = await Promise.all(
-            subjects.map((subject) =>
-                checkRateLimit(CONTACT_RATE_LIMIT_ID, {
-                    headers: requestHeaders,
-                    rateLimitKey: hashKey(subject, secret),
-                    timeout: TIMEOUT_MS,
-                })
-            )
-        );
-        return results.some(({ rateLimited }) => rateLimited);
+        const { rateLimited } = await checkRateLimit(CONTACT_RATE_LIMIT_ID, {
+            headers: requestHeaders,
+            rateLimitKey: hashKey(subject, secret),
+            timeout: TIMEOUT_MS,
+        });
+        return rateLimited;
     } catch (error) {
         const reason = error instanceof Error ? error.name : 'erreur inconnue';
         console.warn(`[contact] Contrôle de débit indisponible (${reason}).`);
         return false;
     }
+};
+
+export async function checkContactRateLimit(
+    requestHeaders: Headers,
+    recipient: string
+): Promise<ContactRateLimit> {
+    // En local, `next start` tourne en NODE_ENV=production : le SDK tenterait
+    // alors d'appeler https://localhost. On ne compte que sur Vercel.
+    if (process.env.VERCEL !== '1') return 'ok';
+
+    const secret = process.env.RATE_LIMIT_SECRET;
+    if (!secret) {
+        console.warn('[contact] RATE_LIMIT_SECRET absent : limitation désactivée.');
+        return 'ok';
+    }
+
+    // Préfixes distincts : une IP et une adresse ne partagent jamais un compteur.
+    const ip = getClientIp(requestHeaders);
+    if (!ip) {
+        console.warn('[contact] IP du client inconnue : seul le destinataire est compté.');
+    } else if (await isOverLimit(`ip:${ipSubject(ip)}`, secret, requestHeaders)) {
+        return 'sender_limited';
+    }
+
+    if (await isOverLimit(`to:${recipientSubject(recipient)}`, secret, requestHeaders)) {
+        return 'recipient_limited';
+    }
+    return 'ok';
 }

@@ -90,7 +90,9 @@ Le service utilise la configuration suivante pour Gandi :
 1. Lorsqu'un formulaire est soumis, le système :
    - Ignore en silence la soumission si le champ piège est rempli
    - Valide et normalise le payload (une seule adresse, tailles bornées, aucun champ inattendu)
-   - Vérifie la limite de débit, uniquement pour une soumission valide
+   - Vérifie la limite de débit, uniquement pour une soumission valide : l'IP
+     d'abord (pleine, rien n'est envoyé), puis le destinataire (plein, seule la
+     confirmation est supprimée, le bureau reçoit toujours la demande)
    - Génère l'email admin avec toutes les informations du formulaire
    - Envoie cet email à `ADMIN_MAIL` (ou `DEV_TEST_EMAIL` en développement)
    - Si `ADMIN_MAIL_CC` (ou `DEV_TEST_EMAIL_CC`) est configuré, l'email est aussi envoyé en copie
