@@ -25,12 +25,26 @@ Le système envoie automatiquement **deux emails** :
 - `ADMIN_MAIL` : Adresse email de l'administrateur principal (optionnel, défaut: `thobena.yann@orange.fr`)
 - `ADMIN_MAIL_CC` : Adresse email en copie pour la production (optionnel)
 
+#### Limitation de débit (Production et Preview)
+
+- `RATE_LIMIT_SECRET` : secret aléatoire d'au moins 32 octets (`openssl rand -hex 32`).
+  Sert de clé au HMAC des deux compteurs (IP, par bloc /64 en IPv6, et
+  destinataire), et le SDK `@vercel/firewall` le lit aussi.
+- Une règle du pare-feu Vercel : condition `@vercel/firewall` égale à `contact-form`,
+  action Rate Limit, fenêtre fixe de 600 s, 5 requêtes, réponse 429.
+
+Sans l'un des deux, le formulaire fonctionne sans limitation et un avertissement
+`[contact]` apparaît dans les logs. Hors Vercel (dev, `next start` local, tests),
+la limitation est ignorée.
+
 ## Structure
 
-- `email.types.ts` : Types TypeScript pour les emails
+- `email.types.ts` : Types TypeScript pour les emails et la réponse de la server action
 - `email-config.ts` : Configuration des emails selon l'environnement
 - `email-transport.ts` : Implémentation du transporteur Nodemailer (Gandi SMTP)
-- `send-email.ts` : Fonction principale d'envoi d'email (gère les deux emails)
+- `contact-rate-limit.ts` : Limitation de débit par IP hachée (pare-feu Vercel)
+- `send-email.ts` : Server action du formulaire (validation, limitation, envoi des deux emails)
+- `../lib/validation/contact.ts` : Schéma zod du formulaire et détection du champ piège
 
 ## Templates React Email
 
@@ -50,14 +64,19 @@ const result = await sendEmail({
     email: 'john@example.com',
     phoneNumber: '+33123456789',
     message: 'Mon message',
+    website: '', // champ piège, doit rester vide
 });
 
-if (result.success) {
-    console.log('Emails envoyés !', result.messageId);
-} else {
-    console.error('Erreur:', result.error);
+switch (result.status) {
+    case 'success': // envoyé (ou robot repéré, volontairement indiscernable)
+    case 'invalid': // result.fieldErrors : un message par champ
+    case 'rate_limited': // trop d'envois depuis cette IP
+    case 'error': // échec SMTP, détail dans les logs serveur uniquement
 }
 ```
+
+Le payload est traité comme `unknown` : la server action est un point d'entrée
+POST public, appelable sans passer par le formulaire.
 
 ## Configuration SMTP
 
@@ -69,11 +88,16 @@ Le service utilise la configuration suivante pour Gandi :
 ## Fonctionnement
 
 1. Lorsqu'un formulaire est soumis, le système :
+   - Ignore en silence la soumission si le champ piège est rempli
+   - Valide et normalise le payload (une seule adresse, tailles bornées, aucun champ inattendu)
+   - Vérifie la limite de débit, uniquement pour une soumission valide : l'IP
+     d'abord (pleine, rien n'est envoyé), puis le destinataire (plein, seule la
+     confirmation est supprimée, le bureau reçoit toujours la demande)
    - Génère l'email admin avec toutes les informations du formulaire
    - Envoie cet email à `ADMIN_MAIL` (ou `DEV_TEST_EMAIL` en développement)
    - Si `ADMIN_MAIL_CC` (ou `DEV_TEST_EMAIL_CC`) est configuré, l'email est aussi envoyé en copie
    - Génère l'email de confirmation personnalisé
    - Envoie l'email de confirmation à l'adresse email de l'utilisateur
 
-2. Si l'envoi de l'email admin échoue, une erreur est retournée
+2. Si l'envoi de l'email admin échoue, `{ status: 'error' }` est retourné, sans le détail SMTP
 3. Si l'envoi de l'email de confirmation échoue, un succès est quand même retourné (l'email admin a été envoyé)

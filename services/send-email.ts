@@ -2,10 +2,13 @@
 
 import { AdminContactEmail } from '@/emails/admin-contact-email';
 import { ConfirmationEmail } from '@/emails/confirmation-email';
+import { parseContactSubmission } from '@/lib/validation/contact';
 import { render } from '@react-email/components';
+import { headers } from 'next/headers';
+import { checkContactRateLimit } from './contact-rate-limit';
 import { emailConfig } from './email-config';
 import { sendEmailWithNodemailer } from './email-transport';
-import type { EmailFormData, EmailResult } from './email.types';
+import type { ContactFormResult, EmailFormData } from './email.types';
 
 const ADMIN_SUBJECT = 'Nouveau message provenant du site jkd-self-defense-31.fr';
 const CONFIRMATION_SUBJECT = 'Confirmation de réception - JKD Self Defense 31';
@@ -16,9 +19,46 @@ const logDebug = (message: string, data?: unknown) => {
     }
 };
 
+/**
+ * Server action du formulaire de contact.
+ *
+ * Next.js l'expose comme un point d'entrée POST public : le payload est
+ * `unknown` tant que `parseContactSubmission` ne l'a pas validé.
+ *
+ * Ordre : honeypot, validation, limitation de débit, envoi. Seules les
+ * soumissions valides consomment le quota, car seules elles coûtent des mails.
+ */
 export const sendEmail = async (
-    formData: EmailFormData
-): Promise<EmailResult> => {
+    payload: unknown
+): Promise<ContactFormResult> => {
+    const submission = parseContactSubmission(payload);
+
+    if (submission.kind === 'spam') {
+        // Faux succès : le robot ne doit pas savoir qu'il est repéré.
+        logDebug('Honeypot rempli, soumission ignorée');
+        return { status: 'success' };
+    }
+
+    if (submission.kind === 'invalid') {
+        return { status: 'invalid', fieldErrors: submission.fieldErrors };
+    }
+
+    const rateLimit = await checkContactRateLimit(
+        await headers(),
+        submission.data.email
+    );
+    if (rateLimit === 'sender_limited') {
+        return { status: 'rate_limited' };
+    }
+
+    // Destinataire saturé : le bureau reçoit la demande, la confirmation saute.
+    return deliver(submission.data, rateLimit !== 'recipient_limited');
+};
+
+const deliver = async (
+    formData: EmailFormData,
+    sendConfirmation: boolean
+): Promise<ContactFormResult> => {
     const environment = emailConfig.getEnvironment();
     const config = emailConfig.getConfig(environment);
 
@@ -30,90 +70,61 @@ export const sendEmail = async (
     });
 
     try {
-        // 1. Rendre le template pour l'admin
-        const adminEmailHtml = await render(
-            AdminContactEmail({ ...formData })
-        );
-
-        // 2. Envoyer l'email à l'admin (avec CC si configuré)
-        const adminEmailContent = {
-            html: adminEmailHtml,
+        // 1. Mail à l'admin (avec CC si configuré)
+        const adminResult = await sendEmailWithNodemailer({
+            html: await render(AdminContactEmail({ ...formData })),
             subject: ADMIN_SUBJECT,
             from: config.from,
             to: config.to,
             replyTo: formData.email,
             cc: config.cc,
-        };
-
-        logDebug('Envoi de l\'email admin', {
-            to: adminEmailContent.to,
-            cc: adminEmailContent.cc,
-            replyTo: adminEmailContent.replyTo,
         });
 
-        const adminResult = await sendEmailWithNodemailer(adminEmailContent);
-
         if (!adminResult.success) {
-            logDebug('Erreur lors de l\'envoi de l\'email admin', {
-                error: adminResult.error,
-            });
-            return adminResult;
+            // Le détail SMTP reste dans les logs serveur.
+            console.error(
+                "[contact] Échec de l'envoi du mail admin :",
+                adminResult.error
+            );
+            return { status: 'error' };
         }
 
         logDebug('Email admin envoyé avec succès', {
             messageId: adminResult.messageId,
         });
 
-        // 3. Rendre le template de confirmation
-        const confirmationEmailHtml = await render(
-            ConfirmationEmail({
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-            })
-        );
+        if (!sendConfirmation) {
+            console.warn(
+                '[contact] Destinataire saturé : confirmation non envoyée.'
+            );
+            return { status: 'success' };
+        }
 
-        // 4. Envoyer l'email de confirmation à l'utilisateur
-        const confirmationEmailContent = {
-            html: confirmationEmailHtml,
+        // 2. Confirmation au visiteur, une seule adresse validée
+        const confirmationResult = await sendEmailWithNodemailer({
+            html: await render(
+                ConfirmationEmail({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                })
+            ),
             subject: CONFIRMATION_SUBJECT,
             from: config.from,
             to: formData.email,
-        };
-
-        logDebug('Envoi de l\'email de confirmation', {
-            to: confirmationEmailContent.to,
         });
-
-        const confirmationResult = await sendEmailWithNodemailer(
-            confirmationEmailContent
-        );
 
         if (!confirmationResult.success) {
-            logDebug('Erreur lors de l\'envoi de l\'email de confirmation', {
+            // Pas de détail : la réponse SMTP contient souvent l'adresse du visiteur.
+            // Le bureau a reçu la demande, c'est l'essentiel.
+            console.error("[contact] Mail de confirmation non envoyé.");
+            logDebug('Erreur du mail de confirmation', {
                 error: confirmationResult.error,
             });
-            // On retourne quand même un succès car l'email admin a été envoyé
-            return {
-                success: true,
-                messageId: adminResult.messageId,
-            };
         }
 
-        logDebug('Email de confirmation envoyé avec succès', {
-            messageId: confirmationResult.messageId,
-        });
-
-        return {
-            success: true,
-            messageId: adminResult.messageId,
-        };
+        return { status: 'success' };
     } catch (error) {
-        const errorMessage =
-            error instanceof Error ? error.message : 'Unknown error';
-        logDebug('Erreur critique', { error: errorMessage });
-        return {
-            success: false,
-            error: errorMessage,
-        };
+        console.error("[contact] Erreur inattendue pendant l'envoi :", error);
+        return { status: 'error' };
     }
 };

@@ -9,7 +9,11 @@ export default defineConfig({
     test: {
         // Les tests de composants rendent du HTML serveur (`renderToStaticMarkup`),
         // ce qui teste exactement ce que voient les robots. Pas besoin de jsdom.
-        include: ['lib/**/*.test.ts', 'components/**/*.test.tsx'],
+        include: [
+            'lib/**/*.test.ts',
+            'components/**/*.test.tsx',
+            'services/**/*.test.ts',
+        ],
         environment: 'node',
     },
 });
