@@ -2,7 +2,7 @@
 
 > Task 6 de [`docs/seo/technical/implementation-plan.md`](../seo/technical/implementation-plan.md).
 > Branche `fix/contact-form-validation` issue de `develop` après la montée des
-> dépendances (`8689e2d`, nodemailer 10), PR vers `main`.
+> dépendances (`8689e2d`, nodemailer 10), PR [#35](https://github.com/thobenayann/jkd-31/pull/35) vers `main`.
 
 ## 1. État des lieux (avant correctif)
 

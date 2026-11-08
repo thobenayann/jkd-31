@@ -150,7 +150,7 @@ export const SITE = {
 
 ### Task 6: Valider et protéger le formulaire côté serveur
 
-> **Réalisé le 8 novembre 2026** (branche `fix/contact-form-validation`). Détail et écarts : [`../../reviews/2026-11-08-formulaire-contact-serveur.md`](../../reviews/2026-11-08-formulaire-contact-serveur.md). Écarts : tests colocalisés (`lib/validation/contact.test.ts`, `services/*.test.ts`) au lieu de `tests/services/`, `@vercel/firewall` ajouté en plus de `zod`, fichiers `lib/validation/contact-limits.ts` et `services/contact-rate-limit.ts` en plus. Reste (action manuelle) : créer la règle WAF `contact-form` et la variable `RATE_LIMIT_SECRET` sur Vercel, sans quoi la limitation de débit reste inactive.
+> **Réalisé le 8 novembre 2026** (PR [#35](https://github.com/thobenayann/jkd-31/pull/35)). Détail et écarts : [`../../reviews/2026-11-08-formulaire-contact-serveur.md`](../../reviews/2026-11-08-formulaire-contact-serveur.md). Écarts : tests colocalisés (`lib/validation/contact.test.ts`, `services/*.test.ts`) au lieu de `tests/services/`, `@vercel/firewall` ajouté en plus de `zod`, fichiers `lib/validation/contact-limits.ts` et `services/contact-rate-limit.ts` en plus. Reste (action manuelle) : créer la règle WAF `contact-form` et la variable `RATE_LIMIT_SECRET` sur Vercel, sans quoi la limitation de débit reste inactive.
 
 **Files:**
 - Create: `lib/validation/contact.ts`
