@@ -150,7 +150,7 @@ export const SITE = {
 
 ### Task 6: Valider et protéger le formulaire côté serveur
 
-> **Réalisé le 8 novembre 2026** (PR [#35](https://github.com/thobenayann/jkd-31/pull/35)). Détail et écarts : [`../../reviews/2026-11-08-formulaire-contact-serveur.md`](../../reviews/2026-11-08-formulaire-contact-serveur.md). Écarts : tests colocalisés (`lib/validation/contact.test.ts`, `services/*.test.ts`) au lieu de `tests/services/`, `@vercel/firewall` ajouté en plus de `zod`, fichiers `lib/validation/contact-limits.ts` et `services/contact-rate-limit.ts` en plus. Reste (action manuelle) : créer la règle WAF `contact-form` et la variable `RATE_LIMIT_SECRET` sur Vercel, sans quoi la limitation de débit reste inactive.
+> **Réalisé le 8 novembre 2026** (PR [#35](https://github.com/thobenayann/jkd-31/pull/35)). Détail et écarts : [`../../reviews/2026-11-08-formulaire-contact-serveur.md`](../../reviews/2026-11-08-formulaire-contact-serveur.md). Écarts : tests colocalisés (`lib/validation/contact.test.ts`, `services/*.test.ts`) au lieu de `tests/services/`, `@vercel/firewall` ajouté en plus de `zod`, fichiers `lib/validation/contact-limits.ts` et `services/contact-rate-limit.ts` en plus. Mis en service le même jour : règle WAF `contact-form` et variable `RATE_LIMIT_SECRET` créées sur Vercel, limitation vérifiée en production (5 réponses 204 puis 429).
 
 **Files:**
 - Create: `lib/validation/contact.ts`
@@ -275,7 +275,7 @@ export const SITE = {
 - [ ] Production : `/robots.txt` 200, sitemap uniquement `.fr`, canonicals cohérentes, `/studio` en `noindex`.
 - [ ] Un seul H1 utile par page ; Lighthouse accessibilité mobile 100.
 - [ ] Les événements de conversion apparaissent dans Vercel sans donnée personnelle.
-- [ ] Formulaire validé côté serveur, protégé contre spam et erreurs SMTP non divulguées.
+- [x] Formulaire validé côté serveur, protégé contre spam et erreurs SMTP non divulguées.
 - [ ] LCP mobile laboratoire amélioré et budget médias respecté ; validation terrain après 30 jours.
 - [ ] Données structurées validées sans avertissement critique.
 - [ ] Search Console et Google Business Profile appartiennent à l'association, avec accès nominatifs révocables.
