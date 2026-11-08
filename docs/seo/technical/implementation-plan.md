@@ -150,6 +150,8 @@ export const SITE = {
 
 ### Task 6: Valider et protéger le formulaire côté serveur
 
+> **Réalisé le 8 novembre 2026** (branche `fix/contact-form-validation`). Détail et écarts : [`../../reviews/2026-11-08-formulaire-contact-serveur.md`](../../reviews/2026-11-08-formulaire-contact-serveur.md). Écarts : tests colocalisés (`lib/validation/contact.test.ts`, `services/*.test.ts`) au lieu de `tests/services/`, `@vercel/firewall` ajouté en plus de `zod`, fichiers `lib/validation/contact-limits.ts` et `services/contact-rate-limit.ts` en plus. Reste (action manuelle) : créer la règle WAF `contact-form` et la variable `RATE_LIMIT_SECRET` sur Vercel, sans quoi la limitation de débit reste inactive.
+
 **Files:**
 - Create: `lib/validation/contact.ts`
 - Modify: `app/(client)/contact/_components/contact-form.tsx`
@@ -157,16 +159,16 @@ export const SITE = {
 - Modify: `services/email.types.ts`
 - Test: `tests/services/send-email.test.ts`
 
-- [ ] Ajouter `zod` : `pnpm add zod`.
-- [ ] Écrire des tests serveur pour email invalide, champs vides, longueur excessive, honeypot rempli et payload inattendu.
-- [ ] Parser chaque payload dans la Server Action ; ne jamais faire confiance à React Hook Form seul.
-- [ ] Normaliser les espaces, limiter strictement les tailles et échapper le contenu envoyé dans l'email HTML.
-- [ ] Ajouter un champ honeypot invisible aux humains et ignorer silencieusement les soumissions automatisées.
-- [ ] Ajouter une limitation de débit par IP via une capacité Vercel adaptée ; ne stocker qu'un identifiant haché et une courte fenêtre.
-- [ ] En cas de spam persistant, intégrer Cloudflare Turnstile avec validation serveur avant envoi.
-- [ ] Retourner des états structurés sans exposer d'erreur SMTP ni de secret.
-- [ ] Tester succès, rejet et panne de transport avec Nodemailer mocké.
-- [ ] Commit proposé : `fix(contact): validate and rate limit submissions`.
+- [x] Ajouter `zod` : `pnpm add zod`.
+- [x] Écrire des tests serveur pour email invalide, champs vides, longueur excessive, honeypot rempli et payload inattendu.
+- [x] Parser chaque payload dans la Server Action ; ne jamais faire confiance à React Hook Form seul.
+- [x] Normaliser les espaces, limiter strictement les tailles et échapper le contenu envoyé dans l'email HTML.
+- [x] Ajouter un champ honeypot invisible aux humains et ignorer silencieusement les soumissions automatisées.
+- [x] Ajouter une limitation de débit par IP via une capacité Vercel adaptée ; ne stocker qu'un identifiant haché et une courte fenêtre.
+- [ ] En cas de spam persistant, intégrer Cloudflare Turnstile avec validation serveur avant envoi. **Reporté** : condition non remplie, aucun spam persistant constaté au 8 novembre 2026. À reprendre si des soumissions robotisées passent malgré le honeypot et la limitation.
+- [x] Retourner des états structurés sans exposer d'erreur SMTP ni de secret.
+- [x] Tester succès, rejet et panne de transport avec Nodemailer mocké.
+- [x] Commit proposé : `fix(contact): validate and rate limit submissions`.
 
 ### Task 6 bis: Mettre en conformité la page légale et la vidéo tierce
 

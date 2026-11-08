@@ -1,42 +1,65 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import type { ContactField, ContactFormData } from '@/lib/validation/contact';
+import {
+    CONTACT_LIMITS,
+    HONEYPOT_FIELD,
+} from '@/lib/validation/contact-limits';
 import { sendEmail } from '@/services/send-email';
 import Image from 'next/image';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 
-type Inputs = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    message: string;
-};
+type Inputs = ContactFormData & Record<typeof HONEYPOT_FIELD, string>;
+
+const SEND_FAILED = "L'envoi a échoué. Merci de réessayer dans quelques instants.";
 
 export default function ContactForm() {
     const {
         register,
         handleSubmit,
         reset,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<Inputs>();
 
     const processForm: SubmitHandler<Inputs> = async (data) => {
         try {
             const result = await sendEmail(data);
-            if (result.success) {
-                toast.success('Email envoyé avec succès!');
-                reset();
-            } else {
-                toast.error(
-                    result.error || "Erreur lors de l'envoi de l'email."
-                );
-                console.error('Email error:', result.error);
+            switch (result.status) {
+                case 'success':
+                    toast.success('Email envoyé avec succès!');
+                    reset();
+                    return;
+                case 'invalid': {
+                    // Le serveur a le dernier mot : ses erreurs s'affichent
+                    // sous les champs, comme celles de React Hook Form.
+                    const entries = Object.entries(result.fieldErrors) as [
+                        ContactField,
+                        string,
+                    ][];
+                    for (const [field, message] of entries) {
+                        setError(field, { type: 'server', message });
+                    }
+                    toast.error(
+                        entries.length > 0
+                            ? 'Merci de corriger les champs signalés.'
+                            : "Le formulaire n'a pas pu être envoyé. Rechargez la page et réessayez."
+                    );
+                    return;
+                }
+                case 'rate_limited':
+                    toast.error(
+                        "Trop d'envois depuis votre connexion. Réessayez dans quelques minutes."
+                    );
+                    return;
+                case 'error':
+                    toast.error(SEND_FAILED);
+                    return;
             }
-        } catch (error) {
-            toast.error("Erreur lors de l'envoi de l'email.");
-            console.error('Something went wrong:', error);
+        } catch {
+            toast.error(SEND_FAILED);
         }
     };
 
@@ -61,6 +84,7 @@ export default function ContactForm() {
                         })}
                         type='text'
                         id='firstName'
+                        maxLength={CONTACT_LIMITS.name}
                         placeholder='...'
                         className='mt-0 p-2 w-full border rounded-md text-gray-800 focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue'
                     />
@@ -85,6 +109,7 @@ export default function ContactForm() {
                         })}
                         type='text'
                         id='lastName'
+                        maxLength={CONTACT_LIMITS.name}
                         placeholder='...'
                         className='mt-0 p-2 w-full border rounded-md text-gray-800 focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue'
                     />
@@ -113,6 +138,7 @@ export default function ContactForm() {
                         })}
                         type='email'
                         id='email'
+                        maxLength={CONTACT_LIMITS.email}
                         placeholder='nom@exemple.com'
                         className='mt-0 p-2 w-full border rounded-md text-gray-800 focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue'
                     />
@@ -137,6 +163,7 @@ export default function ContactForm() {
                         })}
                         type='tel'
                         id='phoneNumber'
+                        maxLength={CONTACT_LIMITS.phoneNumber}
                         placeholder='06 00 00 00 00'
                         className='mt-0 p-2 w-full border rounded-md text-gray-800 focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue'
                     />
@@ -162,6 +189,7 @@ export default function ContactForm() {
                         id='message'
                         placeholder='...'
                         rows={6}
+                        maxLength={CONTACT_LIMITS.message}
                         className='mt-0 p-2 w-full border rounded-md outline-none focus:ring-jkdBlue focus:outline-none focus:ring-2 focus:ring-offset-jkdBlue border-white/20 placeholder:text-gray-400 placeholder:font-light text-gray-800 bg-white'
                     ></textarea>
                     <p
@@ -171,6 +199,24 @@ export default function ContactForm() {
                     >
                         {errors.message?.message}
                     </p>
+                </div>
+                {/* Champ piège : hors écran plutôt qu'en display:none, que
+                    certains robots savent ignorer. Masqué aux lecteurs d'écran
+                    et sauté par la touche Tab. */}
+                <div
+                    aria-hidden='true'
+                    className='absolute -left-[10000px] top-0 h-px w-px overflow-hidden'
+                >
+                    <label htmlFor={HONEYPOT_FIELD}>
+                        Laissez ce champ vide
+                    </label>
+                    <input
+                        {...register(HONEYPOT_FIELD)}
+                        type='text'
+                        id={HONEYPOT_FIELD}
+                        tabIndex={-1}
+                        autoComplete='off'
+                    />
                 </div>
                 <div className='flex flex-col md:grid grid-cols-2 gap-1 sm:col-span-2'>
                     <div className='flex items-center'>
