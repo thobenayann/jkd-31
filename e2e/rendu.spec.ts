@@ -1,4 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
+import { SEASON_ANNOUNCEMENT } from '../constant/announcement';
+import { isAnnouncementVisible } from '../lib/announcement';
 
 /**
  * Ce que ces tests garantissent, et que les tests unitaires ne peuvent pas voir :
@@ -207,6 +209,14 @@ test.describe('événements sans intervenant', () => {
 });
 
 test.describe('annonce de rentrée', () => {
+    // Hors de sa fenêtre d'affichage, l'annonce est masquée : rien à vérifier.
+    // Le test se réactive seul quand `constant/announcement.ts` reçoit de
+    // nouvelles dates. La règle de date est testée dans `lib/announcement.test.ts`.
+    test.skip(
+        !isAnnouncementVisible(SEASON_ANNOUNCEMENT),
+        "annonce hors de sa fenêtre d'affichage"
+    );
+
     test("s'affiche sur l'accueil sans chevaucher le bouton flottant", async ({
         page,
     }) => {
