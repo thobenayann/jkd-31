@@ -3,6 +3,7 @@
 > Task 6 de [`docs/seo/technical/implementation-plan.md`](../seo/technical/implementation-plan.md).
 > Branche `fix/contact-form-validation` issue de `develop` après la montée des
 > dépendances (`8689e2d`, nodemailer 10), PR [#35](https://github.com/thobenayann/jkd-31/pull/35) vers `main`.
+> **En production le 8 novembre 2026**, limitation de débit comprise (section 6).
 
 ## 1. État des lieux (avant correctif)
 
@@ -75,13 +76,14 @@ Turnstile seulement en cas de spam persistant). Cette section précise comment.
 | Fichiers listés | En plus : `services/contact-rate-limit.ts` | Un fichier `'use server'` ne peut exporter que des fonctions asynchrones appelables. La logique IP et HMAC vit à côté, testée seule. |
 | Fichiers listés | En plus : `lib/validation/contact-limits.ts` | Ajouté pendant l'implémentation. Le formulaire client a besoin des limites et du nom du champ piège. Les importer depuis `contact.ts` aurait embarqué zod dans le JavaScript du navigateur. Vérifié après build : aucun chunk client ne contient zod. |
 
-### Ce qui restera à faire à la main (Yann)
+### Étapes manuelles (faites le 8 novembre 2026, voir section 6)
 
 1. **Créer la règle WAF** dans Vercel, projet jkd-31, Firewall, nouvelle règle :
    condition `@vercel/firewall` égale à `contact-form`, action Rate Limit, fenêtre
    fixe de 600 s, 5 requêtes, réponse 429. Puis publier.
 2. **Ajouter la variable `RATE_LIMIT_SECRET`** (Production et Preview), valeur
-   aléatoire d'au moins 32 octets, par exemple `openssl rand -hex 32`.
+   aléatoire d'au moins 32 octets, par exemple `openssl rand -hex 32`, puis
+   redéployer pour qu'elle soit lue.
 
 Tant que l'une des deux manque, le formulaire fonctionne sans limitation (un
 avertissement apparaît dans les logs). Validation et honeypot sont actifs dès le
@@ -170,10 +172,37 @@ Les deux compteurs partagent la règle WAF : rien ne change dans les étapes
 manuelles. Ils ne se mélangent pas, chaque clé étant le HMAC d'un sujet préfixé
 (`ip:` ou `to:`).
 
-## 6. Reste
+## 6. Mise en service (8 novembre 2026)
 
-- Les deux étapes manuelles de la section 2 (règle WAF, `RATE_LIMIT_SECRET`).
+| Étape | Résultat |
+|---|---|
+| Merge | #34 (dépendances, `56d75a5`) puis #35 (`a3a9658`) dans `main`. Déploiement de production réussi. |
+| Validation en production | Appels directs de la server action, identifiant relevé dans le JavaScript public de `/contact` : liste d'adresses, nom « Allez sur casino.com » et champ `bcc` refusés (`invalid`). Aucun mail envoyé. |
+| `RATE_LIMIT_SECRET` | Ajouté par Yann dans le tableau de bord (Production et Preview, type Sensitive). |
+| Règle « Formulaire de contact » | Créée et publiée par Yann : `@vercel/firewall` avec l'identifiant `contact-form`, Fixed Window, 600 s, 5 requêtes, clés « API controlled », réponse 429. |
+| Redéploiement | Relancé par Yann après l'ajout du secret (`dpl_6z75XvEkkrafLun5VigpzMf8MiaP`, même commit `a3a9658`). Validation revérifiée dessus. |
+| `develop` | Aligné sur `main` en avance rapide (`8689e2d` vers `a3a9658`), sans réécriture. |
+
+**Vérifier la règle sans envoyer de mail.** Le SDK interroge
+`https://www.jkd-selfdefense31.fr/.well-known/vercel/rate-limit-api/contact-form`
+avec les en-têtes `x-vercel-rate-limit-api: contact-form` et
+`x-vercel-rate-limit-key: <clé>`. Le même appel fait à la main, avec une clé de
+test que personne n'utilise, répond 404 tant que la règle n'existe pas. Une fois
+publiée, il répond 204 cinq fois puis 429. C'est ce qui a été constaté.
+
+**Non vérifié directement** : la lecture du secret par le code. Le seul signe
+serait l'absence de l'avertissement `[contact] RATE_LIMIT_SECRET absent` dans les
+logs lors d'un vrai envoi. Le secret existait avant le build du redéploiement, il
+est donc lu. À confirmer au premier message reçu.
+
+**Pour la prochaine fois.** Le connecteur Vercel de claude.ai (compte perso, qui
+voit l'équipe `yann-pro`) n'a pas pu faire ces réglages. L'API a répondu
+« Seawall Config not found » à la création du pare-feu et 403 à la lecture des
+variables. Un redéploiement de production par l'API est par ailleurs refusé par
+les permissions de Claude Code. Le tableau de bord reste le chemin pour ces trois
+opérations. Le plugin Vercel de Claude Code est relié au compte Ipanova, qui ne
+voit pas `yann-pro`.
+
+## 7. Reste
+
 - Turnstile, reporté tant qu'aucun spam persistant n'est constaté.
-- Le critère de sortie global « Formulaire validé côté serveur, protégé contre
-  spam » du plan se coche après le déploiement en production et l'activation de
-  la règle.

@@ -10,12 +10,22 @@ const NON_CANONICAL_HOSTS = [
     'jkd-31.vercel.app',
 ];
 
+/**
+ * Projet Sanity du site, le même que `NEXT_PUBLIC_SANITY_PROJECT_ID`. Valeur
+ * publique : elle figure dans chaque URL d'image. Sans elle dans `pathname`,
+ * l'optimiseur redimensionnerait les images de n'importe quel projet Sanity
+ * aux frais de notre quota Vercel.
+ */
+const SANITY_PROJECT_ID = '6aynvirp';
+
 /** @type {import('next').NextConfig} */
 const config = {
     images: {
         remotePatterns: [
             {
+                protocol: 'https',
                 hostname: 'cdn.sanity.io',
+                pathname: `/images/${SANITY_PROJECT_ID}/**`,
             },
         ],
     },

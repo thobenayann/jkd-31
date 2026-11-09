@@ -21,5 +21,6 @@ export default defineConfig([
         '.design-sync/**',
         '.ds-sync/**', // outillage de synchronisation du design system
         'sanity.types.ts', // généré par `sanity typegen`
+        '.claude/**', // outillage et worktrees des sessions Claude
     ]),
 ]);
