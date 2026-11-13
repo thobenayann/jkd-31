@@ -216,12 +216,39 @@ Fanny :
 - Le domaine sert le nouveau déploiement : même identifiant de build
   (`czdOi-t0m-6aufy5ZV2VT`) sur le domaine et sur l'URL du déploiement de production.
 
+## SPF : retrait de `amazonses.com`
+
+Fait le 13 novembre 2026 dans la zone LiveDNS de Gandi, sur accord de Yann
+conditionné à la vérification que Resend ne sert plus.
+
+| Vérification | Constat |
+|---|---|
+| Code | Aucune mention de Resend, ni dépendance. Retiré le 17 septembre 2024 (`35e08ee`, passage à nodemailer). |
+| Vercel | Aucune variable Resend dans le projet `jkd-31`. |
+| DNS de Resend | `send.jkd-selfdefense31.fr` n'a pas de SPF, et son MX vaut `feedback-smtp.us-east-1.amazonses.com.jkd-selfdefense31.fr` : nom saisi sans point final, donc complété par le domaine. Resend ne peut pas valider le domaine avec ces enregistrements. |
+| Rôle de l'include | Resend vérifie le SPF sur `send.jkd-selfdefense31.fr`, son domaine d'enveloppe, jamais sur le domaine racine. `include:amazonses.com` à la racine ne servait donc à rien, même du temps de Resend. Il autorisait seulement l'infrastructure Amazon SES à passer le SPF du domaine. |
+| Envoi actuel | Le site passe par le SMTP de Gandi, couvert par `include:_mailcust.gandi.net` : SPF `pass` constaté sur la preview. |
+
+| | Valeur |
+|---|---|
+| Avant | `v=spf1 include:_mailcust.gandi.net include:amazonses.com ~all` |
+| Après | `v=spf1 include:_mailcust.gandi.net ~all` |
+
+L'enregistrement `google-site-verification` voisin est inchangé. Le TTL est de
+300 secondes.
+
+Restent dans la zone deux traces de Resend, laissées en place à ce stade : la clé
+DKIM `resend._domainkey` et le MX cassé de `send`.
+
+`jkd-self-defense-31.fr` (avec tirets) n'est pas à l'association : Gandi ne gère que
+`jkd-selfdefense31.fr` et `.com`, et le registre AFNIC répond toujours 404 pour le
+nom avec tirets le 13 novembre.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
 | Au premier vrai message reçu : une ligne `contact_screening` dans les logs, et pas d'avertissement `[contact] RATE_LIMIT_SECRET absent` | Yann ou un agent | Logs Vercel |
-| Retirer `include:amazonses.com` du SPF | Yann | DNS Gandi |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
 | Acheter `jkd-self-defense-31.fr` et le rediriger vers le site, pour les mails déjà envoyés | Décision de Yann | Gandi |
 | L'objet et l'expéditeur du mail reçu par Fanny, pour confirmer que le formulaire était la porte d'entrée | Yann | Boîte de réception |
