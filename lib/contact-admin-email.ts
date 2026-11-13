@@ -11,6 +11,13 @@ import type { ScreeningReason, ScreeningResult } from './contact-screening';
 
 export const ADMIN_SUBJECT = `Nouveau message provenant du site ${SITE_DOMAIN}`;
 export const SUSPECT_SUBJECT_PREFIX = '[À VÉRIFIER] ';
+/**
+ * Le texte après le préfixe diffère de `ADMIN_SUBJECT` : Gmail regroupe les
+ * mails d'un même expéditeur au même objet en ignorant ce qui est entre
+ * crochets. Avec le même texte, un message signalé rejoignait la conversation
+ * des messages propres, et la liste l'affichait sans `[À VÉRIFIER]`.
+ */
+export const SUSPECT_SUBJECT = `${SUSPECT_SUBJECT_PREFIX}Message signalé sur le site ${SITE_DOMAIN}`;
 export const SUSPECT_BANNER_TITLE = 'Message à vérifier avant toute action';
 export const SUSPECT_BANNER_BODY =
     "Ce message a été mis de côté automatiquement. Ses liens ont été désactivés. N'en recopiez aucun dans un navigateur tant que vous n'avez pas vérifié l'expéditeur. Pour répondre à une vraie demande, copiez son adresse e-mail ci-dessous.";
@@ -47,7 +54,7 @@ export function buildAdminEnvelope(
 ): AdminEnvelope {
     const clean = isCleanScreening(screening);
     return {
-        subject: clean ? ADMIN_SUBJECT : `${SUSPECT_SUBJECT_PREFIX}${ADMIN_SUBJECT}`,
+        subject: clean ? ADMIN_SUBJECT : SUSPECT_SUBJECT,
         replyTo: clean ? senderEmail : undefined,
         sendConfirmation: clean,
     };

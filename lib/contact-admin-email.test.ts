@@ -16,10 +16,20 @@ describe('buildAdminEnvelope', () => {
 
     it('signale un message suspect, sans Reply-To ni confirmation', () => {
         expect(buildAdminEnvelope({ verdict: 'suspect' }, 'x@piege.online')).toEqual({
-            subject: `[À VÉRIFIER] ${ADMIN_SUBJECT}`,
+            subject: '[À VÉRIFIER] Message signalé sur le site jkd-selfdefense31.fr',
             replyTo: undefined,
             sendConfirmation: false,
         });
+    });
+
+    it('donne au message suspect un objet qui ne rejoint pas la conversation des messages propres', () => {
+        // Gmail regroupe les mails d'un même expéditeur au même objet en
+        // ignorant un préfixe entre crochets : constaté sur la preview le
+        // 13 novembre 2026. Le texte après le préfixe doit donc différer.
+        const { subject } = buildAdminEnvelope({ verdict: 'suspect' }, 'x@piege.online');
+        const withoutTag = subject.replace(/^\[[^\]]*\]\s*/, '');
+        expect(withoutTag).not.toBe(ADMIN_SUBJECT);
+        expect(withoutTag.toLowerCase()).not.toContain(ADMIN_SUBJECT.toLowerCase());
     });
 
     it('traite un verdict absent ou inattendu comme suspect', () => {

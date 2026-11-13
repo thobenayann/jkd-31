@@ -134,8 +134,8 @@ n'a pas d'adresse de réponse ». Version propre : aucun bandeau, lien vers le s
 lisible. Dans les deux, les seuls liens du mail pointent vers
 `https://www.jkd-selfdefense31.fr`.
 
-**Non vérifié** : le rendu dans Gmail et Orange, ni l'envoi réel. À faire sur la
-preview de la PR, avec un message de test vers la boîte de test.
+**Non vérifié à ce stade** : le rendu dans une messagerie et l'envoi réel. Fait
+ensuite sur la preview de la PR #37, voir « Contrôle sur la preview ».
 
 ## Revue de sécurité automatique (après ouverture de la PR #37)
 
@@ -151,11 +151,56 @@ Tests ajoutés : 7 sur la normalisation, 2 sur le tri, 1 de bout en bout sur la
 Server Action. Le test Hexoprint « hôtes ajoutés » passe de `/a.stl` à `/a-stl`,
 le premier étant désormais suspect par construction.
 
+## Contrôle sur la preview de la PR #37
+
+Le 13 novembre, sur le déploiement du commit `863f712`
+(`jkd-31-a56qfunzq-yann-pro.vercel.app`), avec `DEV_TEST_EMAIL` pointant vers la
+Gmail de Yann. Deux envois réels depuis le formulaire, l'adresse du visiteur étant
+aussi celle de Yann. Contrôle dans Gmail, en-têtes lus dans la source du message.
+
+| Contrôle | Message propre | Message avec `https://partagepro.online/fr/b2b/jkd31` |
+|---|---|---|
+| Réponse au visiteur | « Email envoyé avec succès! » | Identique, rien ne trahit le tri |
+| Objet | `Nouveau message provenant du site jkd-selfdefense31.fr` | `[À VÉRIFIER] Nouveau message provenant du site jkd-selfdefense31.fr` |
+| `Reply-To` | Adresse du visiteur | Absent |
+| Destinataires | Boîte de test seule, pas de copie | Boîte de test seule, pas de copie |
+| Bandeau | Aucun | « Message à vérifier avant toute action », motif affiché |
+| Lien du message | Sans objet | `hxxps://partagepro[.]online/fr/b2b/jkd31`, ni lien ni texte `partagepro.online` dans la source |
+| Confirmation au visiteur | Reçue | Aucune, dossier spam compris |
+| SPF, DKIM, DMARC | pass | pass |
+
+L'expéditeur de préproduction `no-reply@jkd-selfdefense31.fr` passe par Gandi sans
+rejet. Fanny n'a rien reçu : hors production, le code n'adresse le mail du bureau
+qu'à `DEV_TEST_EMAIL`, ce que confirment les en-têtes `To` sans `Cc`.
+
+Deux constats propres à Gmail :
+
+- **Le mail signalé rejoint la conversation des mails propres.** Gmail range dans une
+  même conversation les mails d'un même expéditeur au même objet, en ignorant le
+  préfixe entre crochets. La liste affiche alors l'objet sans `[À VÉRIFIER]`. Le
+  bandeau reste visible à l'ouverture et dans l'aperçu de la liste. Corrigé, voir
+  « Objet des messages signalés » ci-dessous.
+- **Gmail rend cliquable l'adresse du visiteur** dans le mail signalé, alors que la
+  source n'a aucun `mailto:`. Le clic ouvre un brouillon de réponse, jamais une
+  page web. Accepté : le bandeau dit déjà de vérifier l'expéditeur avant de répondre.
+
+### Objet des messages signalés
+
+Décision de Yann : séparer les conversations. L'objet d'un message signalé devient
+`[À VÉRIFIER] Message signalé sur le site jkd-selfdefense31.fr`
+(`SUSPECT_SUBJECT`, `lib/contact-admin-email.ts`). Le préfixe reste pour les
+messageries qui l'affichent, et le texte qui suit diffère de celui d'un message
+propre, ce qui suffit à Gmail pour ouvrir une autre conversation. Les messages
+signalés se regroupent entre eux, à part des demandes ordinaires.
+
+Un test pose la règle plutôt que le texte : sans le préfixe entre crochets, l'objet
+d'un message suspect ne doit ni égaler ni contenir celui d'un message propre. Une
+retouche future du libellé ne peut donc pas recréer le regroupement en silence.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
-| Contrôle sur la preview de la PR #37 (un envoi propre, un envoi avec lien, rendu dans la messagerie). Prérequis : `DEV_TEST_EMAIL` dans l'environnement Preview de Vercel. Hors production, le code n'utilise ni `ADMIN_MAIL` ni `ADMIN_MAIL_CC` : sans cette variable, le mail du bureau part vers `test@test.dev`. Fanny ne reçoit donc jamais un essai de preview. | Yann | Vercel |
 | Merge de la PR #37 | Yann | GitHub |
 | Retirer `include:amazonses.com` du SPF | Yann | DNS Gandi |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |

@@ -104,8 +104,10 @@ Le service utilise la configuration suivante pour Gandi :
      (`hxxps://piege[.]online`), aucune messagerie ne peut le rendre cliquable
    - Envoie cet email à `ADMIN_MAIL` (ou `DEV_TEST_EMAIL` en développement)
    - Si `ADMIN_MAIL_CC` (ou `DEV_TEST_EMAIL_CC`) est configuré, l'email est aussi envoyé en copie
-   - Message suspect : objet préfixé `[À VÉRIFIER]`, bandeau d'avertissement,
-     tous les liens désamorcés, pas de Reply-To, et **aucune confirmation** envoyée
+   - Message suspect : objet `[À VÉRIFIER] Message signalé sur le site ...`,
+     différent après le préfixe pour que Gmail ne le range pas avec les messages
+     propres, bandeau d'avertissement, tous les liens désamorcés, pas de Reply-To,
+     et **aucune confirmation** envoyée
    - Message propre : génère et envoie l'email de confirmation à l'adresse de l'utilisateur
 
    Le visiteur reçoit la même réponse dans les deux cas : rien ne lui apprend

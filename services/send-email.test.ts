@@ -186,7 +186,7 @@ describe('sendEmail (server action du formulaire de contact)', () => {
             expect(sent()).toHaveLength(1);
             expect(admin.to).toBe(ADMIN);
             expect(admin.subject).toBe(
-                '[À VÉRIFIER] Nouveau message provenant du site jkd-selfdefense31.fr'
+                '[À VÉRIFIER] Message signalé sur le site jkd-selfdefense31.fr'
             );
             expect(admin.replyTo).toBeUndefined();
             expect(admin.html).toContain('Message à vérifier avant toute action');
