@@ -216,7 +216,7 @@ Fanny :
 - Le domaine sert le nouveau déploiement : même identifiant de build
   (`czdOi-t0m-6aufy5ZV2VT`) sur le domaine et sur l'URL du déploiement de production.
 
-## SPF : retrait de `amazonses.com`
+## DNS : SPF et restes de Resend
 
 Fait le 13 novembre 2026 dans la zone LiveDNS de Gandi, sur accord de Yann
 conditionné à la vérification que Resend ne sert plus.
@@ -237,12 +237,27 @@ conditionné à la vérification que Resend ne sert plus.
 L'enregistrement `google-site-verification` voisin est inchangé. Le TTL est de
 300 secondes.
 
-Restent dans la zone deux traces de Resend, laissées en place à ce stade : la clé
-DKIM `resend._domainkey` et le MX cassé de `send`.
+### Restes de Resend supprimés
 
-`jkd-self-defense-31.fr` (avec tirets) n'est pas à l'association : Gandi ne gère que
-`jkd-selfdefense31.fr` et `.com`, et le registre AFNIC répond toujours 404 pour le
-nom avec tirets le 13 novembre.
+Supprimés le même jour sur accord de Yann, après le SPF :
+
+| Enregistrement | Valeur supprimée | Pourquoi |
+|---|---|---|
+| `resend._domainkey` TXT | Clé publique DKIM de Resend (`p=MIGfMA0GCSqGSIb3…`) | Un mail signé par la clé privée correspondante, détenue par le seul compte Resend, passait encore DKIM et donc DMARC au nom du domaine. |
+| `send` MX | `10 feedback-smtp.us-east-1.amazonses.com`, sans point final | Le retour des rebonds de Resend, sans usage, et cassé : publié comme `…amazonses.com.jkd-selfdefense31.fr`. |
+
+Recréer ces enregistrements n'aurait de sens qu'en réactivant Resend, qui fournirait
+alors de nouvelles valeurs. Contrôle sur les trois serveurs de Gandi : plus aucun
+des deux n'est publié. Le MX du domaine et les clés DKIM de Gandi
+(`gm1` à `gm3._domainkey`) répondent toujours.
+
+### `jkd-self-defense-31.fr` : pas d'achat
+
+Le nom avec tirets n'est pas à l'association : Gandi ne gère que
+`jkd-selfdefense31.fr` et `.com`, et le registre AFNIC répond toujours 404 le
+13 novembre. Décision de Yann : il ne sera pas acheté. Les mails envoyés avant la
+PR #37 gardent donc des liens vers un nom que n'importe qui peut acheter. Les mails
+envoyés depuis la mise en production ne pointent plus que vers le vrai domaine.
 
 ## Reste
 
@@ -250,5 +265,4 @@ nom avec tirets le 13 novembre.
 |---|---|---|
 | Au premier vrai message reçu : une ligne `contact_screening` dans les logs, et pas d'avertissement `[contact] RATE_LIMIT_SECRET absent` | Yann ou un agent | Logs Vercel |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
-| Acheter `jkd-self-defense-31.fr` et le rediriger vers le site, pour les mails déjà envoyés | Décision de Yann | Gandi |
 | L'objet et l'expéditeur du mail reçu par Fanny, pour confirmer que le formulaire était la porte d'entrée | Yann | Boîte de réception |
