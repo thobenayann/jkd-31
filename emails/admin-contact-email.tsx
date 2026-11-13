@@ -10,6 +10,16 @@ import {
     Tailwind,
     Text,
 } from '@react-email/components';
+import { SITE, SITE_DOMAIN } from '@/constant/site';
+import {
+    SUSPECT_BANNER_BODY,
+    SUSPECT_BANNER_TITLE,
+    isCleanScreening,
+    reasonLabels,
+} from '@/lib/contact-admin-email';
+import type { ScreeningResult } from '@/lib/contact-screening';
+import { toSafeText } from '@/lib/safe-text';
+import { EMAIL_LOGO_CID } from './email-constants';
 
 type AdminContactEmailProps = {
     firstName: string;
@@ -17,16 +27,30 @@ type AdminContactEmailProps = {
     email: string;
     phoneNumber: string;
     message: string;
+    screening: Pick<ScreeningResult, 'verdict' | 'reasons'>;
 };
 
+/**
+ * Mail envoyé au bureau pour chaque message du formulaire.
+ *
+ * Tout texte saisi par le visiteur passe par `toSafeText` : un lien hors du
+ * site y devient du texte désamorcé (`hxxps://piege[.]online`), qu'aucune
+ * messagerie ne rend cliquable. Si le message est suspect, même les liens
+ * vers le site sont désamorcés, un bandeau l'annonce en tête, et l'adresse du
+ * demandeur n'est plus un lien `mailto:`.
+ */
 export function AdminContactEmail({
     firstName,
     lastName,
     email,
     phoneNumber,
     message,
+    screening,
 }: AdminContactEmailProps) {
     const isDevelopment = process.env.VERCEL_ENV !== 'production';
+    const clean = isCleanScreening(screening);
+    const safe = (value: string) => toSafeText(value, { allowLinks: clean });
+    const reasons = reasonLabels(screening?.reasons);
 
     return (
         <Tailwind>
@@ -51,7 +75,7 @@ export function AdminContactEmail({
                             }}
                         >
                             <Img
-                                src='cid:logo@jkd-self-defense-31.fr'
+                                src={`cid:${EMAIL_LOGO_CID}`}
                                 alt='JKD Self Defense 31'
                                 width='200'
                                 height='auto'
@@ -99,6 +123,53 @@ export function AdminContactEmail({
                             </Section>
                         )}
 
+                        {/* Bandeau du message suspect */}
+                        {!clean && (
+                            <Section
+                                style={{
+                                    backgroundColor: '#fdecea',
+                                    border: '2px solid #E30613',
+                                    padding: '20px',
+                                    margin: '20px 0',
+                                    borderRadius: '4px',
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: '#E30613',
+                                        fontWeight: 'bold',
+                                        fontSize: '16px',
+                                        margin: '0 0 10px 0',
+                                    }}
+                                >
+                                    ⚠️ {SUSPECT_BANNER_TITLE}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: '#12100C',
+                                        fontSize: '14px',
+                                        lineHeight: '1.6',
+                                        margin: '0',
+                                    }}
+                                >
+                                    {SUSPECT_BANNER_BODY}
+                                </Text>
+                                {reasons.length > 0 && (
+                                    <Text
+                                        style={{
+                                            color: '#12100C',
+                                            fontSize: '14px',
+                                            lineHeight: '1.6',
+                                            margin: '10px 0 0 0',
+                                        }}
+                                    >
+                                        <strong>Signalé car :</strong>{' '}
+                                        {reasons.join(', ')}.
+                                    </Text>
+                                )}
+                            </Section>
+                        )}
+
                         {/* Contenu principal */}
                         <Section
                             style={{
@@ -128,13 +199,13 @@ export function AdminContactEmail({
                                 Vous avez reçu un nouveau message via le
                                 formulaire de contact du site{' '}
                                 <Link
-                                    href='https://jkd-self-defense-31.fr'
+                                    href={SITE.url}
                                     style={{
                                         color: '#E30613',
                                         textDecoration: 'underline',
                                     }}
                                 >
-                                    jkd-self-defense-31.fr
+                                    {SITE_DOMAIN}
                                 </Link>
                                 .
                             </Text>
@@ -178,7 +249,7 @@ export function AdminContactEmail({
                                     <strong style={{ color: '#E30613' }}>
                                         Nom complet :
                                     </strong>{' '}
-                                    {firstName} {lastName}
+                                    {safe(firstName)} {safe(lastName)}
                                 </Text>
 
                                 <Text
@@ -191,15 +262,19 @@ export function AdminContactEmail({
                                     <strong style={{ color: '#E30613' }}>
                                         Email :
                                     </strong>{' '}
-                                    <Link
-                                        href={`mailto:${email}`}
-                                        style={{
-                                            color: '#E30613',
-                                            textDecoration: 'none',
-                                        }}
-                                    >
-                                        {email}
-                                    </Link>
+                                    {clean ? (
+                                        <Link
+                                            href={`mailto:${email}`}
+                                            style={{
+                                                color: '#E30613',
+                                                textDecoration: 'none',
+                                            }}
+                                        >
+                                            {email}
+                                        </Link>
+                                    ) : (
+                                        email
+                                    )}
                                 </Text>
 
                                 <Text
@@ -212,7 +287,7 @@ export function AdminContactEmail({
                                     <strong style={{ color: '#E30613' }}>
                                         Téléphone :
                                     </strong>{' '}
-                                    {phoneNumber}
+                                    {safe(phoneNumber)}
                                 </Text>
 
                                 <Hr
@@ -243,7 +318,7 @@ export function AdminContactEmail({
                                         borderRadius: '4px',
                                     }}
                                 >
-                                    {message}
+                                    {safe(message)}
                                 </Text>
                             </Section>
                         </Section>
@@ -267,13 +342,13 @@ export function AdminContactEmail({
                                 Cet email a été envoyé automatiquement depuis le
                                 formulaire de contact du site{' '}
                                 <Link
-                                    href='https://jkd-self-defense-31.fr'
+                                    href={SITE.url}
                                     style={{
                                         color: '#E30613',
                                         textDecoration: 'none',
                                     }}
                                 >
-                                    jkd-self-defense-31.fr
+                                    {SITE_DOMAIN}
                                 </Link>
                             </Text>
                             <Text
@@ -283,8 +358,9 @@ export function AdminContactEmail({
                                     margin: '5px 0',
                                 }}
                             >
-                                Vous pouvez répondre directement à cet email
-                                pour contacter {firstName} {lastName}.
+                                {clean
+                                    ? `Vous pouvez répondre directement à cet email pour contacter ${safe(firstName)} ${safe(lastName)}.`
+                                    : "Ce message n'a pas d'adresse de réponse. Pour répondre, copiez l'adresse du demandeur ci-dessus."}
                             </Text>
                         </Section>
                     </Container>

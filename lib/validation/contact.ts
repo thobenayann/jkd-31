@@ -27,12 +27,43 @@ export type ContactSubmission =
     | { kind: 'spam' }
     | { kind: 'invalid'; fieldErrors: ContactFieldErrors };
 
+/**
+ * L'analyseur d'URL (donc tout navigateur) retire d'un nom d'hôte les
+ * caractères de mise en forme invisibles (catégorie Unicode Cf : trait d'union
+ * conditionnel U+00AD, espace sans chasse U+200B, U+2060, U+FEFF...) et lit les
+ * points idéographique et pleine chasse comme un `.`. Sans normalisation,
+ * `piege` + U+00AD + `.online/fr` échappe au tri des liens et au désamorçage
+ * (`lib/contact-screening.ts`, `lib/safe-text.ts`), mais un copier-coller dans
+ * un navigateur ouvre `piege.online`.
+ *
+ * D'anciennes tables IDNA, encore présentes dans des navigateurs pas à jour,
+ * lisaient aussi d'autres caractères comme un point : petit point U+FE52,
+ * point de conduite U+2024, ou `⒈` lu « 1. ». La forme NFKC les ramène à leur
+ * forme simple, comme les lettres pleine chasse. Elle change aussi `…` en
+ * `...` ou `²` en `2`, sans gêne pour un message de contact. Le point
+ * idéographique U+3002 n'a pas de forme NFKC : il est remplacé à part.
+ *
+ * Le texte est donc normalisé une seule fois, ici, avant tout contrôle : le
+ * tri, le mail et les traces lisent tous le même texte. Les caractères sont
+ * retirés ou remplacés, jamais refusés : un texte collé depuis un traitement
+ * de texte contient des traits d'union conditionnels, et un refus apprendrait
+ * à l'expéditeur ce que le filtre regarde.
+ */
+const FORMAT_CHARACTERS = /\p{Cf}/gu;
+const DOT_LOOKALIKES = /[。．｡]/g;
+export const normalizeVisitorText = (value: string) =>
+    value
+        .normalize('NFKC')
+        .replace(FORMAT_CHARACTERS, '')
+        .replace(DOT_LOOKALIKES, '.');
+
 /** Une ligne : tout blanc (tabulation, espace insécable, saut de ligne) devient un espace. */
-const collapseWhitespace = (value: string) => value.replace(/\s+/gu, ' ').trim();
+const collapseWhitespace = (value: string) =>
+    normalizeVisitorText(value).replace(/\s+/gu, ' ').trim();
 
 /** Texte libre : fins de ligne unifiées, caractères de contrôle retirés sauf `\n` et `\t`. */
 const normalizeMultiline = (value: string) =>
-    value
+    normalizeVisitorText(value)
         .replace(/\r\n?/g, '\n')
         .replace(/[^\P{Cc}\n\t]/gu, '')
         .trim();

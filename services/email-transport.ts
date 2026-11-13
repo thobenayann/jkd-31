@@ -5,6 +5,7 @@ import type {
 } from 'nodemailer';
 import path from 'path';
 import { readFileSync } from 'fs';
+import { EMAIL_LOGO_CID } from '@/emails/email-constants';
 import type { EmailResult } from './email.types';
 
 type EmailContent = {
@@ -46,7 +47,7 @@ const getLogoAttachment = (): NodemailerAttachment | null => {
         return {
             filename: 'logo-jkd-sd-31.png',
             content: logoBuffer,
-            cid: 'logo@jkd-self-defense-31.fr',
+            cid: EMAIL_LOGO_CID,
         };
     } catch (error) {
         console.error('Erreur lors du chargement du logo:', error);
@@ -79,7 +80,7 @@ export const sendEmailWithNodemailer = async (
         const attachments: NodemailerAttachment[] = [];
         
         // Ajouter le logo si pas déjà présent dans les attachments
-        if (!content.attachments || !content.attachments.some(att => att.cid === 'logo@jkd-self-defense-31.fr')) {
+        if (!content.attachments || !content.attachments.some(att => att.cid === EMAIL_LOGO_CID)) {
             const logoAttachment = getLogoAttachment();
             if (logoAttachment) {
                 attachments.push(logoAttachment);

@@ -11,6 +11,8 @@ import {
     Text,
 } from '@react-email/components';
 import { associationConfig } from '@/constant/config';
+import { SITE, SITE_DOMAIN } from '@/constant/site';
+import { EMAIL_LOGO_CID } from './email-constants';
 
 type ConfirmationEmailProps = {
     firstName: string;
@@ -50,7 +52,7 @@ export function ConfirmationEmail({
                             }}
                         >
                             <Img
-                                src='cid:logo@jkd-self-defense-31.fr'
+                                src={`cid:${EMAIL_LOGO_CID}`}
                                 alt='JKD Self Defense 31'
                                 width='200'
                                 height='auto'
@@ -102,13 +104,13 @@ export function ConfirmationEmail({
                                 Nous avons bien reçu votre message via le
                                 formulaire de contact de notre site{' '}
                                 <Link
-                                    href='https://jkd-self-defense-31.fr'
+                                    href={SITE.url}
                                     style={{
                                         color: '#E30613',
                                         textDecoration: 'underline',
                                     }}
                                 >
-                                    jkd-self-defense-31.fr
+                                    {SITE_DOMAIN}
                                 </Link>
                                 .
                             </Text>
@@ -167,7 +169,7 @@ export function ConfirmationEmail({
                                 }}
                             >
                                 <Button
-                                    href='https://jkd-self-defense-31.fr'
+                                    href={SITE.url}
                                     style={{
                                         backgroundColor: '#E30613',
                                         color: '#ffffff',

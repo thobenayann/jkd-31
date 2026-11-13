@@ -2,6 +2,12 @@
 
 import { AdminContactEmail } from '@/emails/admin-contact-email';
 import { ConfirmationEmail } from '@/emails/confirmation-email';
+import { buildAdminEnvelope } from '@/lib/contact-admin-email';
+import {
+    type ScreeningResult,
+    screenContactSubmission,
+    toScreeningLog,
+} from '@/lib/contact-screening';
 import { parseContactSubmission } from '@/lib/validation/contact';
 import { render } from '@react-email/components';
 import { headers } from 'next/headers';
@@ -10,7 +16,6 @@ import { emailConfig } from './email-config';
 import { sendEmailWithNodemailer } from './email-transport';
 import type { ContactFormResult, EmailFormData } from './email.types';
 
-const ADMIN_SUBJECT = 'Nouveau message provenant du site jkd-self-defense-31.fr';
 const CONFIRMATION_SUBJECT = 'Confirmation de réception - JKD Self Defense 31';
 
 const logDebug = (message: string, data?: unknown) => {
@@ -25,8 +30,11 @@ const logDebug = (message: string, data?: unknown) => {
  * Next.js l'expose comme un point d'entrée POST public : le payload est
  * `unknown` tant que `parseContactSubmission` ne l'a pas validé.
  *
- * Ordre : honeypot, validation, limitation de débit, envoi. Seules les
- * soumissions valides consomment le quota, car seules elles coûtent des mails.
+ * Ordre : honeypot, validation, limitation de débit, tri des liens, envoi.
+ * Seules les soumissions valides consomment le quota, car seules elles coûtent
+ * des mails. Le tri ne bloque rien : un message suspect part au bureau
+ * signalé et désamorcé, sans Reply-To ni confirmation, pour ne jamais perdre
+ * une vraie demande. Le visiteur reçoit la même réponse dans les deux cas.
  */
 export const sendEmail = async (
     payload: unknown
@@ -51,16 +59,39 @@ export const sendEmail = async (
         return { status: 'rate_limited' };
     }
 
+    const screening = screenContactSubmission(submission.data);
+    logScreening(screening);
+
     // Destinataire saturé : le bureau reçoit la demande, la confirmation saute.
-    return deliver(submission.data, rateLimit !== 'recipient_limited');
+    return deliver(
+        submission.data,
+        screening,
+        rateLimit !== 'recipient_limited'
+    );
+};
+
+/**
+ * Une ligne JSON par message valide, sans aucune donnée saisie : verdict,
+ * motifs et hôtes des liens. Au niveau `warn` si le message est suspect, pour
+ * le repérer d'un filtre dans les logs Vercel.
+ */
+const logScreening = (screening: ScreeningResult) => {
+    const line = JSON.stringify(toScreeningLog(screening));
+    if (screening.verdict === 'suspect') {
+        console.warn(line);
+    } else {
+        console.info(line);
+    }
 };
 
 const deliver = async (
     formData: EmailFormData,
-    sendConfirmation: boolean
+    screening: ScreeningResult,
+    recipientAvailable: boolean
 ): Promise<ContactFormResult> => {
     const environment = emailConfig.getEnvironment();
     const config = emailConfig.getConfig(environment);
+    const envelope = buildAdminEnvelope(screening, formData.email);
 
     logDebug('Environnement détecté', environment);
     logDebug('Configuration email', {
@@ -70,13 +101,14 @@ const deliver = async (
     });
 
     try {
-        // 1. Mail à l'admin (avec CC si configuré)
+        // 1. Mail à l'admin (avec CC si configuré). Message suspect : objet
+        // signalé, liens désamorcés, pas de Reply-To.
         const adminResult = await sendEmailWithNodemailer({
-            html: await render(AdminContactEmail({ ...formData })),
-            subject: ADMIN_SUBJECT,
+            html: await render(AdminContactEmail({ ...formData, screening })),
+            subject: envelope.subject,
             from: config.from,
             to: config.to,
-            replyTo: formData.email,
+            replyTo: envelope.replyTo,
             cc: config.cc,
         });
 
@@ -93,7 +125,12 @@ const deliver = async (
             messageId: adminResult.messageId,
         });
 
-        if (!sendConfirmation) {
+        // Message suspect : rien ne part vers l'adresse saisie.
+        if (!envelope.sendConfirmation) {
+            return { status: 'success' };
+        }
+
+        if (!recipientAvailable) {
             console.warn(
                 '[contact] Destinataire saturé : confirmation non envoyée.'
             );
