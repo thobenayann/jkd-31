@@ -197,6 +197,11 @@ Un test pose la règle plutôt que le texte : sans le préfixe entre crochets, l
 d'un message suspect ne doit ni égaler ni contenir celui d'un message propre. Une
 retouche future du libellé ne peut donc pas recréer le regroupement en silence.
 
+Vérifié sur la preview du commit `5012a31` (`jkd-31-eu065gzvj-yann-pro.vercel.app`)
+avec un nouvel envoi contenant le même lien : Gmail l'a rangé dans une conversation
+à part, et la liste affiche `[À VÉRIFIER] Message signalé sur le site
+jkd-selfdefense31.fr`. Pas de nouvelle confirmation reçue.
+
 ## Reste
 
 | Action | Qui | Où |
