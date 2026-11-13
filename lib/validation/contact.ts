@@ -27,12 +27,33 @@ export type ContactSubmission =
     | { kind: 'spam' }
     | { kind: 'invalid'; fieldErrors: ContactFieldErrors };
 
+/**
+ * L'analyseur d'URL (donc tout navigateur) retire d'un nom d'hôte les
+ * caractères de mise en forme invisibles (catégorie Unicode Cf : trait d'union
+ * conditionnel U+00AD, espace sans chasse U+200B, U+2060, U+FEFF...) et lit les
+ * points idéographique et pleine chasse comme un `.`. Sans normalisation,
+ * `piege` + U+00AD + `.online/fr` échappe au tri des liens et au désamorçage
+ * (`lib/contact-screening.ts`, `lib/safe-text.ts`), mais un copier-coller dans
+ * un navigateur ouvre `piege.online`.
+ *
+ * Le texte est donc normalisé une seule fois, ici, avant tout contrôle : le
+ * tri, le mail et les traces lisent tous le même texte. Les caractères sont
+ * retirés ou remplacés, jamais refusés : un texte collé depuis un traitement
+ * de texte contient des traits d'union conditionnels, et un refus apprendrait
+ * à l'expéditeur ce que le filtre regarde.
+ */
+const FORMAT_CHARACTERS = /\p{Cf}/gu;
+const DOT_LOOKALIKES = /[。．｡]/g;
+const normalizeVisitorText = (value: string) =>
+    value.replace(FORMAT_CHARACTERS, '').replace(DOT_LOOKALIKES, '.');
+
 /** Une ligne : tout blanc (tabulation, espace insécable, saut de ligne) devient un espace. */
-const collapseWhitespace = (value: string) => value.replace(/\s+/gu, ' ').trim();
+const collapseWhitespace = (value: string) =>
+    normalizeVisitorText(value).replace(/\s+/gu, ' ').trim();
 
 /** Texte libre : fins de ligne unifiées, caractères de contrôle retirés sauf `\n` et `\t`. */
 const normalizeMultiline = (value: string) =>
-    value
+    normalizeVisitorText(value)
         .replace(/\r\n?/g, '\n')
         .replace(/[^\P{Cc}\n\t]/gu, '')
         .trim();

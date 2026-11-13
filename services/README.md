@@ -44,7 +44,10 @@ la limitation est ignorée.
 - `email-transport.ts` : Implémentation du transporteur Nodemailer (Gandi SMTP)
 - `contact-rate-limit.ts` : Limitation de débit par IP hachée (pare-feu Vercel)
 - `send-email.ts` : Server action du formulaire (validation, limitation, envoi des deux emails)
-- `../lib/validation/contact.ts` : Schéma zod du formulaire et détection du champ piège
+- `../lib/validation/contact.ts` : Schéma zod du formulaire, normalisation des caractères invisibles et détection du champ piège
+- `../lib/contact-screening.ts` : Tri des liens (message `clean` ou `suspect`), porté d'Hexoprint
+- `../lib/safe-text.ts` : Désamorçage des liens dans le mail admin (`hxxps://piege[.]online`)
+- `../lib/contact-admin-email.ts` : Objet, Reply-To et confirmation selon le tri
 
 ## Templates React Email
 
@@ -93,11 +96,20 @@ Le service utilise la configuration suivante pour Gandi :
    - Vérifie la limite de débit, uniquement pour une soumission valide : l'IP
      d'abord (pleine, rien n'est envoyé), puis le destinataire (plein, seule la
      confirmation est supprimée, le bureau reçoit toujours la demande)
-   - Génère l'email admin avec toutes les informations du formulaire
+   - Trie les liens du message : un lien vers un autre hôte que le site, ou un
+     lien dans le nom ou le téléphone, rend le message suspect. Une ligne JSON
+     `contact_screening` (verdict, motifs, hôtes, aucune donnée personnelle)
+     part dans les logs, au niveau `warn` si le message est suspect
+   - Génère l'email admin. Tout lien saisi hors du site y est désamorcé
+     (`hxxps://piege[.]online`), aucune messagerie ne peut le rendre cliquable
    - Envoie cet email à `ADMIN_MAIL` (ou `DEV_TEST_EMAIL` en développement)
    - Si `ADMIN_MAIL_CC` (ou `DEV_TEST_EMAIL_CC`) est configuré, l'email est aussi envoyé en copie
-   - Génère l'email de confirmation personnalisé
-   - Envoie l'email de confirmation à l'adresse email de l'utilisateur
+   - Message suspect : objet préfixé `[À VÉRIFIER]`, bandeau d'avertissement,
+     tous les liens désamorcés, pas de Reply-To, et **aucune confirmation** envoyée
+   - Message propre : génère et envoie l'email de confirmation à l'adresse de l'utilisateur
+
+   Le visiteur reçoit la même réponse dans les deux cas : rien ne lui apprend
+   que son message a été repéré.
 
 2. Si l'envoi de l'email admin échoue, `{ status: 'error' }` est retourné, sans le détail SMTP
 3. Si l'envoi de l'email de confirmation échoue, un succès est quand même retourné (l'email admin a été envoyé)

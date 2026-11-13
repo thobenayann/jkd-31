@@ -12,6 +12,13 @@ export const SITE = {
     locale: 'fr_FR',
 } as const;
 
+/**
+ * Domaine affiché dans les mails, sans `www.` : `jkd-selfdefense31.fr`.
+ * Attention au sosie `jkd-self-defense-31.fr`, avec tirets : il n'appartient
+ * pas à l'association et les anciens gabarits de mail y renvoyaient.
+ */
+export const SITE_DOMAIN = new URL(SITE.url).hostname.replace(/^www\./, '');
+
 /** URL absolue d'un chemin du site, sans double slash ni slash final parasite. */
 export const absoluteUrl = (path = '/'): string =>
     new URL(path, SITE.url).toString().replace(/\/$/, '');

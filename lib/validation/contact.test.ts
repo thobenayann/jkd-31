@@ -187,6 +187,38 @@ describe('parseContactSubmission', () => {
                 data: { ...valid, message: 'Ligne 1\nLigne 2\nLigne 3\tfin' },
             });
         });
+
+        // L'analyseur d'URL retire ces caractères d'un hôte : sans cette
+        // normalisation, `piege` + U+00AD + `.online` échappe au tri des liens,
+        // mais s'ouvre dans un navigateur après un copier-coller.
+        it.each([
+            ['un trait d’union conditionnel', 'piege­.online/fr'],
+            ['une espace sans chasse', 'piege​.online/fr'],
+            ['un gluon de mots', 'pie⁠ge.online/fr'],
+            ['une marque d’ordre d’octets', '﻿piege.online/fr'],
+            ['un point idéographique', 'piege。online/fr'],
+            ['un point pleine chasse', 'piege．online/fr'],
+            ['un point idéographique demi-chasse', 'piege｡online/fr'],
+        ])('ramène %s à la forme que lit un navigateur', (_, written) => {
+            const result = parseContactSubmission({
+                ...valid,
+                message: `Le dossier : ${written}`,
+            });
+            expect(result).toEqual({
+                kind: 'valid',
+                data: { ...valid, message: 'Le dossier : piege.online/fr' },
+            });
+        });
+
+        it('normalise aussi le prénom, le nom et le téléphone', () => {
+            const result = parseContactSubmission({
+                ...valid,
+                firstName: 'Jean­-Pierre',
+                lastName: "N'​Diaye",
+                phoneNumber: '06​ 12 34 56 78',
+            });
+            expect(result).toEqual({ kind: 'valid', data: valid });
+        });
     });
 
     describe('honeypot', () => {
