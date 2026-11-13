@@ -95,7 +95,8 @@ homoglyphe cyrillique, domaine nu, adresse IP, schéma `ftp://`. Le module
 d'Hexoprint a déjà passé plusieurs revues de sécurité sur ces cas, avec des tests
 de non-régression et de temps d'exécution. La liste des hôtes devient un paramètre,
 ce qui permet de faire tourner ses tests tels quels avec la liste d'Hexoprint :
-s'ils passent, le portage n'a rien changé au comportement.
+s'ils passent, le portage n'a rien changé au comportement. Un seul a été modifié,
+volontairement, après la revue de sécurité (section suivante).
 
 ## Vérifications
 
@@ -110,7 +111,8 @@ et vus en échec (8 puis 6) avant le code.
 | `lib/validation/contact.test.ts` | +8 | Trait d'union conditionnel, espace sans chasse, gluon, BOM, trois points sosies, champs d'identité. |
 | `services/send-email.test.ts` | +8 | Message propre inchangé, message suspect signalé sans lien, sans Reply-To ni confirmation, réponse identique pour le visiteur, lien vers le site accepté, lien caché par un caractère invisible repéré, log sans donnée personnelle, aucun lien vers `jkd-self-defense-31`. |
 
-Suite complète : 16 fichiers, 221 tests, tous verts (154 avant ce lot).
+Suite complète : 16 fichiers, 221 tests, tous verts (154 avant ce lot). 230 après
+la revue de sécurité ci-dessous.
 
 **Contrôles statiques.** `pnpm exec tsc --noEmit` passe. `pnpm lint` ne signale rien
 dans les fichiers touchés. Restent les 2 erreurs connues (`components/ui/3d-card.tsx`,
@@ -135,11 +137,26 @@ lisible. Dans les deux, les seuls liens du mail pointent vers
 **Non vérifié** : le rendu dans Gmail et Orange, ni l'envoi réel. À faire sur la
 preview de la PR, avec un message de test vers la boîte de test.
 
+## Revue de sécurité automatique (après ouverture de la PR #37)
+
+Deux contournements relevés. Les deux ont été vérifiés avant correction, puis
+corrigés avec des tests écrits et vus en échec avant le code.
+
+| Faille | Constat | Correctif |
+|---|---|---|
+| Points sosies non couverts | La revue citait le petit point U+FE52. Vérification sur les 1,1 million de points de code contre l'analyseur d'URL de Node 24 : seuls U+3002, U+FF0E et U+FF61 y sont lus comme un point, et ils étaient déjà traités. U+FE52 y est refusé. D'anciennes tables IDNA, encore présentes dans des navigateurs pas à jour, le lisaient pourtant comme un point, ainsi que U+2024 et `⒈` (lu « 1. »). Risque faible mais réel sur un poste ancien. | Forme NFKC appliquée avant le reste de la normalisation (`lib/validation/contact.ts`). Elle ramène ces caractères et les lettres pleine chasse à leur forme simple. Effet visible : `…` devient `...`, `²` devient `2`. Un test parcourt tout le plan multilingue de base contre l'analyseur réel et échoue si un caractère lu comme un point échappe à la normalisation. |
+| Domaine caché dans le chemin d'un lien autorisé | Confirmé : `https://www.jkd-selfdefense31.fr/x'www.piege.online/y` donnait un message propre. `findLinks` garde `'`, `,`, `\|`, `^`, `*` dans le chemin, alors qu'une messagerie peut y couper le lien et rendre cliquable le domaine qui suit. | Un texte en forme de domaine ou d'adresse IPv4 dans le chemin d'un lien autorisé rend le message suspect (`link_not_allowed`), donc entièrement désamorcé (`lib/contact-screening.ts`). Écart assumé avec Hexoprint : un lien vers le site avec un point dans son chemin (`/logo.png`) sera signalé. Le message arrive quand même. |
+
+Tests ajoutés : 7 sur la normalisation, 2 sur le tri, 1 de bout en bout sur la
+Server Action. Le test Hexoprint « hôtes ajoutés » passe de `/a.stl` à `/a-stl`,
+le premier étant désormais suspect par construction.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
-| PR `develop` vers `main`, puis contrôle sur la preview (un envoi propre, un envoi avec lien, rendu dans la messagerie) | Yann pour le merge | GitHub, Vercel |
+| Contrôle sur la preview de la PR #37 (un envoi propre, un envoi avec lien, rendu dans la messagerie). Prérequis : `DEV_TEST_EMAIL` dans l'environnement Preview de Vercel. Hors production, le code n'utilise ni `ADMIN_MAIL` ni `ADMIN_MAIL_CC` : sans cette variable, le mail du bureau part vers `test@test.dev`. Fanny ne reçoit donc jamais un essai de preview. | Yann | Vercel |
+| Merge de la PR #37 | Yann | GitHub |
 | Retirer `include:amazonses.com` du SPF | Yann | DNS Gandi |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
 | Acheter `jkd-self-defense-31.fr` et le rediriger vers le site, pour les mails déjà envoyés | Décision de Yann | Gandi |

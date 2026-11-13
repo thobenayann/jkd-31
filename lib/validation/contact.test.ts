@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
     CONTACT_LIMITS,
     HONEYPOT_FIELD,
+    normalizeVisitorText,
     parseContactSubmission,
 } from './contact';
 
@@ -208,6 +209,46 @@ describe('parseContactSubmission', () => {
                 kind: 'valid',
                 data: { ...valid, message: 'Le dossier : piege.online/fr' },
             });
+        });
+
+        // D'anciennes tables IDNA des navigateurs lisaient aussi ces caractères
+        // comme un point. NFKC les ramène à leur forme simple.
+        it.each([
+            ['un petit point', 'piege﹒online/fr', 'piege.online/fr'],
+            ['un point de conduite', 'piege․online/fr', 'piege.online/fr'],
+            ['un chiffre suivi d’un point', 'piege⒈online/fr', 'piege1.online/fr'],
+            ['des lettres pleine chasse', 'ｐｉｅｇｅ．ｏｎｌｉｎｅ/fr', 'piege.online/fr'],
+        ])('ramène %s à sa forme simple (NFKC)', (_, written, expected) => {
+            const result = parseContactSubmission({
+                ...valid,
+                message: `Le dossier : ${written}`,
+            });
+            expect(result).toEqual({
+                kind: 'valid',
+                data: { ...valid, message: `Le dossier : ${expected}` },
+            });
+        });
+
+        it('ne laisse aucun caractère que l’analyseur d’URL lit comme un point', () => {
+            // Tout le plan multilingue de base, contre l'analyseur réel de Node.
+            const missed: string[] = [];
+            for (let cp = 0; cp <= 0xffff; cp++) {
+                if (cp >= 0xd800 && cp <= 0xdfff) continue;
+                const ch = String.fromCodePoint(cp);
+                if (ch === '.' || !URL.canParse(`https://ab${ch}cd/`)) continue;
+                if (new URL(`https://ab${ch}cd/`).hostname !== 'ab.cd') continue;
+                if (normalizeVisitorText(ch) !== '.') {
+                    missed.push(`U+${cp.toString(16).toUpperCase()}`);
+                }
+            }
+            expect(missed).toEqual([]);
+        });
+
+        it('garde lisible un message en français', () => {
+            const text = 'Bonjour à tous ! « Cours d’essai » mardi, 19h30 😀 Merci…';
+            expect(normalizeVisitorText(text)).toBe(
+                'Bonjour à tous ! « Cours d’essai » mardi, 19h30 😀 Merci...'
+            );
         });
 
         it('normalise aussi le prénom, le nom et le téléphone', () => {

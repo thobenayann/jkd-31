@@ -96,8 +96,11 @@ describe('tri des liens, tests repris d’Hexoprint', () => {
     });
 
     it('respecte les hôtes ajoutés à la liste', () => {
+        // Écart volontaire avec Hexoprint, dont le test portait sur `/a.stl` :
+        // depuis la revue du 13 novembre, un texte en forme de domaine dans le
+        // chemin d'un lien autorisé rend le message suspect (voir plus bas).
         const result = screenContactSubmission(
-            { ...base, message: 'https://store.public.blob.vercel-storage.com/a.stl' },
+            { ...base, message: 'https://store.public.blob.vercel-storage.com/a-stl' },
             [...HEXOPRINT_HOSTS, 'store.public.blob.vercel-storage.com']
         );
         expect(result.verdict).toBe('clean');
@@ -359,6 +362,35 @@ describe('tri des liens, liste par défaut de JKD', () => {
             'Vous pouvez me rappeler au 05.61.22.33.44 ou écrire à jean.dupont@exemple.fr.',
             'J’ai vu les tarifs sur https://www.jkd-selfdefense31.fr/tarifs, la licence est-elle comprise ?',
             'Trouvé via jkd-selfdefense31.com/contact',
+        ]) {
+            expect(screen(message).verdict, message).toBe('clean');
+        }
+    });
+
+    // Revue de sécurité du 13 novembre : `findLinks` garde dans le chemin des
+    // caractères (`'`, `,`, `|`, `^`...) où une messagerie peut couper le lien,
+    // puis rendre cliquable à part le domaine qui suit.
+    it('classe suspect un lien vers le site qui cache un autre domaine dans son chemin', () => {
+        for (const message of [
+            "https://www.jkd-selfdefense31.fr/x'www.piege.online/y",
+            'https://www.jkd-selfdefense31.fr/x,piege.online/y',
+            'https://www.jkd-selfdefense31.fr/x|piege.online/y',
+            'https://www.jkd-selfdefense31.fr/tarifs?u=piege.online',
+            'jkd-selfdefense31.fr/x^piege.online',
+            'https://www.jkd-selfdefense31.fr/x*203.0.113.7/y',
+        ]) {
+            expect(screen(message), message).toMatchObject({
+                verdict: 'suspect',
+                reasons: ['link_not_allowed'],
+            });
+        }
+    });
+
+    it('laisse propre un lien vers le site au chemin ordinaire', () => {
+        for (const message of [
+            'https://www.jkd-selfdefense31.fr/tarifs?saison=2026-2027#ado',
+            'https://www.jkd-selfdefense31.fr/events/stage-2026, merci',
+            'https://www.jkd-selfdefense31.fr/27-styles',
         ]) {
             expect(screen(message).verdict, message).toBe('clean');
         }

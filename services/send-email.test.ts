@@ -223,6 +223,18 @@ describe('sendEmail (server action du formulaire de contact)', () => {
             expect(sent()[0].html).toContain('partagepro[.]online/fr');
         });
 
+        it('un domaine caché derrière un lien vers le site est signalé et désamorcé', async () => {
+            await sendEmail({
+                ...valid,
+                message: "Voir https://www.jkd-selfdefense31.fr/x'www.partagepro.online/fr",
+            });
+            const [admin] = sent();
+            expect(sent()).toHaveLength(1);
+            expect(admin.subject).toMatch(/^\[À VÉRIFIER\] /);
+            expect(admin.html).toContain('www[.]partagepro[.]online/fr');
+            expect(admin.html).not.toContain('partagepro.online');
+        });
+
         it('trace le verdict sans aucune donnée personnelle', async () => {
             await sendEmail(PHISHING);
 

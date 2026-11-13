@@ -36,6 +36,13 @@ export type ContactSubmission =
  * (`lib/contact-screening.ts`, `lib/safe-text.ts`), mais un copier-coller dans
  * un navigateur ouvre `piege.online`.
  *
+ * D'anciennes tables IDNA, encore présentes dans des navigateurs pas à jour,
+ * lisaient aussi d'autres caractères comme un point : petit point U+FE52,
+ * point de conduite U+2024, ou `⒈` lu « 1. ». La forme NFKC les ramène à leur
+ * forme simple, comme les lettres pleine chasse. Elle change aussi `…` en
+ * `...` ou `²` en `2`, sans gêne pour un message de contact. Le point
+ * idéographique U+3002 n'a pas de forme NFKC : il est remplacé à part.
+ *
  * Le texte est donc normalisé une seule fois, ici, avant tout contrôle : le
  * tri, le mail et les traces lisent tous le même texte. Les caractères sont
  * retirés ou remplacés, jamais refusés : un texte collé depuis un traitement
@@ -44,8 +51,11 @@ export type ContactSubmission =
  */
 const FORMAT_CHARACTERS = /\p{Cf}/gu;
 const DOT_LOOKALIKES = /[。．｡]/g;
-const normalizeVisitorText = (value: string) =>
-    value.replace(FORMAT_CHARACTERS, '').replace(DOT_LOOKALIKES, '.');
+export const normalizeVisitorText = (value: string) =>
+    value
+        .normalize('NFKC')
+        .replace(FORMAT_CHARACTERS, '')
+        .replace(DOT_LOOKALIKES, '.');
 
 /** Une ligne : tout blanc (tabulation, espace insécable, saut de ligne) devient un espace. */
 const collapseWhitespace = (value: string) =>

@@ -340,13 +340,40 @@ export function isAllowedLink(
     return link.href !== '' && isAllowedHost(link.host, allowedHosts);
 }
 
+/*
+ * Texte en forme de domaine (`piege.online`, `www.piege`) ou d'adresse IPv4
+ * dans le chemin d'un lien. `findLinks` garde dans le chemin des caractères
+ * (`'`, `,`, `|`, `^`, `*`...) où une messagerie peut couper le lien : le
+ * domaine qui suit deviendrait alors cliquable à part, alors que le lien,
+ * vers un hôte autorisé, laissait le message propre. Écart avec Hexoprint,
+ * ajouté après la revue de sécurité du 13 novembre 2026.
+ *
+ * Linéaire : un caractère, un point, deux lettres, ou quatre groupes de
+ * chiffres de taille bornée. Aucune répétition imbriquée.
+ */
+const DOMAIN_LIKE_IN_PATH = new RegExp(
+    String.raw`[\p{L}\p{M}\p{N}_-]\.[\p{L}\p{M}]{2}|(?<![\d.])\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?!\d)`,
+    'u'
+);
+
+/** Vrai si le chemin du lien, après l'hôte, contient un texte en forme de domaine ou d'IPv4. */
+function hidesAnotherHost(link: Pick<FoundLink, 'raw'>): boolean {
+    const rest = link.raw.replace(SCHEME_PREFIX, '');
+    const authorityEnd = rest.search(AUTHORITY_END);
+    return authorityEnd !== -1 && DOMAIN_LIKE_IN_PATH.test(rest.slice(authorityEnd));
+}
+
 const IDENTITY_FIELDS = ['firstName', 'lastName', 'phoneNumber'] as const;
 
 /**
  * Classe un message validé. Il est `suspect` si un lien pointe hors de la
- * liste (`link_not_allowed`), ou si un lien, même autorisé, figure dans le
- * prénom, le nom ou le téléphone (`link_in_identity_field`). Le schéma refuse
- * déjà les liens dans ces champs : ce contrôle est une seconde barrière.
+ * liste ou cache un autre domaine dans son chemin (`link_not_allowed`), ou si
+ * un lien, même autorisé, figure dans le prénom, le nom ou le téléphone
+ * (`link_in_identity_field`). Le schéma refuse déjà les liens dans ces
+ * champs : ce contrôle est une seconde barrière.
+ *
+ * Un message suspect est affiché sans aucun lien lisible (`toSafeText` avec
+ * `allowLinks: false`) : c'est ce qui couvre le cas du domaine caché.
  */
 export function screenContactSubmission(
     data: ScreeningInput,
@@ -360,7 +387,7 @@ export function screenContactSubmission(
         for (const link of findLinks(value)) {
             hosts.add(link.host);
             linkInIdentityField ||= isIdentityField;
-            linkNotAllowed ||= !isAllowedLink(link, allowedHosts);
+            linkNotAllowed ||= !isAllowedLink(link, allowedHosts) || hidesAnotherHost(link);
         }
     };
 
