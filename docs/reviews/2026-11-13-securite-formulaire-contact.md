@@ -202,13 +202,26 @@ avec un nouvel envoi contenant le même lien : Gmail l'a rangé dans une convers
 à part, et la liste affiche `[À VÉRIFIER] Message signalé sur le site
 jkd-selfdefense31.fr`. Pas de nouvelle confirmation reçue.
 
+## Mise en production
+
+PR #37 mergée dans `main` le 13 novembre 2026 sur décision de Yann (commit de
+merge `11de9c3`, quatre commits : `ee7b327`, `863f712`, `5012a31`, `dfa197a`).
+Checks au vert avant le merge : GitGuardian, Vercel.
+
+Contrôle après déploiement, sans aucun envoi, car un envoi en production part chez
+Fanny :
+
+- `https://www.jkd-selfdefense31.fr/` et `/contact` répondent 200, le formulaire est
+  présent.
+- Le domaine sert le nouveau déploiement : même identifiant de build
+  (`czdOi-t0m-6aufy5ZV2VT`) sur le domaine et sur l'URL du déploiement de production.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
-| Merge de la PR #37 | Yann | GitHub |
+| Au premier vrai message reçu : une ligne `contact_screening` dans les logs, et pas d'avertissement `[contact] RATE_LIMIT_SECRET absent` | Yann ou un agent | Logs Vercel |
 | Retirer `include:amazonses.com` du SPF | Yann | DNS Gandi |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
 | Acheter `jkd-self-defense-31.fr` et le rediriger vers le site, pour les mails déjà envoyés | Décision de Yann | Gandi |
 | L'objet et l'expéditeur du mail reçu par Fanny, pour confirmer que le formulaire était la porte d'entrée | Yann | Boîte de réception |
-| L'absence de l'avertissement `[contact] RATE_LIMIT_SECRET absent`, laissée à confirmer le 8 novembre | Au premier envoi réel | Logs Vercel |
