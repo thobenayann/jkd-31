@@ -259,10 +259,30 @@ Le nom avec tirets n'est pas à l'association : Gandi ne gère que
 PR #37 gardent donc des liens vers un nom que n'importe qui peut acheter. Les mails
 envoyés depuis la mise en production ne pointent plus que vers le vrai domaine.
 
+## Adresse `contact@` (18 novembre)
+
+Question de Yann : l'adresse peut-elle figurer sur un flyer ? Constat sur Gandi et
+dans le DNS, sans envoi de test (il arriverait chez Fanny) :
+
+| Point | Constat |
+|---|---|
+| Réception | MX du domaine vers `spool.mail.gandi.net` et `fb.mail.gandi.net`, sur les trois serveurs de Gandi. Les suppressions DNS du 13 novembre n'y ont pas touché. |
+| Acheminement | `contact@` est une boîte Standard 10 Go, vide, avec une redirection vers la boîte Yahoo de la présidente. Anti-spam et DKIM de Gandi activés. |
+| Formulaire du site | Il s'authentifie au SMTP de Gandi avec cette boîte : en-tête `X-GND-Sasl: contact@jkd-selfdefense31.fr` sur les mails de la preview. |
+| Échéance | La boîte expire le **9 décembre 2026**, renouvellement automatique **désactivé**. |
+
+Sans renouvellement, le formulaire du site ne pourra plus envoyer. Le sort de la
+redirection après l'expiration de la boîte n'est pas vérifié.
+
+Un mail écrit directement à `contact@` ne passe pas par le tri des liens du site :
+seuls les filtres de Gandi et de Yahoo s'appliquent. Les réponses de Fanny partent
+de son adresse Yahoo.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
+| Renouveler la boîte `contact@` avant le 9 décembre 2026 et activer le renouvellement automatique | Yann | Gandi |
 | Au premier vrai message reçu : une ligne `contact_screening` dans les logs, et pas d'avertissement `[contact] RATE_LIMIT_SECRET absent` | Yann ou un agent | Logs Vercel |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
 | L'objet et l'expéditeur du mail reçu par Fanny, pour confirmer que le formulaire était la porte d'entrée | Yann | Boîte de réception |
