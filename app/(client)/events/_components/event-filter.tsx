@@ -88,12 +88,10 @@ const ClientEventFilter: React.FC<ClientEventFilterProps> = ({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Période</SelectLabel>
-                                <SelectItem value='next'>
-                                    3 prochains événements
-                                </SelectItem>
-                                <SelectItem value='past'>
-                                    3 derniers événements
-                                </SelectItem>
+                                {/* Pas de nombre dans le libellé : la liste
+                                    en montre au plus 3, souvent moins */}
+                                <SelectItem value='next'>À venir</SelectItem>
+                                <SelectItem value='past'>Passés</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>

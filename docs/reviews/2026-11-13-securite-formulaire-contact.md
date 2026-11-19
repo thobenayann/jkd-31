@@ -202,13 +202,87 @@ avec un nouvel envoi contenant le même lien : Gmail l'a rangé dans une convers
 à part, et la liste affiche `[À VÉRIFIER] Message signalé sur le site
 jkd-selfdefense31.fr`. Pas de nouvelle confirmation reçue.
 
+## Mise en production
+
+PR #37 mergée dans `main` le 13 novembre 2026 sur décision de Yann (commit de
+merge `11de9c3`, quatre commits : `ee7b327`, `863f712`, `5012a31`, `dfa197a`).
+Checks au vert avant le merge : GitGuardian, Vercel.
+
+Contrôle après déploiement, sans aucun envoi, car un envoi en production part chez
+Fanny :
+
+- `https://www.jkd-selfdefense31.fr/` et `/contact` répondent 200, le formulaire est
+  présent.
+- Le domaine sert le nouveau déploiement : même identifiant de build
+  (`czdOi-t0m-6aufy5ZV2VT`) sur le domaine et sur l'URL du déploiement de production.
+
+## DNS : SPF et restes de Resend
+
+Fait le 13 novembre 2026 dans la zone LiveDNS de Gandi, sur accord de Yann
+conditionné à la vérification que Resend ne sert plus.
+
+| Vérification | Constat |
+|---|---|
+| Code | Aucune mention de Resend, ni dépendance. Retiré le 17 septembre 2024 (`35e08ee`, passage à nodemailer). |
+| Vercel | Aucune variable Resend dans le projet `jkd-31`. |
+| DNS de Resend | `send.jkd-selfdefense31.fr` n'a pas de SPF, et son MX vaut `feedback-smtp.us-east-1.amazonses.com.jkd-selfdefense31.fr` : nom saisi sans point final, donc complété par le domaine. Resend ne peut pas valider le domaine avec ces enregistrements. |
+| Rôle de l'include | Resend vérifie le SPF sur `send.jkd-selfdefense31.fr`, son domaine d'enveloppe, jamais sur le domaine racine. `include:amazonses.com` à la racine ne servait donc à rien, même du temps de Resend. Il autorisait seulement l'infrastructure Amazon SES à passer le SPF du domaine. |
+| Envoi actuel | Le site passe par le SMTP de Gandi, couvert par `include:_mailcust.gandi.net` : SPF `pass` constaté sur la preview. |
+
+| | Valeur |
+|---|---|
+| Avant | `v=spf1 include:_mailcust.gandi.net include:amazonses.com ~all` |
+| Après | `v=spf1 include:_mailcust.gandi.net ~all` |
+
+L'enregistrement `google-site-verification` voisin est inchangé. Le TTL est de
+300 secondes.
+
+### Restes de Resend supprimés
+
+Supprimés le même jour sur accord de Yann, après le SPF :
+
+| Enregistrement | Valeur supprimée | Pourquoi |
+|---|---|---|
+| `resend._domainkey` TXT | Clé publique DKIM de Resend (`p=MIGfMA0GCSqGSIb3…`) | Un mail signé par la clé privée correspondante, détenue par le seul compte Resend, passait encore DKIM et donc DMARC au nom du domaine. |
+| `send` MX | `10 feedback-smtp.us-east-1.amazonses.com`, sans point final | Le retour des rebonds de Resend, sans usage, et cassé : publié comme `…amazonses.com.jkd-selfdefense31.fr`. |
+
+Recréer ces enregistrements n'aurait de sens qu'en réactivant Resend, qui fournirait
+alors de nouvelles valeurs. Contrôle sur les trois serveurs de Gandi : plus aucun
+des deux n'est publié. Le MX du domaine et les clés DKIM de Gandi
+(`gm1` à `gm3._domainkey`) répondent toujours.
+
+### `jkd-self-defense-31.fr` : pas d'achat
+
+Le nom avec tirets n'est pas à l'association : Gandi ne gère que
+`jkd-selfdefense31.fr` et `.com`, et le registre AFNIC répond toujours 404 le
+13 novembre. Décision de Yann : il ne sera pas acheté. Les mails envoyés avant la
+PR #37 gardent donc des liens vers un nom que n'importe qui peut acheter. Les mails
+envoyés depuis la mise en production ne pointent plus que vers le vrai domaine.
+
+## Adresse `contact@` (18 novembre)
+
+Question de Yann : l'adresse peut-elle figurer sur un flyer ? Constat sur Gandi et
+dans le DNS, sans envoi de test (il arriverait chez Fanny) :
+
+| Point | Constat |
+|---|---|
+| Réception | MX du domaine vers `spool.mail.gandi.net` et `fb.mail.gandi.net`, sur les trois serveurs de Gandi. Les suppressions DNS du 13 novembre n'y ont pas touché. |
+| Acheminement | `contact@` est une boîte Standard 10 Go, vide, avec une redirection vers la boîte Yahoo de la présidente. Anti-spam et DKIM de Gandi activés. |
+| Formulaire du site | Il s'authentifie au SMTP de Gandi avec cette boîte : en-tête `X-GND-Sasl: contact@jkd-selfdefense31.fr` sur les mails de la preview. |
+| Échéance | La boîte expire le **9 décembre 2026**, renouvellement automatique **désactivé**. |
+
+Sans renouvellement, le formulaire du site ne pourra plus envoyer. Le sort de la
+redirection après l'expiration de la boîte n'est pas vérifié.
+
+Un mail écrit directement à `contact@` ne passe pas par le tri des liens du site :
+seuls les filtres de Gandi et de Yahoo s'appliquent. Les réponses de Fanny partent
+de son adresse Yahoo.
+
 ## Reste
 
 | Action | Qui | Où |
 |---|---|---|
-| Merge de la PR #37 | Yann | GitHub |
-| Retirer `include:amazonses.com` du SPF | Yann | DNS Gandi |
+| Renouveler la boîte `contact@` avant le 9 décembre 2026 et activer le renouvellement automatique | Yann | Gandi |
+| Au premier vrai message reçu : une ligne `contact_screening` dans les logs, et pas d'avertissement `[contact] RATE_LIMIT_SECRET absent` | Yann ou un agent | Logs Vercel |
 | DMARC : adresse de rapports, quelques semaines de lecture, puis `p=quarantine` | Yann | DNS Gandi |
-| Acheter `jkd-self-defense-31.fr` et le rediriger vers le site, pour les mails déjà envoyés | Décision de Yann | Gandi |
 | L'objet et l'expéditeur du mail reçu par Fanny, pour confirmer que le formulaire était la porte d'entrée | Yann | Boîte de réception |
-| L'absence de l'avertissement `[contact] RATE_LIMIT_SECRET absent`, laissée à confirmer le 8 novembre | Au premier envoi réel | Logs Vercel |

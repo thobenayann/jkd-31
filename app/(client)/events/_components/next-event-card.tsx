@@ -22,7 +22,7 @@ function NextEventCard({
                 <div className='flex max-md:flex-col max-md:items-center items-top justify-between w-full max-md:space-y-20 md:space-x-20'>
                     {[1, 2, 3].map((index) => (
                         <div key={index} className='w-full'>
-                            <Skeleton className='h-96 w-full mb-4' />
+                            <Skeleton className='aspect-[4/5] w-full mb-4' />
                             <Skeleton className='h-4 w-3/4 mb-2' />
                             <Skeleton className='h-4 w-1/2' />
                         </div>
@@ -35,13 +35,12 @@ function NextEventCard({
     return (
         <section className='container md:p-20'>
             {events.length > 0 ? (
+                // Même largeur de carte (un tiers) quel que soit le nombre
+                // d'événements : avec 1 ou 2 cartes, elles sont centrées au
+                // lieu de changer de format.
                 <FadeInWrapper
                     delay={0.2}
-                    className={`grid gap-8 w-full ${
-                        events.length === 1
-                            ? 'grid-cols-1 md:grid-cols-2'
-                            : 'grid-cols-1 md:grid-cols-3'
-                    }`}
+                    className='flex flex-wrap justify-center gap-8 w-full'
                 >
                     {events.map((event) => {
                         const mainImageUrl = event.mainImage?.asset?._ref
@@ -52,27 +51,30 @@ function NextEventCard({
                             ? urlFor(event.personality.photo).url()
                             : '';
 
-                        const isSingle = events.length === 1;
                         return (
-                            <CardEvent
+                            <div
                                 key={event._id}
-                                id={event._id}
-                                title={event.title || ''}
-                                eventDates={event.eventDates || []}
-                                timeSlots={event.timeSlots || []}
-                                mainImageUrl={mainImageUrl}
-                                personalityPhotoUrl={personalityPhotoUrl}
-                                firstName={event.personality?.firstName || ''}
-                                lastName={event.personality?.lastName || ''}
-                                titlePersonality={
-                                    event.personality?.title || ''
-                                }
-                                origin={event.origin}
-                                imageFit={isSingle ? 'contain' : 'cover'}
-                                containerClassName={
-                                    isSingle ? 'aspect-[16/9]' : undefined
-                                }
-                            />
+                                className='w-full md:w-[calc((100%-4rem)/3)]'
+                            >
+                                <CardEvent
+                                    id={event._id}
+                                    title={event.title || ''}
+                                    eventDates={event.eventDates || []}
+                                    timeSlots={event.timeSlots || []}
+                                    mainImageUrl={mainImageUrl}
+                                    personalityPhotoUrl={personalityPhotoUrl}
+                                    firstName={
+                                        event.personality?.firstName || ''
+                                    }
+                                    lastName={
+                                        event.personality?.lastName || ''
+                                    }
+                                    titlePersonality={
+                                        event.personality?.title || ''
+                                    }
+                                    origin={event.origin}
+                                />
+                            </div>
                         );
                     })}
                 </FadeInWrapper>
