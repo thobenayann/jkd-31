@@ -19,9 +19,11 @@ interface CardEventProps {
     lastName: string;
     titlePersonality: string;
     origin?: 'internal' | 'external';
-    imageFit?: 'cover' | 'contain';
-    containerClassName?: string;
 }
+
+// Les affiches du club sont au format 4:5 (1080 × 1350). Le cadre suit ce
+// format pour qu'une affiche s'affiche entière, sans bande ni recadrage.
+const IMAGE_SIZES = '(max-width: 768px) 100vw, 33vw';
 
 function CardEvent({
     id,
@@ -34,15 +36,15 @@ function CardEvent({
     lastName,
     titlePersonality,
     origin,
-    imageFit = 'cover',
-    containerClassName,
 }: CardEventProps) {
     const [isHovered, setIsHovered] = useState(false);
     const formattedEventDates = formatEventDates(eventDates);
 
     return (
+        // h-full : la carte prend la hauteur de la ligne, donc celle de la
+        // plus haute carte voisine
         <motion.article
-            className='flex flex-col rounded-md overflow-hidden shadow-lg shadow-zinc-200 w-full'
+            className='flex flex-col h-full rounded-md overflow-hidden shadow-lg shadow-zinc-200 w-full'
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
         >
@@ -50,23 +52,30 @@ function CardEvent({
                 <motion.div
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className={`w-full relative ${containerClassName ?? 'h-96'}`}
+                    className='relative w-full aspect-[4/5] overflow-hidden bg-gray-900 cursor-pointer'
                 >
-                    <Image
-                        src={mainImageUrl}
-                        alt='placeholder'
-                        className='transition-transform duration-500 ease-in-out cursor-pointer'
-                        fill
-                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                        style={{
-                            objectFit: imageFit,
-                            objectPosition: 'center',
-                        }}
-                    />
-                    <EventOriginBadge
-                        origin={origin}
-                        className='absolute top-3 left-3'
-                    />
+                    {mainImageUrl ? (
+                        <>
+                            {/* Fond : la même image, floutée et assombrie,
+                                remplit les bords quand le format n'est pas 4:5 */}
+                            <Image
+                                src={mainImageUrl}
+                                alt=''
+                                aria-hidden
+                                fill
+                                sizes={IMAGE_SIZES}
+                                className='object-cover scale-110 blur-2xl brightness-50'
+                            />
+                            {/* Affiche entière, jamais recadrée */}
+                            <Image
+                                src={mainImageUrl}
+                                alt={`Affiche : ${title}`}
+                                fill
+                                sizes={IMAGE_SIZES}
+                                className='object-contain'
+                            />
+                        </>
+                    ) : null}
                     {/* Project Info Overlay */}
                     <div
                         className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-6 transition-opacity duration-500 ease-in-out ${
@@ -91,6 +100,9 @@ function CardEvent({
             </TransitionLink>
 
             <div className='flex flex-col space-y-1 px-2 py-4'>
+                {/* Sous l'image plutôt que dessus, pour ne jamais masquer
+                    le texte de l'affiche */}
+                <EventOriginBadge origin={origin} className='self-center' />
                 <strong className='text-center font-bold text-lg'>
                     {formattedEventDates}
                 </strong>
